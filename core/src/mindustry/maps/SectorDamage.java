@@ -113,8 +113,9 @@ public class SectorDamage{
                 Tile tile = frontier.removeFirst();
                 float currDamage = values[tile.x][tile.y] - falloff;
 
-                for(int i = 0; i < 4; i++){
-                    int cx = tile.x + Geometry.d4x[i], cy = tile.y + Geometry.d4y[i];
+                for(int i = 0; i < 6; i++){
+                    Point2 p = Hex.nearby(tile.x, tile.y, i);
+                    int cx = p.x, cy = p.y;
 
                     //propagate to new tiles
                     if(tiles.in(cx, cy) && values[cx][cy] < currDamage){

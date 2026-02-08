@@ -56,8 +56,9 @@ public class Astar{
                 break;
             }
             closed.set(next.x, next.y);
-            for(Point2 point : Geometry.d4){
-                int newx = next.x + point.x, newy = next.y + point.y;
+            for(int i = 0; i < 6; i++){
+                Point2 p = Hex.nearby(next.x, next.y, i);
+                int newx = p.x, newy = p.y;
                 if(Structs.inBounds(newx, newy, tiles.width, tiles.height)){
                     Tile child = tiles.getn(newx, newy);
                     if(passable.get(child)){
@@ -82,7 +83,8 @@ public class Astar{
             out.add(current);
 
             byte rot = rotations[current.x][current.y];
-            current = tiles.getn(current.x + Geometry.d4x[rot], current.y + Geometry.d4y[rot]);
+            Point2 p = Hex.nearby(current.x, current.y, rot);
+            current = tiles.getn(p.x, p.y);
         }
 
         out.reverse();
