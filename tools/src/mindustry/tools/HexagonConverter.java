@@ -13,31 +13,49 @@ public class HexagonConverter{
         ArcNativesLoader.load();
 
         if(args.length < 2){
-            System.err.println("Usage: HexagonConverter <input.png> <output.png>");
+            System.err.println("Usage: HexagonConverter <input.png/dir> <output.png/dir>");
             System.exit(1);
         }
 
-        String inputPath = args[0];
-        Fi input = Fi.get(inputPath);
+        Fi input = Fi.get(args[0]);
         Fi output = Fi.get(args[1]);
 
-        if(!input.exists()){
-            // If input doesn't exist, create a dummy one for testing if requested
-            if(inputPath.equals("test_square.png")){
-                createTestSquare(input);
-            } else {
-                System.err.println("Input file not found: " + input.absolutePath());
-                System.exit(1);
+        if(input.isDirectory()){
+            output.mkdirs();
+            input.walk(f -> {
+                if(f.extEquals("png")){
+                    Pixmap pix = new Pixmap(f);
+                    try{
+                        Pixmap hex = process(pix);
+                        output.child(f.name()).writePng(hex);
+                        hex.dispose();
+                        Log.info("Processed @", f.name());
+                    }catch(Exception e){
+                        Log.err("Failed to process @", f.name(), e);
+                    }finally{
+                        pix.dispose();
+                    }
+                }
+            });
+        }else{
+            if(!input.exists()){
+                // If input doesn't exist, create a dummy one for testing if requested
+                if(input.name().equals("test_square.png")){
+                    createTestSquare(input);
+                } else {
+                    System.err.println("Input file not found: " + input.absolutePath());
+                    System.exit(1);
+                }
             }
-        }
 
-        Pixmap pix = new Pixmap(input);
-        try{
-            Pixmap hex = process(pix);
-            output.writePng(hex);
-            hex.dispose();
-        }finally{
-            pix.dispose();
+            Pixmap pix = new Pixmap(input);
+            try{
+                Pixmap hex = process(pix);
+                output.writePng(hex);
+                hex.dispose();
+            }finally{
+                pix.dispose();
+            }
         }
     }
 
