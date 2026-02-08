@@ -22,14 +22,29 @@ public class HexagonConverter{
 
         if(input.isDirectory()){
             output.mkdirs();
+
+            // Ensure we have the base path string
+            String basePath = input.path();
+
             input.walk(f -> {
                 if(f.extEquals("png")){
+                    // 1. Manually calculate the relative path via string manipulation
+                    // We take the full path and remove the base directory part
+                    String relPath = f.path().substring(basePath.length());
+
+                    // 2. Map it to the output directory
+                    Fi dest = output.child(relPath);
+
                     Pixmap pix = new Pixmap(f);
                     try{
                         Pixmap hex = process(pix);
-                        output.child(f.name()).writePng(hex);
+
+                        // 3. Ensure the sub-directories exist in the destination
+                        dest.parent().mkdirs();
+
+                        dest.writePng(hex);
                         hex.dispose();
-                        Log.info("Processed @", f.name());
+                        Log.info("Processed @ -> @", f.name(), relPath);
                     }catch(Exception e){
                         Log.err("Failed to process @", f.name(), e);
                     }finally{
