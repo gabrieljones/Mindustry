@@ -471,18 +471,18 @@ public class Block extends UnlockableContent implements Senseable{
     /** Drawn when you are placing a block. */
     public void drawPlace(int x, int y, int rotation, boolean valid){
         drawPotentialLinks(x, y);
-        drawOverlay(x * tilesize + offset, y * tilesize + offset, rotation);
+        drawOverlay(Hex.worldX(x, y), Hex.worldY(y), rotation);
     }
 
     /** Draws a region to overlay a specific side of this block. This method makes sure it is placed at the edge of the side. */
     public void drawSideRegion(TextureRegion region, float x, float y, int rotation){
-        var p = Geometry.d4[Mathf.mod(rotation, 4)];
+        Tmp.v1.trns(rotation * 60, 1);
         float s = size * tilesize/2f;
 
         Draw.rect(region,
-        x + p.x * (s - region.width/2f * region.scl()),
-        y + p.y * (s - region.width/2f * region.scl()),
-        rotation * 90f
+        x + Tmp.v1.x * (s - region.width/2f * region.scl()),
+        y + Tmp.v1.y * (s - region.width/2f * region.scl()),
+        rotation * 60f
         );
     }
 
@@ -812,7 +812,7 @@ public class Block extends UnlockableContent implements Senseable{
     /** this is a different method so subclasses can call it even after overriding the base */
     public void drawDefaultPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         TextureRegion reg = getPlanRegion(plan, list);
-        Draw.rect(reg, plan.drawx(), plan.drawy(), !rotate || !rotateDraw ? 0 : plan.rotation * 90);
+        Draw.rect(reg, plan.drawx(), plan.drawy(), !rotate || !rotateDraw ? 0 : plan.rotation * 60);
 
         if(plan.worldContext && player != null && teamRegion != null && teamRegion.found()){
             if(teamRegions[player.team().id] == teamRegion) Draw.color(player.team().color);
@@ -876,7 +876,7 @@ public class Block extends UnlockableContent implements Senseable{
     /** sets {@param out} to the index-th side outside of this block, using the given rotation. */
     public void nearbySide(int x, int y, int rotation, int index, Point2 out){
         int cornerX = x - (size-1)/2, cornerY = y - (size-1)/2, s = size;
-        switch(rotation){
+        switch(Mathf.mod(rotation, 4)){
             case 0 -> out.set(cornerX + s, cornerY + index);
             case 1 -> out.set(cornerX + index, cornerY + s);
             case 2 -> out.set(cornerX - 1, cornerY + index);
@@ -1569,7 +1569,7 @@ public class Block extends UnlockableContent implements Senseable{
 
     public void flipRotation(BuildPlan req, boolean x){
         if((x == (req.rotation % 2 == 0)) != invertFlip){
-            req.rotation = planRotation(Mathf.mod(req.rotation + 2, 4));
+            req.rotation = planRotation(Mathf.mod(req.rotation + 3, 6));
         }
     }
 
