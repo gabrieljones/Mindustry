@@ -150,11 +150,13 @@ public class World{
     }
 
     public @Nullable Tile tileWorld(float x, float y){
-        return tile(Math.round(x / tilesize), Math.round(y / tilesize));
+        Point2 p = Hex.worldToTile(x, y);
+        return tile(p.x, p.y);
     }
 
     public @Nullable Building buildWorld(float x, float y){
-        return build(Math.round(x / tilesize), Math.round(y / tilesize));
+        Point2 p = Hex.worldToTile(x, y);
+        return build(p.x, p.y);
     }
 
     public @Nullable Building buildWorld(Position pos){
@@ -410,10 +412,10 @@ public class World{
             for(Tile tile : tiles){
                 int idx = tile.y * tiles.width + tile.x;
                 boolean min = false;
-                for(Point2 point : Geometry.d4){
-                    int newX = tile.x + point.x, newY = tile.y + point.y;
-                    int nidx = newY * tiles.width + newX;
-                    if(tiles.in(newX, newY) && dark[nidx] < dark[idx]){
+                for(int j = 0; j < 6; j++){
+                    Point2 p = Hex.nearby(tile.x, tile.y, j);
+                    int nidx = p.y * tiles.width + p.x;
+                    if(tiles.in(p.x, p.y) && dark[nidx] < dark[idx]){
                         min = true;
                         break;
                     }
@@ -433,10 +435,10 @@ public class World{
 
             if(dark[idx] == darkRadius){
                 boolean full = true;
-                for(Point2 p : Geometry.d4){
-                    int px = p.x + tile.x, py = p.y + tile.y;
-                    int nidx = py * tiles.width + px;
-                    if(tiles.in(px, py) && !(tile.isDarkened() && dark[nidx] == 4)){
+                for(int j = 0; j < 6; j++){
+                    Point2 p = Hex.nearby(tile.x, tile.y, j);
+                    int nidx = p.y * tiles.width + p.x;
+                    if(tiles.in(p.x, p.y) && !(tile.isDarkened() && dark[nidx] == 4)){
                         full = false;
                         break;
                     }
@@ -536,47 +538,56 @@ public class World{
     }
 
     public static void raycastEach(int x1, int y1, int x2, int y2, Raycaster cons){
-        int x = x1, dx = Math.abs(x2 - x), sx = x < x2 ? 1 : -1;
-        int y = y1, dy = Math.abs(y2 - y), sy = y < y2 ? 1 : -1;
-        int e2, err = dx - dy;
+        float wx1 = Hex.worldX(x1, y1);
+        float wy1 = Hex.worldY(y1);
+        float wx2 = Hex.worldX(x2, y2);
+        float wy2 = Hex.worldY(y2);
 
-        while(true){
-            if(cons.accept(x, y)) break;
-            if(x == x2 && y == y2) break;
+        float dist = Mathf.dst(wx1, wy1, wx2, wy2);
+        int steps = (int)(dist / (tilesize / 2f)) + 1;
 
-            e2 = 2 * err;
-            if(e2 > -dy){
-                err -= dy;
-                x += sx;
+        int lastX = -1, lastY = -1;
+
+        for(int i = 0; i <= steps; i++){
+            float t = (float)i / steps;
+            float wx = Mathf.lerp(wx1, wx2, t);
+            float wy = Mathf.lerp(wy1, wy2, t);
+            Point2 p = Hex.worldToTile(wx, wy);
+
+            if(p.x != lastX || p.y != lastY){
+                if(cons.accept(p.x, p.y)) break;
+                lastX = p.x;
+                lastY = p.y;
             }
-
-            if(e2 < dx){
-                err += dx;
-                y += sy;
-            }
+            if(p.x == x2 && p.y == y2) break;
         }
     }
 
     public static boolean raycast(int x1, int y1, int x2, int y2, Raycaster cons){
-        int x = x1, dx = Math.abs(x2 - x), sx = x < x2 ? 1 : -1;
-        int y = y1, dy = Math.abs(y2 - y), sy = y < y2 ? 1 : -1;
-        int e2, err = dx - dy;
+        float wx1 = Hex.worldX(x1, y1);
+        float wy1 = Hex.worldY(y1);
+        float wx2 = Hex.worldX(x2, y2);
+        float wy2 = Hex.worldY(y2);
 
-        while(true){
-            if(cons.accept(x, y)) return true;
-            if(x == x2 && y == y2) return false;
+        float dist = Mathf.dst(wx1, wy1, wx2, wy2);
+        int steps = (int)(dist / (tilesize / 2f)) + 1;
 
-            e2 = 2 * err;
-            if(e2 > -dy){
-                err = err - dy;
-                x = x + sx;
+        int lastX = -1, lastY = -1;
+
+        for(int i = 0; i <= steps; i++){
+            float t = (float)i / steps;
+            float wx = Mathf.lerp(wx1, wx2, t);
+            float wy = Mathf.lerp(wy1, wy2, t);
+            Point2 p = Hex.worldToTile(wx, wy);
+
+            if(p.x != lastX || p.y != lastY){
+                if(cons.accept(p.x, p.y)) return true;
+                lastX = p.x;
+                lastY = p.y;
             }
-
-            if(e2 < dx){
-                err = err + dx;
-                y = y + sy;
-            }
+            if(p.x == x2 && p.y == y2) return false;
         }
+        return false;
     }
 
     public WorldContext makeSectorContext(Sector sector){

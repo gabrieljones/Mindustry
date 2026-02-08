@@ -82,54 +82,24 @@ public class Tile implements Position, QuadTreeObject, Displayable{
 
     /** Return relative rotation to a coordinate. Returns -1 if the coordinate is not near this tile. */
     public byte relativeTo(int cx, int cy){
-        if(x == cx && y == cy - 1) return 1;
-        if(x == cx && y == cy + 1) return 3;
-        if(x == cx - 1 && y == cy) return 0;
-        if(x == cx + 1 && y == cy) return 2;
-        return -1;
+        return relativeTo(x, y, cx, cy);
     }
 
     public static byte relativeTo(int x, int y, int cx, int cy){
-        if(x == cx && y == cy - 1) return 1;
-        if(x == cx && y == cy + 1) return 3;
-        if(x == cx - 1 && y == cy) return 0;
-        if(x == cx + 1 && y == cy) return 2;
+        for(int i = 0; i < 6; i++){
+            Point2 p = Hex.nearby(x, y, i);
+            if(p.x == cx && p.y == cy) return (byte)i;
+        }
         return -1;
     }
 
+    //TODO implement hex version?
     public static int relativeTo(float x, float y, float cx, float cy){
-        if(Math.abs(x - cx) > Math.abs(y - cy)){
-            if(x <= cx - 1) return 0;
-            if(x >= cx + 1) return 2;
-        }else{
-            if(y <= cy - 1) return 1;
-            if(y >= cy + 1) return 3;
-        }
         return -1;
     }
 
     public byte absoluteRelativeTo(int cx, int cy){
-
-        //very straightforward for odd sizes
-        if(block.size % 2 == 1){
-            if(Math.abs(x - cx) > Math.abs(y - cy)){
-                if(x <= cx - 1) return 0;
-                if(x >= cx + 1) return 2;
-            }else{
-                if(y <= cy - 1) return 1;
-                if(y >= cy + 1) return 3;
-            }
-        }else{ //need offsets here
-            if(Math.abs(x - cx + 0.5f) > Math.abs(y - cy + 0.5f)){
-                if(x+0.5f <= cx - 1) return 0;
-                if(x+0.5f >= cx + 1) return 2;
-            }else{
-                if(y+0.5f <= cy - 1) return 1;
-                if(y+0.5f >= cy + 1) return 3;
-            }
-        }
-
-        return -1;
+        return relativeTo(cx, cy);
     }
 
     /**
@@ -157,11 +127,11 @@ public class Tile implements Position, QuadTreeObject, Displayable{
     }
 
     public float worldx(){
-        return x * tilesize;
+        return Hex.worldX(x, y);
     }
 
     public float worldy(){
-        return y * tilesize;
+        return Hex.worldY(y);
     }
 
     //TODO: this method is misleading and buggy for non-center tiles
@@ -355,8 +325,8 @@ public class Tile implements Position, QuadTreeObject, Displayable{
             renderer.blocks.invalidateTile(this);
             renderer.blocks.addFloorIndex(this);
             //update neighbor tiles as well
-            for(int i = 0; i < 8; i++){
-                Tile other = world.tile(x + Geometry.d8[i].x, y + Geometry.d8[i].y);
+            for(int i = 0; i < 6; i++){
+                Tile other = nearby(i);
                 if(other != null){
                     renderer.blocks.floor.recacheTile(other);
                 }
@@ -538,23 +508,13 @@ public class Tile implements Position, QuadTreeObject, Displayable{
     }
 
     public @Nullable Tile nearby(int rotation){
-        return switch(rotation){
-            case 0 -> world.tile(x + 1, y);
-            case 1 -> world.tile(x, y + 1);
-            case 2 -> world.tile(x - 1, y);
-            case 3 -> world.tile(x, y - 1);
-            default -> null;
-        };
+        Point2 p = Hex.nearby(x, y, rotation);
+        return world.tile(p.x, p.y);
     }
 
     public @Nullable Building nearbyBuild(int rotation){
-        return switch(rotation){
-            case 0 -> world.build(x + 1, y);
-            case 1 -> world.build(x, y + 1);
-            case 2 -> world.build(x - 1, y);
-            case 3 -> world.build(x, y - 1);
-            default -> null;
-        };
+        Point2 p = Hex.nearby(x, y, rotation);
+        return world.build(p.x, p.y);
     }
 
     public boolean interactable(Team team){
@@ -659,8 +619,8 @@ public class Tile implements Position, QuadTreeObject, Displayable{
                 build.updateProximity();
             }else{
                 //since the entity won't update proximity for us, update proximity for all nearby tiles manually
-                for(Point2 p : Geometry.d4){
-                    Building tile = world.build(x + p.x, y + p.y);
+                for(int i = 0; i < 6; i++){
+                    Building tile = nearbyBuild(i);
                     if(tile != null && !tile.tile.changing){
                         tile.onProximityUpdate();
                     }
