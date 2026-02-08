@@ -356,3 +356,11 @@ task updateBundles{
         })
     }
 }
+
+
+task genHexagons(type: JavaExec){
+    mainClass = "mindustry.tools.HexagonConverter"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["../core/assets-raw/sprites/blocks/environment", "../core/assets-raw/sprites/blocks/environment-hex"]
+    workingDir = "."
+}
