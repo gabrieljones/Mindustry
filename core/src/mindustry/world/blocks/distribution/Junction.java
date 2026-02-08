@@ -49,7 +49,7 @@ public class Junction extends Block{
         @Override
         public void updateTile(){
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(buffer.indexes[i] > 0){
                     if(buffer.indexes[i] > capacity) buffer.indexes[i] = capacity;
                     long l = buffer.buffers[i][0];
