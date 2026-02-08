@@ -248,6 +248,13 @@ task icongen(dependsOn: classes, type: JavaExec){
     workingDir = "../core/assets-raw"
 }
 
+task hexMesh(dependsOn: classes, type: JavaExec){
+    mainClass = "mindustry.tools.HexMesher"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    workingDir = "../"
+}
+
 task updateScripts(dependsOn: classes, type: JavaExec){
     mainClass = "mindustry.tools.ScriptMainGenerator"
     classpath = sourceSets.main.runtimeClasspath
