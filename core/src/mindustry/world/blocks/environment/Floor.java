@@ -260,15 +260,14 @@ public class Floor extends Block{
 
             TextureRegion[] regions = autotileVariants > 1 ? autotileVariantRegions[variant(tile.x, tile.y, autotileVariantRegions.length)] : autotileRegions;
 
-            for(int i = 0; i < 6; i++){
-                Point2 p = Hex.nearby(tile.x, tile.y, i);
-                Tile other = world.tile(p.x, p.y);
+            for(int i = 0; i < 8; i++){
+                Tile other = tile.nearby(Geometry.d8[i]);
                 if(checkAutotileSame(tile, other)){
                     bits |= (1 << i);
                 }
             }
 
-            int bit = TileBitmask.values[bits]; // TODO update TileBitmask for hex?
+            int bit = TileBitmask.values[bits];
             TextureRegion region = bit == 13 && autotileMidVariants > 1 ? autotileMidRegions[variant(tile.x, tile.y, autotileMidRegions.length)] : regions[bit];
 
             Draw.rect(region, tile.worldx(), tile.worldy());
@@ -335,9 +334,9 @@ public class Floor extends Block{
         blenders.clear();
         blended.clear();
 
-        for(int i = 0; i < 6; i++){
-            Point2 p = Hex.nearby(tile.x, tile.y, i);
-            Tile other = world.tile(p.x, p.y);
+        for(int i = 0; i < 8; i++){
+            Point2 point = Geometry.d8[i];
+            Tile other = tile.nearby(point);
             //special case: empty is, well, empty, so never draw emptiness on top, as that would just be an incorrect black texture
             if(other != null && other.floor().drawEdgeOut && other.floor().cacheLayer == layer && other.floor().edges(tile.x, tile.y) != null){
                 if(!blended.getAndSet(other.floor().id)){
@@ -356,9 +355,9 @@ public class Floor extends Block{
         Arrays.fill(dirs, 0);
         CacheLayer realCache = tile.floor().cacheLayer;
 
-        for(int i = 0; i < 6; i++){
-            Point2 p = Hex.nearby(tile.x, tile.y, i);
-            Tile other = world.tile(p.x, p.y);
+        for(int i = 0; i < 8; i++){
+            Point2 point = Geometry.d8[i];
+            Tile other = tile.nearby(point);
 
             if(other == null) continue;
 
@@ -380,28 +379,17 @@ public class Floor extends Block{
         blenders.sort(a -> a.id + (tile.floor() != this && a == tile.floor() ? 99999 : 0));
 
         for(Floor block : blenders){
-            for(int i = 0; i < 6; i++){
-                Point2 p = Hex.nearby(tile.x, tile.y, i);
-                Tile other = world.tile(p.x, p.y);
+            for(int i = 0; i < 8; i++){
+                Point2 point = Geometry.d8[i];
+                Tile other = tile.nearby(point);
 
                 if(other == null) continue;
 
                 Floor ob = (this == tile.floor() || other.overlay() == Blocks.air ? other.floor() : other.overlay());
 
                 if(ob == block && (!checkId || dirs[i] == block.id)){
-                    // Edge index mapping for hex?
-                    // Square used 1 - point.x which mapped -1,0,1 to 2,1,0.
-                    // Here we need to map direction 'i' to an edge index.
-                    // For now, assume square edges and map i=0..5 to indices?
-                    // This will likely be broken visually until assets are updated.
-                    // TextureRegion region = block.edge(tile.x, tile.y, 1 - point.x, 1 - point.y);
-                    // Just use i for now to avoid crash, assuming 6 edges
-                    // But 'edge' method expects rx, ry.
-                    // Square edges are 3x3 grid.
-                    // We need a way to map hex direction to texture.
-                    // TODO fix me
-                    // TextureRegion region = block.edge(tile.x, tile.y, ...);
-                    // Draw.rect(region, tile.worldx(), tile.worldy());
+                    TextureRegion region = block.edge(tile.x, tile.y, 1 - point.x, 1 - point.y);
+                    Draw.rect(region, tile.worldx(), tile.worldy());
                 }
             }
         }
