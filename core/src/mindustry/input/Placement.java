@@ -390,10 +390,10 @@ public class Placement{
 
         float offset = block.offset;
 
-        drawResult.x = result.x * tilesize;
-        drawResult.y = result.y * tilesize;
-        drawResult.x2 = result.x2 * tilesize;
-        drawResult.y2 = result.y2 * tilesize;
+        drawResult.x = Hex.worldX(result.x, result.y);
+        drawResult.y = Hex.worldY(result.y);
+        drawResult.x2 = Hex.worldX(result.x2, result.y2);
+        drawResult.y2 = Hex.worldY(result.y2);
 
         drawResult.x -= block.size * scaling * tilesize / 2;
         drawResult.x2 += block.size * scaling * tilesize / 2;
