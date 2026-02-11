@@ -113,11 +113,11 @@ public class Conveyor extends Block implements Autotiler{
         if(junctionReplacement == null) return this;
 
         Boolf<Point2> cont = p -> plans.contains(o -> o.x == req.x + p.x && o.y == req.y + p.y && (req.block instanceof Conveyor || req.block instanceof Junction));
-        return cont.get(Geometry.d4(req.rotation)) &&
-            cont.get(Geometry.d4(req.rotation - 2)) &&
+        return cont.get(Hex.getOffset(req.y, req.rotation)) &&
+            cont.get(Hex.getOffset(req.y, req.rotation + 3)) &&
             req.tile() != null &&
             req.tile().block() instanceof Conveyor &&
-            Mathf.mod(req.tile().build.rotation - req.rotation, 2) == 1 ? junctionReplacement : this;
+            Mathf.mod(req.tile().build.rotation - req.rotation, 3) != 0 ? junctionReplacement : this;
     }
 
     public class ConveyorBuild extends Building implements ChainedBuilding{
