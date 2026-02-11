@@ -143,26 +143,8 @@ public class WallCrafter extends Block{
         int cornerX = tx - (size-1)/2, cornerY = ty - (size-1)/2, s = size;
 
         for(int i = 0; i < size; i++){
-            int rx = 0, ry = 0;
-
-            switch(rotation){
-                case 0 -> {
-                    rx = cornerX + s;
-                    ry = cornerY + i;
-                }
-                case 1 -> {
-                    rx = cornerX + i;
-                    ry = cornerY + s;
-                }
-                case 2 -> {
-                    rx = cornerX - 1;
-                    ry = cornerY + i;
-                }
-                case 3 -> {
-                    rx = cornerX + i;
-                    ry = cornerY - 1;
-                }
-            }
+            nearbySide(tx, ty, rotation, i, Tmp.p1);
+            int rx = Tmp.p1.x, ry = Tmp.p1.y;
 
             if(cpos != null){
                 cpos.get(rx, ry);
@@ -191,7 +173,8 @@ public class WallCrafter extends Block{
             boolean itemValid = itemConsumer != null && itemConsumer.efficiency(this) > 0;
 
             warmup = Mathf.approachDelta(warmup, Mathf.num(efficiency > 0), 1f / 40f);
-            float dx = Geometry.d4x(rotation) * 0.5f, dy = Geometry.d4y(rotation) * 0.5f;
+            Tmp.v1.trns(rotation * 60f, 0.5f);
+            float dx = Tmp.v1.x, dy = Tmp.v1.y;
 
             float eff = getEfficiency(tile.x, tile.y, rotation, dest -> {
                 //TODO make not chance based?
@@ -232,7 +215,8 @@ public class WallCrafter extends Block{
             //TODO draw spinner drill thingies
             Draw.rect(block.region, x, y);
             Draw.rect(topRegion, x, y, rotdeg());
-            float ds = 0.6f, dx = Geometry.d4x(rotation) * ds, dy = Geometry.d4y(rotation) * ds;
+            Tmp.v1.trns(rotation * 60f, 0.6f);
+            float dx = Tmp.v1.x, dy = Tmp.v1.y;
 
             int bs = (rotation == 0 || rotation == 3) ? 1 : -1;
             idx = 0;
