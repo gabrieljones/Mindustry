@@ -37,13 +37,25 @@ public class Hex{
     }
 
     public static Point2 worldToTile(float wx, float wy){
-        // Approximate conversion for now. A precise one involves checking nearest hex center.
         float hexH = Vars.tilesize * Mathf.sqrt3 / 2f;
         int y = Math.round(wy / hexH);
 
         float xOffset = (y & 1) * 0.5f * Vars.tilesize;
         int x = Math.round((wx - xOffset) / Vars.tilesize);
 
-        return new Point2(x, y);
+        // Refine by checking neighbors for closest center
+        Point2 best = new Point2(x, y);
+        float bestDst = Mathf.dst2(wx, wy, worldX(x, y), worldY(y));
+
+        for(int i = 0; i < 6; i++){
+            Point2 p = nearby(x, y, i);
+            float d = Mathf.dst2(wx, wy, worldX(p.x, p.y), worldY(p.y));
+            if(d < bestDst){
+                bestDst = d;
+                best = p;
+            }
+        }
+
+        return best;
     }
 }

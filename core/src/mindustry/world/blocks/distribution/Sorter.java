@@ -117,8 +117,8 @@ public class Sorter extends Block{
                 }
                 to = nearby(dir);
             }else{
-                Building a = nearby(Mathf.mod(dir - 1, 4));
-                Building b = nearby(Mathf.mod(dir + 1, 4));
+                Building a = nearby(Mathf.mod(dir - 2, 6));
+                Building b = nearby(Mathf.mod(dir + 2, 6));
                 boolean ac = a != null && !(a.block.instantTransfer && source.block.instantTransfer) &&
                 a.acceptItem(this, item);
                 boolean bc = b != null && !(b.block.instantTransfer && source.block.instantTransfer) &&

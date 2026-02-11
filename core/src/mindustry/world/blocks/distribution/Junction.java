@@ -90,7 +90,7 @@ public class Junction extends Block{
 
         @Override
         public byte version(){
-            return 1;
+            return 2;
         }
 
         @Override
@@ -102,7 +102,7 @@ public class Junction extends Block{
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
-            buffer.read(read, revision == 0);
+            buffer.read(read, revision < 2);
         }
     }
 }
