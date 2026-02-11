@@ -50,9 +50,10 @@ public class PayloadConveyor extends Block{
 
         int ntrns = size;
 
-        for(int i = 0; i < 4; i++){
-            Tile tile = world.tile(x + Geometry.d4x[i] * ntrns, y + Geometry.d4y[i] * ntrns);
-            if(tile != null && tile.build != null && tile.isCenter() && tile.build.block.outputsPayload && tile.build.block.size == size && (i == rotation || tile.block().rotate && i == (tile.build.rotation + 2) % 4)){
+        for(int i = 0; i < 6; i++){
+            Point2 p = Hex.nearby(x, y, i, ntrns);
+            Tile tile = world.tile(p.x, p.y);
+            if(tile != null && tile.build != null && tile.isCenter() && tile.build.block.outputsPayload && tile.build.block.size == size && (i == rotation || tile.block().rotate && i == (tile.build.rotation + 3) % 6)){
                 Drawf.selected(tile.x, tile.y, tile.block(), tile.build.team.color);
             }
         }
@@ -102,25 +103,25 @@ public class PayloadConveyor extends Block{
         public void onProximityUpdate(){
             super.onProximityUpdate();
 
-            Building accept = nearby(Geometry.d4(rotation).x * (size/2+1), Geometry.d4(rotation).y * (size/2+1));
+            Point2 p = Hex.nearby(tileX(), tileY(), rotation, size/2 + 1);
+            Building accept = world.build(p.x, p.y);
             //next block must be aligned and of the same size
+            Point2 center = Hex.nearby(tileX(), tileY(), rotation, size);
             if(accept != null && (
                 //same size
-                (accept.block.size == size && tileX() + Geometry.d4(rotation).x * size == accept.tileX() && tileY() + Geometry.d4(rotation).y * size == accept.tileY()) ||
+                (accept.block.size == size && center.x == accept.tileX() && center.y == accept.tileY()) ||
 
                 //differing sizes
-                (accept.block.size > size &&
-                    (rotation % 2 == 0 ? //check orientation
-                    Math.abs(accept.y - y) <= (accept.block.size * tilesize - size * tilesize)/2f : //check Y alignment
-                    Math.abs(accept.x - x) <= (accept.block.size * tilesize - size * tilesize)/2f   //check X alignment
-                )))){
+                (accept.block.size > size) //TODO better alignment check?
+                )){
                 next = accept;
             }else{
                 next = null;
             }
 
             int ntrns = 1 + size/2;
-            Tile next = tile.nearby(Geometry.d4(rotation).x * ntrns, Geometry.d4(rotation).y * ntrns);
+            Point2 nextP = Hex.nearby(tileX(), tileY(), rotation, ntrns);
+            Tile next = world.tile(nextP.x, nextP.y);
             blocked = (next != null && next.solid() && !(next.block().outputsPayload || next.block().acceptsPayload)) || (this.next != null && this.next.payloadCheck(rotation));
         }
 
@@ -226,20 +227,20 @@ public class PayloadConveyor extends Block{
             Tmp.v1.set(widthPrev, heightPrev).rotate(rot);
             Draw.rect(clipped, x + Tmp.v1.x, y + Tmp.v1.y, rot);
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(blends(i) && i != rotation){
                     Draw.alpha(1f - Interp.pow5In.apply(fract()));
                     //prev from back
-                    Tmp.v1.set(widthPrev, heightPrev).rotate(i * 90 + 180);
-                    Draw.rect(clipped, x + Tmp.v1.x, y + Tmp.v1.y, i * 90 + 180);
+                    Tmp.v1.set(widthPrev, heightPrev).rotate(i * 60 + 180);
+                    Draw.rect(clipped, x + Tmp.v1.x, y + Tmp.v1.y, i * 60 + 180);
                 }
             }
 
             Draw.reset();
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(!blends(i)){
-                    Draw.rect(edgeRegion, x, y, i * 90);
+                    Draw.rect(edgeRegion, x, y, i * 60);
                 }
             }
 

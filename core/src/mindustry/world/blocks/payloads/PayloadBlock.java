@@ -51,25 +51,21 @@ public class PayloadBlock extends Block{
     public static boolean blends(Building build, int direction){
         int size = build.block.size;
         int trns = build.block.size/2 + 1;
-        Building accept = build.nearby(Geometry.d4(direction).x * trns, Geometry.d4(direction).y * trns);
+        Point2 p = Hex.nearby(build.tileX(), build.tileY(), direction, trns);
+        Building accept = world.build(p.x, p.y);
         return accept != null &&
             accept.block.outputsPayload &&
 
             //if size is the same, block must either be facing this one, or not be rotating
             ((accept.block.size == size
-            && Math.abs(accept.tileX() - build.tileX()) % size == 0 //check alignment
-            && Math.abs(accept.tileY() - build.tileY()) % size == 0
-            && ((accept.block.rotate && accept.tileX() + Geometry.d4(accept.rotation).x * size == build.tileX() && accept.tileY() + Geometry.d4(accept.rotation).y * size == build.tileY())
+            && ((accept.block.rotate && world.build(Hex.nearby(accept.tileX(), accept.tileY(), accept.rotation, trns).x, Hex.nearby(accept.tileX(), accept.tileY(), accept.rotation, trns).y) == build)
             || !accept.block.rotate
             || !accept.block.outputFacing)) ||
 
             //if the other block is smaller, check alignment
             (accept.block.size != size &&
-            (accept.rotation % 2 == 0 ? //check orientation; make sure it's aligned properly with this block.
-                Math.abs(accept.y - build.y) <= Math.abs(size * tilesize - accept.block.size * tilesize)/2f : //check Y alignment
-                Math.abs(accept.x - build.x) <= Math.abs(size * tilesize - accept.block.size * tilesize)/2f   //check X alignment
-                )) && (!accept.block.rotate || accept.front() == build || !accept.block.outputFacing) //make sure it's facing this block
-            );
+            (!accept.block.rotate || world.build(Hex.nearby(accept.tileX(), accept.tileY(), accept.rotation, accept.block.size/2 + 1).x, Hex.nearby(accept.tileX(), accept.tileY(), accept.rotation, accept.block.size/2 + 1).y) == build || !accept.block.outputFacing) //make sure it's facing this block
+            ));
     }
 
     public static void pushOutput(Payload payload, float progress){

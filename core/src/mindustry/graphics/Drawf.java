@@ -302,13 +302,8 @@ public class Drawf{
 
     public static void selected(int x, int y, Block block, Color color){
         Draw.color(color);
-        for(int i = 0; i < 4; i++){
-            Point2 p = Geometry.d8edge[i];
-            float offset = -Math.max(block.size - 1, 0) / 2f * tilesize;
-            Draw.rect("block-select",
-            x*tilesize + block.offset + offset * p.x,
-            y*tilesize + block.offset + offset * p.y, i * 90);
-        }
+        Lines.stroke(2.5f);
+        Lines.poly(Hex.worldX(x, y), Hex.worldY(y), 6, block.size * tilesize / 2f + 2f, 30);
         Draw.reset();
     }
 

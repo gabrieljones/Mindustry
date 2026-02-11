@@ -57,13 +57,13 @@ public class DuctJunction extends Block{
 
     @Override
     public void init(){
-        itemCapacity = 4;
+        itemCapacity = 6;
         super.init();
     }
 
     public class DuctJunctionBuild extends Building{
-        Item[] itemdata = new Item[4];
-        float[] times = new float[4];
+        Item[] itemdata = new Item[6];
+        float[] times = new float[6];
 
         @Override
         public void draw(){
@@ -72,15 +72,15 @@ public class DuctJunction extends Block{
 
             Draw.z(Layer.blockUnder + 0.1f);
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 Item current = itemdata[i];
 
                 if(current != null){
                     float progress = (Mathf.clamp((times[i] + 1f) / (2f - 1f/speed)) - 0.5f) * 2f;
 
                     Draw.rect(current.fullIcon,
-                        x + Geometry.d4x(i) * tilesize / 2f * progress,
-                        y + Geometry.d4y(i) * tilesize / 2f * progress,
+                        x + Angles.trnsx(i * 60, tilesize / 2f * progress),
+                        y + Angles.trnsy(i * 60, tilesize / 2f * progress),
                         itemSize, itemSize
                     );
                 }
@@ -99,7 +99,7 @@ public class DuctJunction extends Block{
         public void updateTile(){
             float inc = edelta() / speed * 2f;
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 Item item = itemdata[i];
                 if(item != null){
 
@@ -147,7 +147,7 @@ public class DuctJunction extends Block{
         @Override
         public int removeStack(Item item, int amount){
             int removed = 0;
-            for(int i = 0; i < 4 && amount > 0; i++){
+            for(int i = 0; i < 6 && amount > 0; i++){
                 if(itemdata[i] == item){
                     amount --;
                     removed ++;
@@ -161,7 +161,7 @@ public class DuctJunction extends Block{
         @Override
         public void write(Writes write){
             super.write(write);
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 write.f(times[i]);
                 TypeIO.writeItem(write, itemdata[i]);
             }
@@ -170,7 +170,7 @@ public class DuctJunction extends Block{
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 times[i] = read.f();
                 itemdata[i] = TypeIO.readItem(read);
             }
