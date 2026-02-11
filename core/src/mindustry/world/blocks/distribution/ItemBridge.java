@@ -106,7 +106,7 @@ public class ItemBridge extends Block{
         );
 
         Draw.rect(arrowRegion, (req.drawx() + ox) / 2f, (req.drawy() + oy) / 2f,
-        Angles.angle(req.drawx(), req.drawy(), ox, oy) + flip);
+        Angles.angle(req.drawx(), req.drawy(), ox, oy) + flip - 90);
 
         Draw.reset();
     }
@@ -117,12 +117,18 @@ public class ItemBridge extends Block{
 
         Tile link = findLink(x, y);
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 6; i++){
+            int cx = x, cy = y;
+            for(int j = 0; j < range; j++){
+                Point2 p = Hex.nearby(cx, cy, i);
+                cx = p.x;
+                cy = p.y;
+            }
             Drawf.dashLine(Pal.placing,
-            x * tilesize + Geometry.d4[i].x * (tilesize / 2f + 2),
-            y * tilesize + Geometry.d4[i].y * (tilesize / 2f + 2),
-            x * tilesize + Geometry.d4[i].x * (range) * tilesize,
-            y * tilesize + Geometry.d4[i].y * (range) * tilesize);
+            Hex.worldX(x, y),
+            Hex.worldY(y),
+            Hex.worldX(cx, cy),
+            Hex.worldY(cy));
         }
 
         Draw.reset();
@@ -130,11 +136,11 @@ public class ItemBridge extends Block{
         Lines.stroke(1f);
         if(link != null && Math.abs(link.x - x) + Math.abs(link.y - y) > 1){
             int rot = link.absoluteRelativeTo(x, y);
-            float w = (link.x == x ? tilesize : Math.abs(link.x - x) * tilesize - tilesize);
-            float h = (link.y == y ? tilesize : Math.abs(link.y - y) * tilesize - tilesize);
-            Lines.rect((x + link.x) / 2f * tilesize - w / 2f, (y + link.y) / 2f * tilesize - h / 2f, w, h);
 
-            Draw.rect("bridge-arrow", link.x * tilesize + Geometry.d4(rot).x * tilesize, link.y * tilesize + Geometry.d4(rot).y * tilesize, link.absoluteRelativeTo(x, y) * 90);
+            Drawf.dashLine(Pal.placing, Hex.worldX(x, y), Hex.worldY(y), link.worldx(), link.worldy());
+
+            Tmp.v1.trns(rot * 60, tilesize);
+            Draw.rect("bridge-arrow", link.worldx() + Tmp.v1.x, link.worldy() + Tmp.v1.y, rot * 60);
         }
         Draw.reset();
     }
@@ -152,13 +158,16 @@ public class ItemBridge extends Block{
     }
 
     public boolean positionsValid(int x1, int y1, int x2, int y2){
-        if(x1 == x2){
-            return Math.abs(y1 - y2) <= range;
-        }else if(y1 == y2){
-            return Math.abs(x1 - x2) <= range;
-        }else{
-            return false;
+        for(int i = 0; i < 6; i++){
+            int cx = x1, cy = y1;
+            for(int j = 1; j <= range; j++){
+                Point2 p = Hex.nearby(cx, cy, i);
+                cx = p.x;
+                cy = p.y;
+                if(cx == x2 && cy == y2) return true;
+            }
         }
+        return false;
     }
 
     public Tile findLink(int x, int y){
@@ -266,9 +275,14 @@ public class ItemBridge extends Block{
         public void drawConfigure(){
             Drawf.select(x, y, tile.block().size * tilesize / 2f + 2f, Pal.accent);
 
-            for(int i = 1; i <= range; i++){
-                for(int j = 0; j < 4; j++){
-                    Tile other = tile.nearby(Geometry.d4[j].x * i, Geometry.d4[j].y * i);
+            for(int j = 0; j < 6; j++){
+                int cx = tile.x, cy = tile.y;
+                for(int i = 1; i <= range; i++){
+                    Point2 p = Hex.nearby(cx, cy, j);
+                    cx = p.x;
+                    cy = p.y;
+                    Tile other = world.tile(cx, cy);
+
                     if(linkValid(tile, other)){
                         boolean linked = other.pos() == link;
 
@@ -383,8 +397,8 @@ public class ItemBridge extends Block{
 
             Draw.alpha((fadeIn ? Math.max(warmup, 0.25f) : 1f) * Renderer.bridgeOpacity);
 
-            Draw.rect(endRegion, x, y, i * 90 + 90);
-            Draw.rect(endRegion, other.drawx(), other.drawy(), i * 90 + 270);
+            Draw.rect(endRegion, x, y, i * 60 + 90);
+            Draw.rect(endRegion, other.drawx(), other.drawy(), i * 60 + 270);
 
             Lines.stroke(bridgeWidth);
 
@@ -396,18 +410,21 @@ public class ItemBridge extends Block{
             other.worldx() - Tmp.v1.x,
             other.worldy() - Tmp.v1.y, false);
 
-            int dist = Math.max(Math.abs(other.x - tile.x), Math.abs(other.y - tile.y)) - 1;
+            float len = Mathf.dst(x, y, other.worldx(), other.worldy());
+            int dist = (int)(len / tilesize) - 1;
 
             Draw.color();
 
-            int arrows = (int)(dist * tilesize / arrowSpacing), dx = Geometry.d4x(i), dy = Geometry.d4y(i);
+            int arrows = (int)(dist * tilesize / arrowSpacing);
+            Tmp.v2.trns(i * 60, 1f);
+            float dx = Tmp.v2.x, dy = Tmp.v2.y;
 
             for(int a = 0; a < arrows; a++){
                 Draw.alpha(Mathf.absin(a - time / arrowTimeScl, arrowPeriod, 1f) * warmup * Renderer.bridgeOpacity);
                 Draw.rect(arrowRegion,
                 x + dx * (tilesize / 2f + a * arrowSpacing + arrowOffset),
                 y + dy * (tilesize / 2f + a * arrowSpacing + arrowOffset),
-                i * 90f);
+                i * 60f);
             }
 
             Draw.reset();
