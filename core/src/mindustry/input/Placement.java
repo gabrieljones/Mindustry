@@ -137,7 +137,8 @@ public class Placement{
     }
 
     public static boolean isSidePlace(Seq<BuildPlan> plans){
-        return plans.size > 1 && Mathf.mod(Tile.relativeTo(plans.first().x, plans.first().y, plans.get(1).x, plans.get(1).y) - plans.first().rotation, 2) == 1;
+        // TODO: Update logic for hex side placement if necessary
+        return plans.size > 1 && Mathf.mod(Tile.relativeTo(plans.first().x, plans.first().y, plans.get(1).x, plans.get(1).y) - plans.first().rotation, 6) != 0;
     }
 
     public static void calculateBridges(Seq<BuildPlan> plans, ItemBridge bridge){
@@ -145,10 +146,10 @@ public class Placement{
     }
 
     public static void calculateBridges(Seq<BuildPlan> plans, ItemBridge bridge, boolean hasJunction, Boolf<Block> avoid){
-        if(isSidePlace(plans) || plans.size == 0) return;
+        if(plans.size == 0) return;
 
-        //check for orthogonal placement + unlocked state
-        if(!(plans.first().x == plans.peek().x || plans.first().y == plans.peek().y) || !bridge.unlockedNow()){
+        //check for unlocked state
+        if(!bridge.unlockedNow()){
             return;
         }
 
@@ -157,7 +158,7 @@ public class Placement{
            !(plan != plans.first() && plan.build() != null && plan.build().rotation != plan.rotation && avoid.get(plan.tile().block()));
 
         var result = plans1.clear();
-        var rotated = plans.first().tile() != null && plans.first().tile().absoluteRelativeTo(plans.peek().x, plans.peek().y) == Mathf.mod(plans.first().rotation + 2, 4);
+        var rotated = plans.first().tile() != null && plans.first().tile().absoluteRelativeTo(plans.peek().x, plans.peek().y) == Mathf.mod(plans.first().rotation + 3, 6);
 
         outer:
         for(int i = 0; i < plans.size;){
