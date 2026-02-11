@@ -1811,7 +1811,8 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     }
 
     protected void updateLine(int x1, int y1){
-        updateLine(x1, y1, tileX(getMouseX()), tileY(getMouseY()));
+        Point2 end = getMouseTile();
+        updateLine(x1, y1, end.x, end.y);
     }
 
     boolean checkConfigTap(){
@@ -1945,31 +1946,44 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
 
     /** Returns the tile at the specified MOUSE coordinates. */
     Tile tileAt(float x, float y){
-        return world.tile(tileX(x), tileY(y));
+        Vec2 vec = Core.input.mouseWorld(x, y);
+        if(selectedBlock()){
+            vec.sub(block.offset, block.offset);
+        }
+        Point2 p = Hex.worldToTile(vec.x, vec.y);
+        return world.tile(p.x, p.y);
+    }
+
+    private Point2 getMouseTile(){
+        Vec2 vec = Core.input.mouseWorld(getMouseX(), getMouseY());
+        if(selectedBlock()){
+            vec.sub(block.offset, block.offset);
+        }
+        return Hex.worldToTile(vec.x, vec.y);
     }
 
     int rawTileX(){
-        return World.toTile(Core.input.mouseWorld().x);
+        return Hex.worldToTile(Core.input.mouseWorld().x, Core.input.mouseWorld().y).x;
     }
 
     int rawTileY(){
-        return World.toTile(Core.input.mouseWorld().y);
+        return Hex.worldToTile(Core.input.mouseWorld().x, Core.input.mouseWorld().y).y;
     }
 
     int tileX(float cursorX){
-        Vec2 vec = Core.input.mouseWorld(cursorX, 0);
+        Vec2 vec = Core.input.mouseWorld(cursorX, getMouseY());
         if(selectedBlock()){
             vec.sub(block.offset, block.offset);
         }
-        return World.toTile(vec.x);
+        return Hex.worldToTile(vec.x, vec.y).x;
     }
 
     int tileY(float cursorY){
-        Vec2 vec = Core.input.mouseWorld(0, cursorY);
+        Vec2 vec = Core.input.mouseWorld(getMouseX(), cursorY);
         if(selectedBlock()){
             vec.sub(block.offset, block.offset);
         }
-        return World.toTile(vec.y);
+        return Hex.worldToTile(vec.x, vec.y).y;
     }
 
     /** Forces the camera to a position and enables panning on desktop. */
@@ -2244,9 +2258,12 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
 
     public void drawArrow(Block block, int x, int y, int rotation, boolean valid){
         float trns = (block.size / 2) * tilesize;
-        int dx = Geometry.d4(rotation).x, dy = Geometry.d4(rotation).y;
-        float offsetx = x * tilesize + block.offset + dx*trns;
-        float offsety = y * tilesize + block.offset + dy*trns;
+        float angle = rotation * 60f;
+        float dx = Mathf.cosDeg(angle) * trns;
+        float dy = Mathf.sinDeg(angle) * trns;
+
+        float offsetx = Hex.worldX(x, y) + block.offset + dx;
+        float offsety = Hex.worldY(y) + block.offset + dy;
 
         Draw.color(!valid ? Pal.removeBack : Pal.accentBack);
         TextureRegion regionArrow = Core.atlas.find("place-arrow");
@@ -2256,7 +2273,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         offsety - 1,
         regionArrow.width * regionArrow.scl(),
         regionArrow.height * regionArrow.scl(),
-        rotation * 90 - 90);
+        angle - 90);
 
         Draw.color(!valid ? Pal.remove : Pal.accent);
         Draw.rect(regionArrow,
@@ -2264,7 +2281,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         offsety,
         regionArrow.width * regionArrow.scl(),
         regionArrow.height * regionArrow.scl(),
-        rotation * 90 - 90);
+        angle - 90);
     }
 
     void iterateLine(int startX, int startY, int endX, int endY, Cons<PlaceLine> cons){
