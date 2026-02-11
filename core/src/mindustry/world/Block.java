@@ -875,13 +875,9 @@ public class Block extends UnlockableContent implements Senseable{
 
     /** sets {@param out} to the index-th side outside of this block, using the given rotation. */
     public void nearbySide(int x, int y, int rotation, int index, Point2 out){
-        int cornerX = x - (size-1)/2, cornerY = y - (size-1)/2, s = size;
-        switch(Mathf.mod(rotation, 4)){
-            case 0 -> out.set(cornerX + s, cornerY + index);
-            case 1 -> out.set(cornerX + index, cornerY + s);
-            case 2 -> out.set(cornerX - 1, cornerY + index);
-            case 3 -> out.set(cornerX + index, cornerY - 1);
-        }
+        // TODO: size > 1 geometry for hex is undefined. This is a fallback.
+        Point2 p = Hex.nearby(x, y, rotation);
+        out.set(p.x, p.y);
     }
 
     public Point2[] getEdges(){
