@@ -22,7 +22,7 @@ public class Edges{
         for(int i = 0; i < maxBlockSize; i++){
             int bot = -(int)(i / 2f) - 1;
             int top = (int)(i / 2f + 0.5f) + 1;
-            edges[i] = new Point2[(i + 1) * 4];
+            edges[i] = new Point2[(i + 1) * 4 + 4];
 
             int idx = 0;
 
@@ -36,6 +36,11 @@ public class Edges{
                 //right
                 edges[i][idx++] = new Point2(top, bot + j + 1);
             }
+
+            edges[i][idx++] = new Point2(bot, bot);
+            edges[i][idx++] = new Point2(bot, top);
+            edges[i][idx++] = new Point2(top, top);
+            edges[i][idx++] = new Point2(top, bot);
 
             Arrays.sort(edges[i], (e1, e2) -> Float.compare(Mathf.angle(e1.x, e1.y), Mathf.angle(e2.x, e2.y)));
 
