@@ -75,7 +75,7 @@ public class Conveyor extends Block implements Autotiler{
         if(bits == null) return;
 
         TextureRegion region = regions[bits[0]][0];
-        Draw.rect(region, plan.drawx(), plan.drawy(), region.width * bits[1] * region.scl(), region.height * bits[2] * region.scl(), plan.rotation * 90);
+        Draw.rect(region, plan.drawx(), plan.drawy(), region.width * bits[1] * region.scl(), region.height * bits[2] * region.scl(), plan.rotation * 60);
     }
 
     @Override
@@ -146,26 +146,28 @@ public class Conveyor extends Block implements Autotiler{
 
             //draw extra conveyors facing this one for non-square tiling purposes
             Draw.z(Layer.blockUnder);
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if((blending & (1 << i)) != 0){
                     int dir = rotation - i;
-                    float rot = i == 0 ? rotation * 90 : (dir)*90;
+                    float rot = i == 0 ? rotation * 60 : (dir)*60;
 
-                    Draw.rect(sliced(regions[0][frame], i != 0 ? SliceMode.bottom : SliceMode.top), x + Geometry.d4x(dir) * tilesize*0.75f, y + Geometry.d4y(dir) * tilesize*0.75f, rot);
+                    Tmp.v1.trns(dir * 60, tilesize * 0.75f);
+
+                    Draw.rect(sliced(regions[0][frame], i != 0 ? SliceMode.bottom : SliceMode.top), x + Tmp.v1.x, y + Tmp.v1.y, rot);
                 }
             }
 
             Draw.z(Layer.block - 0.2f);
 
-            Draw.rect(regions[blendbits][frame], x, y, tilesize * blendsclx, tilesize * blendscly, rotation * 90);
+            Draw.rect(regions[blendbits][frame], x, y, tilesize * blendsclx, tilesize * blendscly, rotation * 60);
 
             Draw.z(Layer.block - 0.1f);
             float layer = Layer.block - 0.1f, wwidth = world.unitWidth(), wheight = world.unitHeight(), scaling = 0.01f;
 
             for(int i = 0; i < len; i++){
                 Item item = ids[i];
-                Tmp.v1.trns(rotation * 90, tilesize, 0);
-                Tmp.v2.trns(rotation * 90, -tilesize / 2f, xs[i] * tilesize / 2f);
+                Tmp.v1.trns(rotation * 60, tilesize, 0);
+                Tmp.v2.trns(rotation * 60, -tilesize / 2f, xs[i] * tilesize / 2f);
 
                 float
                 ix = (x + Tmp.v1.x * ys[i] + Tmp.v2.x),
@@ -233,10 +235,12 @@ public class Conveyor extends Block implements Autotiler{
             float mspeed = speed * tilesize * 55f;
             float centerSpeed = 0.1f;
             float centerDstScl = 3f;
-            float tx = Geometry.d4x(rotation), ty = Geometry.d4y(rotation);
+            Tmp.v1.trns(rotation * 60, 1);
+            float tx = Tmp.v1.x, ty = Tmp.v1.y;
 
             float centerx = 0f, centery = 0f;
 
+            // TODO hex logic for centering unit?
             if(Math.abs(tx) > Math.abs(ty)){
                 centery = Mathf.clamp((y - unit.y()) / centerDstScl, -centerSpeed, centerSpeed);
                 if(Math.abs(y - unit.y()) < 1f) centery = 0f;
@@ -354,8 +358,8 @@ public class Conveyor extends Block implements Autotiler{
             if(len >= capacity) return false;
             Tile facing = Edges.getFacingEdge(source.tile, tile);
             if(facing == null) return false;
-            int direction = Math.abs(facing.relativeTo(tile.x, tile.y) - rotation);
-            return (((direction == 0) && minitem >= itemSpace) || ((direction % 2 == 1) && minitem > 0.7f)) && !(source.block.rotate && next == source);
+            int direction = Mathf.mod(facing.relativeTo(tile.x, tile.y) - rotation, 6);
+            return (((direction == 0) && minitem >= itemSpace) || ((direction == 1 || direction == 5) && minitem > 0.7f)) && !(source.block.rotate && next == source);
         }
 
         @Override
@@ -364,13 +368,15 @@ public class Conveyor extends Block implements Autotiler{
 
             int r = rotation;
             Tile facing = Edges.getFacingEdge(source.tile, tile);
-            int ang = ((facing.relativeTo(tile.x, tile.y) - r));
-            float x = (ang == -1 || ang == 3) ? 1 : (ang == 1 || ang == -3) ? -1 : 0;
+            int ang = Mathf.mod(facing.relativeTo(tile.x, tile.y) - r, 6);
+            // 1 is CW side (Right), 5 is CCW side (Left)
+            // Original code: x=1 was Right (CW), x=-1 was Left (CCW)
+            float x = (ang == 1) ? 1 : (ang == 5) ? -1 : 0;
 
             noSleep();
             items.add(item, 1);
 
-            if(Math.abs(facing.relativeTo(tile.x, tile.y) - r) == 0){ //idx = 0
+            if(ang == 0){ //idx = 0
                 add(0);
                 xs[0] = x;
                 ys[0] = 0;

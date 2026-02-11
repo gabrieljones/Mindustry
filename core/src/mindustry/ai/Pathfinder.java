@@ -222,7 +222,7 @@ public class Pathfinder implements Runnable{
     public int packTile(Tile tile){
         boolean nearLiquid = false, nearSolid = false, nearLegSolid = false, nearGround = false, solid = tile.solid(), allDeep = tile.floor().isDeep(), nearDeep = allDeep;
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 6; i++){
             Tile other = tile.nearby(i);
             if(other != null){
                 Floor floor = other.floor();
@@ -241,17 +241,6 @@ public class Pathfinder implements Runnable{
                 //other tile is now near solid
                 if(solid && !tile.block().teamPassable && other.array() < tiles.length){
                     tiles[other.array()] |= PathTile.bitMaskNearSolid;
-                }
-            }
-        }
-
-        //check diagonals for allDeep
-        if(allDeep){
-            for(int i = 0; i < 4; i++){
-                Tile other = tile.nearby(Geometry.d8edge[i]);
-                if(other != null && !other.floor().isDeep()){
-                    allDeep = false;
-                    break;
                 }
             }
         }
@@ -407,26 +396,28 @@ public class Pathfinder implements Runnable{
         int[] values = path.hasComplete ? path.completeWeights : path.weights;
         int res = path.resolution;
         int ww = path.width;
-        int apos = tile.x/res + tile.y/res * ww;
+        int px = tile.x / res;
+        int py = tile.y / res;
+        int apos = px + py * ww;
         int value = values[apos];
 
-        var points = diagonals ? Geometry.d8 : Geometry.d4;
         int[] avoid = avoidanceId <= 0 ? null : avoidance.getAvoidance();
 
         Tile current = null;
         int tl = 0;
-        for(Point2 point : points){
-            int dx = tile.x + point.x * res, dy = tile.y + point.y * res;
+        for(int i = 0; i < 6; i++){
+            Point2 point = Hex.getOffset(py, i);
+            int nx = px + point.x, ny = py + point.y;
+            int dx = nx * res, dy = ny * res;
 
             Tile other = world.tile(dx, dy);
             if(other == null) continue;
 
-            int packed = dx/res + dy/res * ww;
+            int packed = nx + ny * ww;
             int avoidance = avoid == null ? 0 : avoid[packed] > Integer.MAX_VALUE - avoidanceId ? 1 : 0;
             int cost = values[packed] + avoidance;
 
-            if(cost < value && avoidance == 0 && (current == null || cost < tl) && path.passable(packed) &&
-            !(point.x != 0 && point.y != 0 && (!path.passable(((tile.x + point.x)/res + tile.y/res*ww)) || !path.passable((tile.x/res + (tile.y + point.y)/res*ww))))){ //diagonal corner trap
+            if(cost < value && avoidance == 0 && (current == null || cost < tl) && path.passable(packed)){
                 current = other;
                 tl = cost;
             }
@@ -514,9 +505,13 @@ public class Pathfinder implements Runnable{
             }
 
             if(cost != impassable){
-                for(Point2 point : Geometry.d4){
+                int px = tile % w;
+                int py = tile / w;
 
-                    int dx = (tile % w) + point.x, dy = (tile / w) + point.y;
+                for(int i = 0; i < 6; i++){
+                    Point2 point = Hex.getOffset(py, i);
+
+                    int dx = px + point.x, dy = py + point.y;
 
                     if(dx < 0 || dy < 0 || dx >= w || dy >= h) continue;
 

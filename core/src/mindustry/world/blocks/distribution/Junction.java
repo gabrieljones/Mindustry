@@ -49,7 +49,7 @@ public class Junction extends Block{
         @Override
         public void updateTile(){
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(buffer.indexes[i] > 0){
                     if(buffer.indexes[i] > capacity) buffer.indexes[i] = capacity;
                     long l = buffer.buffers[i][0];
@@ -90,7 +90,7 @@ public class Junction extends Block{
 
         @Override
         public byte version(){
-            return 1;
+            return 2;
         }
 
         @Override
@@ -102,7 +102,7 @@ public class Junction extends Block{
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
-            buffer.read(read, revision == 0);
+            buffer.read(read, revision < 2);
         }
     }
 }

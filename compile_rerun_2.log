@@ -1,0 +1,61 @@
+
+> Configure project :
+Compiling with build: 'custom build'
+
+> Configure project :android
+No keystore property found. Releases will be unsigned.
+Configuration 'natives' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+
+> Configure project :desktop
+Scheduling sprite packing.
+
+> Task :annotations:clearCache
+
+> Task :annotations:compileJava
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+3 warnings
+
+> Task :core:clearCache
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :annotations:processResources
+> Task :annotations:classes
+> Task :annotations:jar
+> Task :core:kaptGenerateStubsKotlin SKIPPED
+> Task :core:preGen UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+
+> Task :core:kaptKotlin
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+
+> Task :core:compileKotlin SKIPPED
+
+> Task :core:compileJava
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+3 warnings
+
+> Task :core:classes
+
+[Incubating] Problems report is available at: file:///app/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 37s
+7 actionable tasks: 7 executed

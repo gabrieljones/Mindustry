@@ -44,15 +44,27 @@ public class Placement{
     public static Seq<Point2> normalizeLine(int startX, int startY, int endX, int endY){
         Pools.freeAll(points);
         points.clear();
-        if(Math.abs(startX - endX) > Math.abs(startY - endY)){
-            //go width
-            for(int i = 0; i <= Math.abs(startX - endX); i++){
-                points.add(Pools.obtain(Point2.class, Point2::new).set(startX + i * Mathf.sign(endX - startX), startY));
-            }
-        }else{
-            //go height
-            for(int i = 0; i <= Math.abs(startY - endY); i++){
-                points.add(Pools.obtain(Point2.class, Point2::new).set(startX, startY + i * Mathf.sign(endY - startY)));
+
+        float wx1 = Hex.worldX(startX, startY);
+        float wy1 = Hex.worldY(startY);
+        float wx2 = Hex.worldX(endX, endY);
+        float wy2 = Hex.worldY(endY);
+
+        float dist = Mathf.dst(wx1, wy1, wx2, wy2);
+        int steps = (int)(dist / (tilesize / 2f)) + 1;
+
+        int lastX = -1, lastY = -1;
+
+        for(int i = 0; i <= steps; i++){
+            float t = (float)i / steps;
+            float wx = Mathf.lerp(wx1, wx2, t);
+            float wy = Mathf.lerp(wy1, wy2, t);
+            Point2 p = Hex.worldToTile(wx, wy);
+
+            if(p.x != lastX || p.y != lastY){
+                points.add(Pools.obtain(Point2.class, Point2::new).set(p.x, p.y));
+                lastX = p.x;
+                lastY = p.y;
             }
         }
         return points;
@@ -125,7 +137,8 @@ public class Placement{
     }
 
     public static boolean isSidePlace(Seq<BuildPlan> plans){
-        return plans.size > 1 && Mathf.mod(Tile.relativeTo(plans.first().x, plans.first().y, plans.get(1).x, plans.get(1).y) - plans.first().rotation, 2) == 1;
+        // TODO: Update logic for hex side placement if necessary
+        return plans.size > 1 && Mathf.mod(Tile.relativeTo(plans.first().x, plans.first().y, plans.get(1).x, plans.get(1).y) - plans.first().rotation, 6) != 0;
     }
 
     public static void calculateBridges(Seq<BuildPlan> plans, ItemBridge bridge){
@@ -133,10 +146,10 @@ public class Placement{
     }
 
     public static void calculateBridges(Seq<BuildPlan> plans, ItemBridge bridge, boolean hasJunction, Boolf<Block> avoid){
-        if(isSidePlace(plans) || plans.size == 0) return;
+        if(plans.size == 0) return;
 
-        //check for orthogonal placement + unlocked state
-        if(!(plans.first().x == plans.peek().x || plans.first().y == plans.peek().y) || !bridge.unlockedNow()){
+        //check for unlocked state
+        if(!bridge.unlockedNow()){
             return;
         }
 
@@ -145,7 +158,7 @@ public class Placement{
            !(plan != plans.first() && plan.build() != null && plan.build().rotation != plan.rotation && avoid.get(plan.tile().block()));
 
         var result = plans1.clear();
-        var rotated = plans.first().tile() != null && plans.first().tile().absoluteRelativeTo(plans.peek().x, plans.peek().y) == Mathf.mod(plans.first().rotation + 2, 4);
+        var rotated = plans.first().tile() != null && plans.first().tile().absoluteRelativeTo(plans.peek().x, plans.peek().y) == Mathf.mod(plans.first().rotation + 3, 6);
 
         outer:
         for(int i = 0; i < plans.size;){
@@ -327,9 +340,9 @@ public class Placement{
                 break;
             }
             closed.add(Point2.pack(next.x, next.y));
-            for(Point2 point : Geometry.d4){
-                int newx = next.x + point.x, newy = next.y + point.y;
-                Tile child = world.tile(newx, newy);
+            for(int i = 0; i < 6; i++){
+                Point2 p = Hex.nearby(next.x, next.y, i);
+                Tile child = world.tile(p.x, p.y);
                 if(child != null && validNode(next, child)){
                     if(closed.add(child.pos())){
                         parents.put(child.pos(), next.pos());
@@ -429,19 +442,8 @@ public class Placement{
 
         int dx = endx - tilex, dy = endy - tiley;
 
-        if(Math.abs(dx) > Math.abs(dy)){
-            if(dx >= 0){
-                rotation = 0;
-            }else{
-                rotation = 2;
-            }
-        }else if(Math.abs(dx) < Math.abs(dy)){
-            if(dy >= 0){
-                rotation = 1;
-            }else{
-                rotation = 3;
-            }
-        }
+        float angle = Angles.angle(Hex.worldX(tilex, tiley), Hex.worldY(tiley), Hex.worldX(endx, endy), Hex.worldY(endy));
+        rotation = (int)((angle + 30) / 60) % 6;
 
         if(endx < tilex){
             int t = endx;

@@ -17,7 +17,7 @@ public interface Autotiler{
      */
     class AutotilerHolder{
         static final int[] blendresult = new int[5];
-        static final BuildPlan[] directionals = new BuildPlan[4];
+        static final BuildPlan[] directionals = new BuildPlan[6];
     }
 
     /**
@@ -66,7 +66,8 @@ public interface Autotiler{
             if(other.breaking || other == req) return;
 
             int i = 0;
-            for(Point2 point : Geometry.d4){
+            for(int j = 0; j < 6; j++){
+                Point2 point = Hex.getOffset(req.y, j);
                 int x = req.x + point.x, y = req.y + point.y;
                 if(x >= other.x -(other.block.size - 1) / 2 && x <= other.x + (other.block.size / 2) && y >= other.y -(other.block.size - 1) / 2 && y <= other.y + (other.block.size / 2)){
                     directionals[i] = other;
@@ -96,13 +97,24 @@ public interface Autotiler{
         blendresult[0] = 0;
         blendresult[1] = blendresult[2] = 1;
 
+        // Map hex directions to square logic:
+        // 0: Forward (0)
+        // 1: Right (1) -> Hex 1
+        // 2: Back (2) -> Hex 3
+        // 3: Left (3) -> Hex 5
+
+        // This is heuristic mapping
+        boolean right = blends(tile, rotation, directional, 1, world);
+        boolean left = blends(tile, rotation, directional, 5, world);
+        boolean back = blends(tile, rotation, directional, 3, world);
+
         int num =
-        (blends(tile, rotation, directional, 2, world) && blends(tile, rotation, directional, 1, world) && blends(tile, rotation, directional, 3, world)) ? 0 :
-        (blends(tile, rotation, directional, 1, world) && blends(tile, rotation, directional, 3, world)) ? 1 :
-        (blends(tile, rotation, directional, 1, world) && blends(tile, rotation, directional, 2, world)) ? 2 :
-        (blends(tile, rotation, directional, 3, world) && blends(tile, rotation, directional, 2, world)) ? 3 :
-        blends(tile, rotation, directional, 1, world) ? 4 :
-        blends(tile, rotation, directional, 3, world) ? 5 :
+        (back && right && left) ? 0 :
+        (right && left) ? 1 :
+        (right && back) ? 2 :
+        (left && back) ? 3 :
+        right ? 4 :
+        left ? 5 :
         -1;
         transformCase(num, blendresult);
 
@@ -110,7 +122,7 @@ public interface Autotiler{
 
         blendresult[3] = 0;
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 6; i++){
             if(blends(tile, rotation, directional, i, world)){
                 blendresult[3] |= (1 << i);
             }
@@ -120,8 +132,8 @@ public interface Autotiler{
 
         blendresult[4] = 0;
 
-        for(int i = 0; i < 4; i++){
-            int realDir = Mathf.mod(rotation - i, 4);
+        for(int i = 0; i < 6; i++){
+            int realDir = Mathf.mod(rotation - i, 6);
             if(blends(tile, rotation, directional, i, world) && (tile != null && tile.nearbyBuild(realDir) != null && !tile.nearbyBuild(realDir).block.squareSprite)){
                 blendresult[4] |= (1 << i);
             }
@@ -166,11 +178,12 @@ public interface Autotiler{
      * @return If position 1 is facing position 2 at a certain angle
      */
     default boolean facing(int x, int y, int rotation, int x2, int y2){
-        return Point2.equals(x + Geometry.d4(rotation).x,y + Geometry.d4(rotation).y, x2, y2);
+        Point2 p = Hex.nearby(x, y, rotation);
+        return Point2.equals(p.x, p.y, x2, y2);
     }
 
     default boolean blends(Tile tile, int rotation, @Nullable BuildPlan[] directional, int direction, boolean checkWorld){
-        int realDir = Mathf.mod(rotation - direction, 4);
+        int realDir = Mathf.mod(rotation - direction, 6);
         if(directional != null && directional[realDir] != null){
             BuildPlan req = directional[realDir];
             if(blends(tile, rotation, req.x, req.y, req.rotation, req.block)){
@@ -183,32 +196,38 @@ public interface Autotiler{
 
     // TODO docs -- use for direction?
     default boolean blends(Tile tile, int rotation, int direction){
-        Building other = tile.nearbyBuild(Mathf.mod(rotation - direction, 4));
+        if(tile == null) return false;
+        Building other = tile.nearbyBuild(Mathf.mod(rotation - direction, 6));
         return other != null && other.team == tile.team() && blends(tile, rotation, other.tileX(), other.tileY(), other.rotation, other.block);
     }
 
     default boolean blendsArmored(Tile tile, int rotation, int otherx, int othery, int otherrot, Block otherblock){
-        return Point2.equals(tile.x + Geometry.d4(rotation).x, tile.y + Geometry.d4(rotation).y, otherx, othery)
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation);
+        Point2 pOther = Hex.nearby(otherx, othery, otherrot);
+        return Point2.equals(p.x, p.y, otherx, othery)
                 || ((!otherblock.rotatedOutput(otherx, othery, tile) && Edges.getFacingEdge(otherblock, otherx, othery, tile) != null &&
                 Edges.getFacingEdge(otherblock, otherx, othery, tile).relativeTo(tile) == rotation) ||
-                (otherblock.rotatedOutput(otherx, othery, tile) && Point2.equals(otherx + Geometry.d4(otherrot).x, othery + Geometry.d4(otherrot).y, tile.x, tile.y)));
+                (otherblock.rotatedOutput(otherx, othery, tile) && Point2.equals(pOther.x, pOther.y, tile.x, tile.y)));
     }
 
     /** @return whether this other block is *not* looking at this one. */
     default boolean notLookingAt(Tile tile, int rotation, int otherx, int othery, int otherrot, Block otherblock){
-        return !(otherblock.rotatedOutput(otherx, othery, tile) && Point2.equals(otherx + Geometry.d4(otherrot).x, othery + Geometry.d4(otherrot).y, tile.x, tile.y));
+        Point2 pOther = Hex.nearby(otherx, othery, otherrot);
+        return !(otherblock.rotatedOutput(otherx, othery, tile) && Point2.equals(pOther.x, pOther.y, tile.x, tile.y));
     }
 
     /** @return whether this tile is looking at the other tile, or the other tile is looking at this one.
      * If the other tile does not rotate, it is always considered to be facing this one. */
     default boolean lookingAtEither(Tile tile, int rotation, int otherx, int othery, int otherrot, Block otherblock){
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation);
+        Point2 pOther = Hex.nearby(otherx, othery, otherrot);
         return
             //block is facing the other
-            Point2.equals(tile.x + Geometry.d4(rotation).x, tile.y + Geometry.d4(rotation).y, otherx, othery) ||
+            Point2.equals(p.x, p.y, otherx, othery) ||
             //does not output to rotated direction
             !otherblock.rotatedOutput(otherx, othery, tile) ||
             //other block is facing this one
-            Point2.equals(otherx + Geometry.d4(otherrot).x, othery + Geometry.d4(otherrot).y, tile.x, tile.y);
+            Point2.equals(pOther.x, pOther.y, tile.x, tile.y);
     }
 
     /**
@@ -222,8 +241,9 @@ public interface Autotiler{
      */
     default boolean lookingAt(Tile tile, int rotation, int otherx, int othery, Block otherblock){
         Tile facing = Edges.getFacingEdge(otherblock, otherx, othery, tile);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation);
         return facing != null &&
-            Point2.equals(tile.x + Geometry.d4(rotation).x, tile.y + Geometry.d4(rotation).y, facing.x, facing.y);
+            Point2.equals(p.x, p.y, facing.x, facing.y);
     }
 
     boolean blends(Tile tile, int rotation, int otherx, int othery, int otherrot, Block otherblock);

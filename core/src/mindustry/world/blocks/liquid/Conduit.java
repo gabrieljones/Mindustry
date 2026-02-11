@@ -39,7 +39,9 @@ public class Conduit extends LiquidBlock implements Autotiler{
     public TextureRegion[][][] rotateRegions;
 
     /** If true, the liquid region is padded at corners, so it doesn't stick out. */
-    public boolean padCorners = true;
+    // Padding logic for hex is different or unnecessary if sprites are designed correctly.
+    // For now, disabling corner padding for hex adaptation or we'd need 6-directional offsets.
+    public boolean padCorners = false;
     public boolean leaks = true;
     public @Nullable Block junctionReplacement, bridgeReplacement, rotBridgeReplacement;
 
@@ -67,37 +69,15 @@ public class Conduit extends LiquidBlock implements Autotiler{
     public void load(){
         super.load();
 
-        rotateRegions = new TextureRegion[4][2][animationFrames];
+        rotateRegions = new TextureRegion[6][2][animationFrames];
 
-        if(renderer != null){
-            float pad = rotatePad;
-            var frames = renderer.getFluidFrames();
+        // Hex liquid region generation is more complex and might not be needed if we don't pad/crop.
+        // If we want to support it, we'd need 6 variants.
+        // For now, simply copy the base frames as placeholders if accessed,
+        // or just don't generate if padCorners is false.
 
-            for(int rot = 0; rot < 4; rot++){
-                for(int fluid = 0; fluid < 2; fluid++){
-                    for(int frame = 0; frame < animationFrames; frame++){
-                        TextureRegion base = frames[fluid][frame];
-                        TextureRegion result = new TextureRegion();
-                        result.set(base);
-
-                        if(rot == 0){
-                            result.setX(result.getX() + pad);
-                            result.setHeight(result.height - pad);
-                        }else if(rot == 1){
-                            result.setWidth(result.width - pad);
-                            result.setHeight(result.height - pad);
-                        }else if(rot == 2){
-                            result.setWidth(result.width - pad);
-                            result.setY(result.getY() + pad);
-                        }else{
-                            result.setX(result.getX() + pad);
-                            result.setY(result.getY() + pad);
-                        }
-
-                        rotateRegions[rot][fluid][frame] = result;
-                    }
-                }
-            }
+        if(renderer != null && padCorners){
+             // TODO: Implement hex padding logic if padCorners becomes true
         }
     }
 
@@ -110,22 +90,27 @@ public class Conduit extends LiquidBlock implements Autotiler{
         Draw.scl(bits[1], bits[2]);
         Draw.color(botColor);
         Draw.alpha(0.5f);
-        Draw.rect(botRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(botRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.color();
-        Draw.rect(topRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(topRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.scl();
     }
 
     @Override
     public Block getReplacement(BuildPlan req, Seq<BuildPlan> plans){
+        // Hex logic for junction replacement: check forward (0) and backward (3)
         if(junctionReplacement == null) return this;
 
         Boolf<Point2> cont = p -> plans.contains(o -> o.x == req.x + p.x && o.y == req.y + p.y && (req.block instanceof Conduit || req.block instanceof LiquidJunction));
-        return cont.get(Geometry.d4(req.rotation)) &&
-            cont.get(Geometry.d4(req.rotation - 2)) &&
+        // Rotation 0 is forward, Rotation 3 is backward in hex
+        Point2 fwd = Hex.getOffset(req.y, req.rotation);
+        Point2 bwd = Hex.getOffset(req.y, Mathf.mod(req.rotation + 3, 6));
+
+        return cont.get(fwd) &&
+            cont.get(bwd) &&
             req.tile() != null &&
             req.tile().block() instanceof Conduit &&
-            Mathf.mod(req.build().rotation - req.rotation, 2) == 1 ? junctionReplacement : this;
+            Mathf.mod(req.build().rotation - req.rotation, 3) != 0 ? junctionReplacement : this;
     }
 
     @Override
@@ -160,10 +145,11 @@ public class Conduit extends LiquidBlock implements Autotiler{
 
             //draw extra conduits facing this one for tiling purposes
             Draw.z(Layer.blockUnder);
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if((blending & (1 << i)) != 0){
                     int dir = r - i;
-                    drawAt(x + Geometry.d4x(dir) * tilesize*0.75f, y + Geometry.d4y(dir) * tilesize*0.75f, 0, i == 0 ? r : dir, i != 0 ? SliceMode.bottom : SliceMode.top);
+                    Tmp.v1.trns(dir * 60, tilesize * 0.75f);
+                    drawAt(x + Tmp.v1.x, y + Tmp.v1.y, 0, i == 0 ? r : dir, i != 0 ? SliceMode.bottom : SliceMode.top);
                 }
             }
 
@@ -178,22 +164,25 @@ public class Conduit extends LiquidBlock implements Autotiler{
         }
 
         protected void drawAt(float x, float y, int bits, int rotation, SliceMode slice){
-            float angle = rotation * 90f;
+            float angle = rotation * 60f;
             Draw.color(botColor);
             Draw.rect(sliced(botRegions[bits], slice), x, y, angle);
 
-            int offset = yscl == -1 ? 3 : 0;
+            // int offset = yscl == -1 ? 3 : 0; // Hex flipping logic might differ?
 
             int frame = liquids.current().getAnimationFrame();
             int gas = liquids.current().gas ? 1 : 0;
             float ox = 0f, oy = 0f;
-            int wrapRot = (rotation + offset) % 4;
-            TextureRegion liquidr = bits == 1 && padCorners ? rotateRegions[wrapRot][gas][frame] : renderer.fluidFrames[gas][frame];
+            // int wrapRot = (rotation + offset) % 6;
+            // Pad corners disabled for now
+            TextureRegion liquidr = renderer.fluidFrames[gas][frame];
 
+            /*
             if(bits == 1 && padCorners){
                 ox = rotateOffsets[wrapRot][0];
                 oy = rotateOffsets[wrapRot][1];
             }
+            */
 
             //the drawing state machine sure was a great design choice with no downsides or hidden behavior!!!
             float xscl = Draw.xscl, yscl = Draw.yscl;
@@ -222,8 +211,9 @@ public class Conduit extends LiquidBlock implements Autotiler{
         @Override
         public boolean acceptLiquid(Building source, Liquid liquid){
             noSleep();
+            // In hex, back is rotation + 3
             return (liquids.current() == liquid || liquids.currentAmount() < 0.2f)
-                && (tile == null || source == this || (source.relativeTo(tile.x, tile.y) + 2) % 4 != rotation);
+                && (tile == null || source == this || (source.relativeTo(tile.x, tile.y) + 3) % 6 != rotation);
         }
 
         @Override

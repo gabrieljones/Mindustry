@@ -17,6 +17,8 @@ ios/libs/
 /ios/assets/
 /core/assets-raw/sprites/generated/
 /core/assets-raw/sprites_out/
+/core/assets-raw/sprites_vector/
+/core/assets-raw/sprites_hex/
 /annotations/build/
 /annotations/out/
 /net/build/
