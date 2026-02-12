@@ -40,9 +40,15 @@ public class DrawPulseShape extends DrawBlock{
         }else{
             float r = Math.max(0f, Mathf.clamp(2f - f * 2f) * rad - f - 0.2f), w = Mathf.clamp(0.5f - f) * rad * 2f;
             Lines.beginLine();
-            for(int i = 0; i < 4; i++){
-                Lines.linePoint(build.x + Geometry.d4(i).x * r + Geometry.d4(i).y * w, build.y + Geometry.d4(i).y * r - Geometry.d4(i).x * w);
-                if(f < 0.5f) Lines.linePoint(build.x + Geometry.d4(i).x * r - Geometry.d4(i).y * w, build.y + Geometry.d4(i).y * r + Geometry.d4(i).x * w);
+            for(int i = 0; i < 6; i++){
+                float angle = i * 60f;
+                Tmp.v1.trns(angle, r);
+                Tmp.v2.trns(angle - 90, w);
+                Lines.linePoint(build.x + Tmp.v1.x + Tmp.v2.x, build.y + Tmp.v1.y + Tmp.v2.y);
+                if(f < 0.5f){
+                    Tmp.v2.trns(angle + 90, w);
+                    Lines.linePoint(build.x + Tmp.v1.x + Tmp.v2.x, build.y + Tmp.v1.y + Tmp.v2.y);
+                }
             }
             Lines.endLine(true);
         }
