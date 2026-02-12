@@ -357,9 +357,9 @@ public class PayloadMassDriver extends PayloadBlock{
             Draw.rect(baseRegion, x, y);
 
             //draw input
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(blends(i) && i != rotation){
-                    Draw.rect(inRegion, x, y, (i * 90) - 180);
+                    Draw.rect(inRegion, x, y, (i * 60) - 180);
                 }
             }
 
