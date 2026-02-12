@@ -150,8 +150,8 @@ public class TileableLogicDisplay extends LogicDisplay{
 
             bits = 0;
 
-            for(int i = 0; i < 8; i++){
-                Tile other = tile.nearby(Geometry.d8(i));
+            for(int i = 0; i < 6; i++){
+                Tile other = tile.nearby(i);
                 if(other != null && other.block() == block && other.team() == team){
                     bits |= (1 << i);
                 }
@@ -248,8 +248,8 @@ public class TileableLogicDisplay extends LogicDisplay{
         }
 
         public void updateOthers(){
-            for(int i = 0; i < 4; i++){
-                Tile other = tile.nearby(Geometry.d8edge(i));
+            for(int i = 0; i < 6; i++){
+                Tile other = tile.nearby(i);
                 if(other != null && other.block() == block && other.team() == team){
                     other.build.onProximityUpdate();
                 }
