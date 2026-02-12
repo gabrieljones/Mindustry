@@ -75,8 +75,8 @@ public class ColoredFloor extends Floor{
             //Only autotiling is supported right now for the sake of simplicity
             int bits = 0;
 
-            for(int i = 0; i < 8; i++){
-                Tile other = tile.nearby(Geometry.d8[i]);
+            for(int i = 0; i < 6; i++){
+                Tile other = tile.nearby(i);
                 //force flagIgnoreDifferentColor by bypassing checkAutotileSame
                 if(other != null && other.floor().blendGroup == blendGroup){
                     bits |= (1 << i);

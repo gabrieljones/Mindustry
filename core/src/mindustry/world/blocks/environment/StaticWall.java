@@ -41,8 +41,8 @@ public class StaticWall extends Prop{
         if(autotile){
             int bits = 0;
 
-            for(int i = 0; i < 8; i++){
-                Tile other = tile.nearby(Geometry.d8[i]);
+            for(int i = 0; i < 6; i++){
+                Tile other = tile.nearby(i);
                 if(checkAutotileSame(tile, other)){
                     bits |= (1 << i);
                 }
