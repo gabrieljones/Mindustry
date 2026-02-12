@@ -95,7 +95,7 @@ public class PayloadMassDriver extends PayloadBlock{
     public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         Draw.rect(baseRegion, plan.drawx(), plan.drawy());
         Draw.rect(topRegion, plan.drawx(), plan.drawy());
-        Draw.rect(outRegion, plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(outRegion, plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.rect(region, plan.drawx(), plan.drawy());
     }
 

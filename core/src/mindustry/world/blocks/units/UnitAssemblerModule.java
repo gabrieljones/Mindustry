@@ -53,7 +53,7 @@ public class UnitAssemblerModule extends PayloadBlock{
     @Override
     public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         Draw.rect(region, plan.drawx(), plan.drawy());
-        drawSideRegion(plan.rotation >= 2 ? sideRegion2 : sideRegion1, plan.drawx(), plan.drawy(), plan.rotation);
+        drawSideRegion(plan.rotation >= 3 ? sideRegion2 : sideRegion1, plan.drawx(), plan.drawy(), plan.rotation);
         Draw.rect(topRegion, plan.drawx(), plan.drawy());
     }
 
@@ -91,13 +91,13 @@ public class UnitAssemblerModule extends PayloadBlock{
             Draw.rect(region, x, y);
 
             //draw input conveyors
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(blends(i) && i != rotation){
-                    drawSideRegion(inRegion, x, y, i - 2);
+                    drawSideRegion(inRegion, x, y, i - 3);
                 }
             }
 
-            drawSideRegion(rotation >= 2 ? sideRegion2 : sideRegion1, x, y, rotation);
+            drawSideRegion(rotation >= 3 ? sideRegion2 : sideRegion1, x, y, rotation);
 
             Draw.z(Layer.blockOver);
             payRotation = rotdeg();
