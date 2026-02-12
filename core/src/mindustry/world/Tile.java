@@ -595,12 +595,12 @@ public class Tile implements Position, QuadTreeObject, Displayable{
             //update edge entities
             tileSet.clear();
 
-            for(Point2 edge : Edges.getEdges(size)){
-                Building other = world.build(x + edge.x, y + edge.y);
+            Hex.getRing(x, y, size, (cx, cy) -> {
+                Building other = world.build(cx, cy);
                 if(other != null){
                     tileSet.add(other);
                 }
-            }
+            });
 
             //update proximity, since multiblock was just removed
             for(Building t : tileSet){

@@ -42,12 +42,13 @@ public class DrawPulseShape extends DrawBlock{
             Lines.beginLine();
             for(int i = 0; i < 6; i++){
                 float angle = i * 60f;
-                Tmp.v1.trns(angle, r);
+                Tmp.v1.trns(angle, r).add(build.x, build.y);
                 Tmp.v2.trns(angle - 90, w);
-                Lines.linePoint(build.x + Tmp.v1.x + Tmp.v2.x, build.y + Tmp.v1.y + Tmp.v2.y);
+                Lines.linePoint(Tmp.v1.x + Tmp.v2.x, Tmp.v1.y + Tmp.v2.y);
+
                 if(f < 0.5f){
                     Tmp.v2.trns(angle + 90, w);
-                    Lines.linePoint(build.x + Tmp.v1.x + Tmp.v2.x, build.y + Tmp.v1.y + Tmp.v2.y);
+                    Lines.linePoint(Tmp.v1.x + Tmp.v2.x, Tmp.v1.y + Tmp.v2.y);
                 }
             }
             Lines.endLine(true);
