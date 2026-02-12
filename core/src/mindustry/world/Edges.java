@@ -1,56 +1,31 @@
 package mindustry.world;
 
+import arc.func.*;
 import arc.math.*;
 import arc.math.geom.*;
 import mindustry.gen.*;
-
-import java.util.*;
 
 import static mindustry.Vars.*;
 
 public class Edges{
     private static final int maxRadius = 12;
-    private static Point2[][] edges = new Point2[maxBlockSize][0];
-    private static Point2[][] edgeInside = new Point2[maxBlockSize][0];
     private static Vec2[][] polygons = new Vec2[maxRadius * 2][0];
 
     static{
         for(int i = 0; i < maxRadius * 2; i++){
             polygons[i] = Geometry.pixelCircle((i + 1) / 2f);
         }
+    }
 
-        for(int i = 0; i < maxBlockSize; i++){
-            int bot = -(int)(i / 2f) - 1;
-            int top = (int)(i / 2f + 0.5f) + 1;
-            edges[i] = new Point2[(i + 1) * 4 + 4];
+    public static void iterateEdges(int size, int x, int y, Intc2 consumer){
+        Hex.getRing(x, y, size, consumer);
+    }
 
-            int idx = 0;
-
-            for(int j = 0; j < i + 1; j++){
-                //bottom
-                edges[i][idx++] = new Point2(bot + 1 + j, bot);
-                //top
-                edges[i][idx++] = new Point2(bot + 1 + j, top);
-                //left
-                edges[i][idx++] = new Point2(bot, bot + j + 1);
-                //right
-                edges[i][idx++] = new Point2(top, bot + j + 1);
-            }
-
-            edges[i][idx++] = new Point2(bot, bot);
-            edges[i][idx++] = new Point2(bot, top);
-            edges[i][idx++] = new Point2(top, top);
-            edges[i][idx++] = new Point2(top, bot);
-
-            Arrays.sort(edges[i], (e1, e2) -> Float.compare(Mathf.angle(e1.x, e1.y), Mathf.angle(e2.x, e2.y)));
-
-            edgeInside[i] = new Point2[edges[i].length];
-
-            for(int j = 0; j < edges[i].length; j++){
-                Point2 point = edges[i][j];
-                edgeInside[i][j] = new Point2(Mathf.clamp(point.x, -(int)((i) / 2f), (int)(i / 2f + 0.5f)),
-                Mathf.clamp(point.y, -(int)((i) / 2f), (int)(i / 2f + 0.5f)));
-            }
+    public static void iterateInsideEdges(int size, int x, int y, Intc2 consumer){
+        if(size <= 1){
+            consumer.get(x, y);
+        }else{
+            Hex.getRing(x, y, size - 1, consumer);
         }
     }
 
@@ -67,25 +42,17 @@ public class Edges{
     public static Tile getFacingEdge(Block block, int tilex, int tiley, Tile other){
         if(!block.isMultiblock()) return world.tile(tilex, tiley);
         int size = block.size;
-        return world.tile(tilex + Mathf.clamp(other.x - tilex, -(size - 1) / 2, (size / 2)),
-         tiley + Mathf.clamp(other.y - tiley, -(size - 1) / 2, (size / 2)));
+
+        float angle = Angles.angle(Hex.worldX(tilex, tiley), Hex.worldY(tiley), other.worldx(), other.worldy());
+        int direction = Math.round(angle / 60f);
+
+        Point2 p = Hex.nearby(tilex, tiley, direction, size - 1);
+        return world.tile(p.x, p.y);
     }
 
     public static Vec2[] getPixelPolygon(float radius){
         if(radius < 1 || radius > maxRadius)
             throw new RuntimeException("Polygon size must be between 1 and " + maxRadius);
         return polygons[(int)(radius * 2) - 1];
-    }
-
-    public static Point2[] getEdges(int size){
-        if(size < 0 || size > maxBlockSize) throw new RuntimeException("Block size must be between 0 and " + maxBlockSize);
-
-        return edges[size - 1];
-    }
-
-    public static Point2[] getInsideEdges(int size){
-        if(size < 0 || size > maxBlockSize) throw new RuntimeException("Block size must be between 0 and " + maxBlockSize);
-
-        return edgeInside[size - 1];
     }
 }
