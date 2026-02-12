@@ -28,6 +28,16 @@ public class Hex{
         return new Point2(x + offset.x, y + offset.y);
     }
 
+    public static Point2 nearby(int x, int y, int direction, int length){
+        int cx = x, cy = y;
+        for(int i = 0; i < length; i++){
+            Point2 p = nearby(cx, cy, direction);
+            cx = p.x;
+            cy = p.y;
+        }
+        return new Point2(cx, cy);
+    }
+
     public static float worldX(int x, int y){
         return (x + (y & 1) * 0.5f) * Vars.tilesize;
     }
