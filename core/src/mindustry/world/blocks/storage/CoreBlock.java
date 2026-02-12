@@ -453,8 +453,8 @@ public class CoreBlock extends StorageBlock{
             float strength = (1f + (size - 3)/2.5f) * scl * thrusterSize * (0.95f + Mathf.absin(2f, 0.1f));
             float offset = (size - 3) * 3f * scl;
 
-            for(int i = 0; i < 4; i++){
-                Tmp.v1.trns(i * 90 + rotation, 1f);
+            for(int i = 0; i < 6; i++){
+                Tmp.v1.trns(i * 60 + rotation, 1f);
 
                 Tmp.v1.setLength((size * tilesize/2f + 1f)*scl + strength*2f + offset);
                 Draw.color(team.color);
@@ -488,16 +488,16 @@ public class CoreBlock extends StorageBlock{
 
             //two passes for consistent lighting
             for(int j = 0; j < 2; j++){
-                for(int i = 0; i < 4; i++){
-                    var reg = i >= 2 ? thruster2 : thruster1;
-                    float rot = (i * 90) + rotation % 90f;
+                for(int i = 0; i < 6; i++){
+                    var reg = i >= 3 ? thruster2 : thruster1;
+                    float rot = (i * 60) + rotation % 60f;
                     Tmp.v1.trns(rot, length * Draw.xscl);
 
                     //second pass applies extra layer of shading
                     if(j == 1){
-                        Tmp.v1.rotate(-90f);
-                        Draw.alpha((rotation % 90f) / 90f * alpha);
-                        rot -= 90f;
+                        Tmp.v1.rotate(-60f);
+                        Draw.alpha((rotation % 60f) / 60f * alpha);
+                        rot -= 60f;
                         Draw.rect(reg, x + Tmp.v1.x, y + Tmp.v1.y, rot);
                     }else{
                         Draw.alpha(alpha);
@@ -510,10 +510,10 @@ public class CoreBlock extends StorageBlock{
 
         public void drawThrusters(float frame){
             float length = thrusterLength * (frame - 1f) - 1f/4f;
-            for(int i = 0; i < 4; i++){
-                var reg = i >= 2 ? thruster2 : thruster1;
-                float dx = Geometry.d4x[i] * length, dy = Geometry.d4y[i] * length;
-                Draw.rect(reg, x + dx, y + dy, i * 90);
+            for(int i = 0; i < 6; i++){
+                var reg = i >= 3 ? thruster2 : thruster1;
+                Tmp.v1.trns(i * 60, length);
+                Draw.rect(reg, x + Tmp.v1.x, y + Tmp.v1.y, i * 60);
             }
         }
 
@@ -767,10 +767,10 @@ public class CoreBlock extends StorageBlock{
 
             Lines.stroke(1f, Pal.accent);
             Cons<Building> outline = b -> {
-                for(int i = 0; i < 4; i++){
-                    Point2 p = Geometry.d8edge[i];
-                    float offset = -Math.max(b.block.size - 1, 0) / 2f * tilesize;
-                    Draw.rect("block-select", b.x + offset * p.x, b.y + offset * p.y, i * 90);
+                for(int i = 0; i < 6; i++){
+                    float offset = Math.max(b.block.size - 1, 0) / 2f * tilesize * 1.1f;
+                    Tmp.v1.trns(30 + i * 60, offset);
+                    Draw.rect("block-select", b.x + Tmp.v1.x, b.y + Tmp.v1.y, i * 60);
                 }
             };
             team.cores().each(core -> {

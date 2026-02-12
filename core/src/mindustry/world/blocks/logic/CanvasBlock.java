@@ -88,8 +88,9 @@ public class CanvasBlock extends Block{
             //O(N^2), awful
             list.each(other -> {
                 if(other.block == this){
-                    for(int i = 0; i < 4; i++){
-                        if(other.x == plan.x + Geometry.d4x(i) * size && other.y == plan.y + Geometry.d4y(i) * size){
+                    for(int i = 0; i < 6; i++){
+                        Point2 p = Hex.nearby(plan.x, plan.y, i, size);
+                        if(other.x == p.x && other.y == p.y){
                             tempBlend |= (1 << i);
                         }
                     }
@@ -106,17 +107,17 @@ public class CanvasBlock extends Block{
             Draw.flush(); //texture is reused, so flush it now
 
             //code duplication, awful
-            for(int i = 0; i < 4; i ++){
+            for(int i = 0; i < 6; i ++){
                 if((blending & (1 << i)) == 0){
-                    Draw.rect(i >= 2 ? side2 : side1, x, y, i * 90);
+                    Draw.rect(i >= 3 ? side2 : side1, x, y, i * 60);
 
-                    if((blending & (1 << ((i + 1) % 4))) != 0){
-                        Draw.rect(i >= 2 ? corner2 : corner1, x, y, i * 90);
+                    if((blending & (1 << ((i + 1) % 6))) != 0){
+                        Draw.rect(i >= 3 ? corner2 : corner1, x, y, i * 60);
                     }
 
-                    if((blending & (1 << (Mathf.mod(i - 1, 4)))) != 0){
+                    if((blending & (1 << (Mathf.mod(i - 1, 6)))) != 0){
                         Draw.yscl = -1f;
-                        Draw.rect(i >= 2 ? corner2 : corner1, x, y, i * 90);
+                        Draw.rect(i >= 3 ? corner2 : corner1, x, y, i * 60);
                         Draw.yscl = 1f;
                     }
                 }
@@ -222,8 +223,9 @@ public class CanvasBlock extends Block{
             super.onProximityUpdate();
 
             blending = 0;
-            for(int i = 0; i < 4; i++){
-                if(blends(world.tile(tile.x + Geometry.d4[i].x * size, tile.y + Geometry.d4[i].y * size))) blending |= (1 << i);
+            for(int i = 0; i < 6; i++){
+                Point2 p = Hex.nearby(tile.x, tile.y, i, size);
+                if(blends(world.tile(p.x, p.y))) blending |= (1 << i);
             }
         }
 
@@ -271,17 +273,17 @@ public class CanvasBlock extends Block{
             float pad = blending == 0 ? padding : 0f;
 
             Draw.rect(Tmp.tr1, x, y, size * tilesize - pad, size * tilesize - pad);
-            for(int i = 0; i < 4; i ++){
+            for(int i = 0; i < 6; i ++){
                 if((blending & (1 << i)) == 0){
-                    Draw.rect(i >= 2 ? side2 : side1, x, y, i * 90);
+                    Draw.rect(i >= 3 ? side2 : side1, x, y, i * 60);
 
-                    if((blending & (1 << ((i + 1) % 4))) != 0){
-                        Draw.rect(i >= 2 ? corner2 : corner1, x, y, i * 90);
+                    if((blending & (1 << ((i + 1) % 6))) != 0){
+                        Draw.rect(i >= 3 ? corner2 : corner1, x, y, i * 60);
                     }
 
-                    if((blending & (1 << (Mathf.mod(i - 1, 4)))) != 0){
+                    if((blending & (1 << (Mathf.mod(i - 1, 6)))) != 0){
                         Draw.yscl = -1f;
-                        Draw.rect(i >= 2 ? corner2 : corner1, x, y, i * 90);
+                        Draw.rect(i >= 3 ? corner2 : corner1, x, y, i * 60);
                         Draw.yscl = 1f;
                     }
                 }
