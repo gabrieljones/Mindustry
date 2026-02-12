@@ -510,13 +510,8 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public Building nearby(int rotation){
-        return switch(rotation){
-            case 0 -> world.build(tile.x + 1, tile.y);
-            case 1 -> world.build(tile.x, tile.y + 1);
-            case 2 -> world.build(tile.x - 1, tile.y);
-            case 3 -> world.build(tile.x, tile.y - 1);
-            default -> null;
-        };
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation);
+        return world.build(p.x, p.y);
     }
 
     public byte relativeTo(Tile tile){
@@ -545,25 +540,29 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     /** Multiblock front. */
     public @Nullable Building front(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation).x * trns, Geometry.d4(rotation).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Multiblock back. */
     public @Nullable Building back(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation + 2).x * trns, Geometry.d4(rotation + 2).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation + 3, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Multiblock left. */
     public @Nullable Building left(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation + 1).x * trns, Geometry.d4(rotation + 1).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation + 5, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Multiblock right. */
     public @Nullable Building right(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation + 3).x * trns, Geometry.d4(rotation + 3).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation + 1, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Any class that overrides this method and changes the value must call Vars.fogControl.forceUpdate(team). */

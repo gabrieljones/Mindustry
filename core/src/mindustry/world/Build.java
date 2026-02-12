@@ -280,8 +280,9 @@ public class Build{
                 if(tile != null && !tile.floor().isLiquid) return true;
             }
         }else{
-            for(Point2 point : Geometry.d4){
-                Tile tile = world.tile(x + point.x, y + point.y);
+            for(int i = 0; i < 6; i++){
+                Point2 p = Hex.nearby(x, y, i);
+                Tile tile = world.tile(p.x, p.y);
                 if(tile != null && !tile.floor().isLiquid) return true;
             }
         }
@@ -300,8 +301,9 @@ public class Build{
                 if(tile != null && !tile.floor().isDeep()) return true;
             }
         }else{
-            for(Point2 point : Geometry.d4){
-                Tile tile = world.tile(x + point.x, y + point.y);
+            for(int i = 0; i < 6; i++){
+                Point2 p = Hex.nearby(x, y, i);
+                Tile tile = world.tile(p.x, p.y);
                 if(tile != null && !tile.floor().isDeep()) return true;
             }
             Tile tile = world.tile(x, y);
