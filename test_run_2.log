@@ -1,0 +1,386 @@
+
+> Configure project :
+Compiling with build: 'custom build'
+
+> Configure project :android
+No keystore property found. Releases will be unsigned.
+Configuration 'natives' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+
+> Configure project :desktop
+Scheduling sprite packing.
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.2.2) was tested up to compileSdk = 34.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+
+> Task :clearCache
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kaptGenerateStubsKotlin SKIPPED
+> Task :kaptKotlin SKIPPED
+> Task :compileKotlin NO-SOURCE
+> Task :compileJava NO-SOURCE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :jar UP-TO-DATE
+> Task :kaptGenerateStubsTestKotlin SKIPPED
+> Task :kaptTestKotlin SKIPPED
+> Task :compileTestKotlin NO-SOURCE
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :annotations:clearCache
+> Task :annotations:compileJava UP-TO-DATE
+> Task :core:clearCache
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :annotations:processResources UP-TO-DATE
+> Task :annotations:classes UP-TO-DATE
+> Task :annotations:jar UP-TO-DATE
+> Task :core:kaptGenerateStubsKotlin SKIPPED
+> Task :core:preGen UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :android:clearCache
+> Task :android:preBuild UP-TO-DATE
+> Task :android:preDebugBuild UP-TO-DATE
+> Task :android:javaPreCompileDebug UP-TO-DATE
+> Task :android:checkDebugAarMetadata UP-TO-DATE
+> Task :android:generateDebugResValues UP-TO-DATE
+> Task :android:mapDebugSourceSetPaths UP-TO-DATE
+> Task :android:generateDebugResources UP-TO-DATE
+> Task :android:mergeDebugResources UP-TO-DATE
+> Task :android:packageDebugResources UP-TO-DATE
+> Task :android:parseDebugLocalResources UP-TO-DATE
+> Task :android:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :android:extractDeepLinksDebug UP-TO-DATE
+> Task :android:processDebugMainManifest UP-TO-DATE
+> Task :android:processDebugManifest UP-TO-DATE
+> Task :android:processDebugManifestForPackage UP-TO-DATE
+> Task :android:processDebugResources UP-TO-DATE
+> Task :android:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :android:processDebugJavaRes NO-SOURCE
+> Task :android:processDebugUnitTestJavaRes NO-SOURCE
+> Task :android:preReleaseBuild UP-TO-DATE
+> Task :android:javaPreCompileRelease UP-TO-DATE
+> Task :android:checkReleaseAarMetadata UP-TO-DATE
+> Task :android:generateReleaseResValues UP-TO-DATE
+> Task :android:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :android:generateReleaseResources UP-TO-DATE
+> Task :android:mergeReleaseResources UP-TO-DATE
+> Task :android:packageReleaseResources UP-TO-DATE
+> Task :android:parseReleaseLocalResources UP-TO-DATE
+> Task :android:createReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :android:extractDeepLinksRelease UP-TO-DATE
+> Task :android:processReleaseMainManifest UP-TO-DATE
+> Task :android:processReleaseManifest UP-TO-DATE
+> Task :android:processReleaseManifestForPackage UP-TO-DATE
+> Task :android:processReleaseResources UP-TO-DATE
+> Task :android:preReleaseUnitTestBuild UP-TO-DATE
+> Task :android:javaPreCompileReleaseUnitTest UP-TO-DATE
+> Task :android:processReleaseJavaRes NO-SOURCE
+> Task :android:processReleaseUnitTestJavaRes NO-SOURCE
+> Task :annotations:compileTestJava NO-SOURCE
+> Task :annotations:processTestResources NO-SOURCE
+> Task :annotations:testClasses UP-TO-DATE
+> Task :annotations:test NO-SOURCE
+> Task :core:processTestResources NO-SOURCE
+> Task :desktop:clearCache
+> Task :desktop:processResources NO-SOURCE
+> Task :desktop:processTestResources NO-SOURCE
+> Task :ios:clearCache
+> Task :ios:processResources NO-SOURCE
+> Task :ios:processTestResources NO-SOURCE
+> Task :server:clearCache
+> Task :server:processResources NO-SOURCE
+> Task :server:processTestResources NO-SOURCE
+> Task :tests:clearCache
+> Task :tests:compileJava NO-SOURCE
+> Task :tests:processResources NO-SOURCE
+> Task :tests:classes UP-TO-DATE
+> Task :tests:processTestResources UP-TO-DATE
+> Task :tools:clearCache
+> Task :tools:processResources NO-SOURCE
+> Task :tools:processTestResources NO-SOURCE
+
+> Task :core:kaptKotlin
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+warning: Supported source version 'RELEASE_8' from annotation processor 'org.jetbrains.kotlin.kapt3.base.ProcessorWrapper' less than -source '21'
+
+> Task :core:compileKotlin SKIPPED
+
+> Task :core:compileJava
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+3 warnings
+
+> Task :core:classes
+> Task :core:jar
+> Task :core:kaptGenerateStubsTestKotlin UP-TO-DATE
+> Task :android:compileDebugJavaWithJavac UP-TO-DATE
+> Task :android:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :android:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :android:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :android:testDebugUnitTest NO-SOURCE
+> Task :android:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :android:bundleReleaseClassesToRuntimeJar UP-TO-DATE
+> Task :android:bundleReleaseClassesToCompileJar UP-TO-DATE
+> Task :android:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :android:testReleaseUnitTest NO-SOURCE
+> Task :android:test UP-TO-DATE
+> Task :core:kaptTestKotlin UP-TO-DATE
+> Task :core:compileTestKotlin NO-SOURCE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:testClasses UP-TO-DATE
+> Task :core:test NO-SOURCE
+> Task :desktop:compileJava UP-TO-DATE
+> Task :desktop:classes UP-TO-DATE
+> Task :desktop:compileTestJava NO-SOURCE
+> Task :desktop:testClasses UP-TO-DATE
+> Task :desktop:test NO-SOURCE
+> Task :ios:compileJava UP-TO-DATE
+> Task :ios:classes UP-TO-DATE
+> Task :ios:compileTestJava NO-SOURCE
+> Task :ios:testClasses UP-TO-DATE
+> Task :ios:test NO-SOURCE
+> Task :server:compileJava UP-TO-DATE
+> Task :server:classes UP-TO-DATE
+> Task :server:compileTestJava NO-SOURCE
+> Task :server:testClasses UP-TO-DATE
+> Task :server:test NO-SOURCE
+> Task :tests:compileTestJava UP-TO-DATE
+> Task :tests:testClasses UP-TO-DATE
+
+> Task :tests:test
+
+ApplicationTests > sorterOutputCorrect() FAILED
+    org.opentest4j.AssertionFailedError: expected: <coal> but was: <copper>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.sorterOutputCorrect(ApplicationTests.java:487)
+
+ApplicationTests > routerOutputAll() FAILED
+    org.opentest4j.AssertionFailedError: expected: <coal> but was: <null>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.routerOutputAll(ApplicationTests.java:517)
+
+ApplicationTests > edges() FAILED
+    org.opentest4j.AssertionFailedError: expected: <(1, 1)> but was: <(0, 1)>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.edges(ApplicationTests.java:720)
+
+ApplicationTests > liquidJunctionOutput() FAILED
+    org.opentest4j.AssertionFailedError: Liquid not moved through junction ==> expected: <true> but was: <false>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at app//org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:193)
+        at app//ApplicationTests.liquidJunctionOutput(ApplicationTests.java:430)
+
+ApplicationTests > junctionOutputCorrect() FAILED
+    org.opentest4j.AssertionFailedError: expected: <coal> but was: <copper>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.junctionOutputCorrect(ApplicationTests.java:543)
+
+ApplicationTests > conveyorBench() STANDARD_OUT
+    1925.0778ms to process 21127 items
+
+ModTestAllure > begin() STANDARD_OUT
+    [0b04-01-solar-heater.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-03-thermal-boiler.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-04-gaseous-reactor.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-05-energia-converter.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [annihilatron.hjson]: Unknown field 'visualElevationScl' for class 'UnitType'
+    [chlorine.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7.98e50'
+    [granite.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 4.24e87'
+    [wandura.hjson]: Unknown field 'allowWaveSimulation' for class 'Planet'
+    Modded units: [allure-0b00-00-victory-exit, allure-0b00-00-victory-spawn, allure-0b00-00-victory-transit, allure-0b00-01-reckless-exit, allure-0b00-01-reckless-spawn, allure-0b00-01-reckless-transit, allure-0b00-02-endeavour-exit, allure-0b00-02-endeavour-spawn, allure-0b00-02-endeavour-transit, allure-0b00-03-forefront-spawn, allure-0b00-03-forefront-transit, allure-0b00-04-barricade-transit, allure-0b00-05-harmony-exit, allure-0b00-05-harmony-spawn, allure-0b00-05-harmony-transit, allure-0b00-07-ultimatum-spawn, allure-0b00-07-ultimatum-transit, allure-0b00-08-valiance-spawn, allure-0b00-08-valiance-transit, allure-0b00-15-leviathan-spawn, allure-0b00-15-leviathan-transit, allure-0b00-16-fearless-exit, allure-0b00-16-fearless-spawn, allure-0b00-16-fearless-transit, allure-0b00-17-hellfire-exit, allure-0b00-17-hellfire-spawn, allure-0b00-17-hellfire-transit, allure-0b00-victory, allure-0b01-reckless, allure-0b02-endeavour, allure-0b03-forefront, allure-0b04-barricade, allure-0b05-harmony, allure-0b07-ultimatum, allure-0b08-valiance, allure-0b11-exodus, allure-0b15-leviathan, allure-0b16-fearless, allure-0b17-hellfire, allure-0bc0-construct, allure-0bc1-recurrence, allure-0bc2-maintenance, allure-0bc3-industrialism, allure-0bs0-small-shield, allure-0bs1-medium-shield, allure-0bs3-shield-boost, allure-0r00-00-13-meras-spawner, allure-0r00-00-14-extelsus-spawner, allure-0r00-01-00-regiia-deamth, allure-0r00-01-07-saiace-deamth, allure-0r00-01-13-meras-deamth, allure-0r00-01-14-extelsus-deamth, allure-0r00-regiia, allure-0r01-kelta, allure-0r02-meron, allure-0r03-calsaten, allure-0r04-bantres, allure-0r05-qsentrex, allure-0r06-pentense, allure-0r07-saiace, allure-0r08-telsenis, allure-0r10-atriasa, allure-0r11-varias, allure-0r13-meras, allure-0r14-extelsus, allure-0rm-ponterx, allure-1s00-acari, allure-1v00-harass, allure-1v06-conflict, allure-1v07-strife, allure-1v08-dispute, allure-1v09-skirmish, allure-1v10-hostility, allure-1v11-war, allure-1v12-oreodytes, allure-1v15-acilius, allure-1v18-bulwark, allure-1v19-palisade, allure-1v24-spark, allure-1v25-wildfire, allure-1v26-ember, allure-1v30-piscicola, allure-1v31-haemopis, allure-1v34-haementeria, allure-aftermath-singularity, allure-aftermath, allure-aggravate, allure-annihilatron, allure-assault-construction-drone, allure-cleave-missile, allure-concuss, allure-continued-wrath, allure-defend, allure-discharge-energia, allure-electric-construction-drone, allure-epsilon, allure-flameUnit, allure-guard, allure-infini0, allure-infini1, allure-infini2, allure-infini3, allure-infini4, allure-infini5, allure-infini6, allure-infini7, allure-infini8, allure-infini9, allure-instigate, allure-localize, allure-luminance-lightning, allure-luminance-missile, allure-miss, allure-missile0, allure-missile1, allure-multiply-pulse, allure-occlusion, allure-pi, allure-premonition, allure-protect, allure-qsentrex-missile, allure-rebel-nuke, allure-rebel-trap, allure-regiia-missile, allure-relentless-fury, allure-shield, allure-shootBigUnit, allure-shootUnit, allure-small-red-builder, allure-specialist-construction-drone, allure-telsenis-missile-l, allure-telsenis-missile-r, allure-temp-harmony-spawn, allure-temp-harmony, allure-that-one-doomlaser, allure-the-voices-are-telling-me-to-stop-holding-them-in-the-closet, allure-they-want-your-soul-for-their-cruel-experiments, allure-vertex-decoy, allure-wisp]
+
+PatcherTests STANDARD_OUT
+    [0b04-01-solar-heater.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-03-thermal-boiler.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-04-gaseous-reactor.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-05-energia-converter.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [annihilatron.hjson]: Unknown field 'visualElevationScl' for class 'UnitType'
+    [chlorine.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7.98e50'
+    [granite.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 4.24e87'
+    [wandura.hjson]: Unknown field 'allowWaveSimulation' for class 'Planet'
+
+PatcherTests > unknownFieldWarn() STANDARD_OUT
+    [ContentPatcher] Unknown field 'frogs' for class 'BasicBulletType'
+    [ContentPatcher] Unknown field 'frogs' for class 'UnitType'
+
+PatcherTests > assignStringToObject() STANDARD_OUT
+    [ContentPatcher] Failed to read value dagger.weapons = unit.dagger.weapons: [
+    frog
+    ]: (type = class arc.struct.Seq elementType = class mindustry.type.Weapon)
+    SerializationException: Expecting an object, but found: 'frog'
+
+PatcherTests > noResolution() STANDARD_OUT
+    [ContentPatcher] Field 'public java.lang.Object mindustry.world.Block.lastConfig' cannot be edited.
+
+PatcherTests > noIdAssign() STANDARD_OUT
+    [ContentPatcher] Field 'public short mindustry.ctype.Content.id' cannot be edited.
+
+PatcherTests > gibberish() STANDARD_OUT
+    Failed to apply patch: }[35209509()jfkjhadsf,
+    ,,,,,[]
+    ]{
+    : arc.util.serialization.Jval$JsonParseException: Found '}' where a key name was expected (check your syntax or use quotes if the key name includes {}[],: or whitespace) at 1:0
+	at arc.util.serialization.Jval$Hparser.error(Jval.java:852)
+	at arc.util.serialization.Jval$Hparser.readName(Jval.java:567)
+	at arc.util.serialization.Jval$Hparser.readObject(Jval.java:536)
+	at arc.util.serialization.Jval$Hparser.parse(Jval.java:427)
+	at arc.util.serialization.Jval.read(Jval.java:67)
+	at mindustry.mod.DataPatcher.apply(DataPatcher.java:92)
+	at PatcherTests.gibberish(PatcherTests.java:344)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:688)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:210)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:206)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:131)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+
+PatcherTests > cannotPatch() STANDARD_OUT
+    [ContentPatcher] Field 'public int mindustry.world.Block.size' cannot be edited.
+
+200 tests completed, 5 failed
+
+> Task :tests:test FAILED
+
+[Incubating] Problems report is available at: file:///app/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':tests:test'.
+> There were failing tests. See the report at: file:///app/tests/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 49s
+58 actionable tasks: 13 executed, 45 up-to-date

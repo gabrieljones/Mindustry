@@ -1,5 +1,6 @@
 package mindustry.world;
 
+import arc.func.*;
 import arc.math.*;
 import arc.math.geom.*;
 import mindustry.Vars;
@@ -36,6 +37,20 @@ public class Hex{
             cy = p.y;
         }
         return new Point2(cx, cy);
+    }
+
+    public static void getRing(int x, int y, int radius, Intc2 cons){
+        Point2 p = nearby(x, y, 4, radius);
+        int cx = p.x, cy = p.y;
+
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < radius; j++){
+                cons.get(cx, cy);
+                p = nearby(cx, cy, i);
+                cx = p.x;
+                cy = p.y;
+            }
+        }
     }
 
     public static float worldX(int x, int y){
