@@ -216,34 +216,29 @@ public class Tile implements Position, QuadTreeObject, Displayable{
 
         //set up multiblock
         if(block.isMultiblock()){
-            int offset = -(block.size - 1) / 2;
             Building entity = this.build;
             Block block = this.block;
 
             //two passes: first one clears, second one sets
             for(int pass = 0; pass < 2; pass++){
-                for(int dx = 0; dx < block.size; dx++){
-                    for(int dy = 0; dy < block.size; dy++){
-                        int worldx = dx + offset + x;
-                        int worldy = dy + offset + y;
-                        if(!(worldx == x && worldy == y)){
-                            Tile other = world.tile(worldx, worldy);
+                int p = pass;
+                block.iterateTaken(x, y, (worldx, worldy) -> {
+                    if(!(worldx == x && worldy == y)){
+                        Tile other = world.tile(worldx, worldy);
 
-                            if(other != null){
-                                if(pass == 0){
-                                    //first pass: delete existing blocks - this should automatically trigger removal if overlap exists
-                                    //TODO pointless setting air to air?
-                                    other.setBlock(Blocks.air);
-                                }else{
-                                    //second pass: assign changed data
-                                    //assign entity and type to blocks, so they act as proxies for this one
-                                    other.build = entity;
-                                    other.block = block;
-                                }
+                        if(other != null){
+                            if(p == 0){
+                                //first pass: delete existing blocks - this should automatically trigger removal if overlap exists
+                                other.setBlock(Blocks.air);
+                            }else{
+                                //second pass: assign changed data
+                                //assign entity and type to blocks, so they act as proxies for this one
+                                other.build = entity;
+                                other.block = block;
                             }
                         }
                     }
-                }
+                });
             }
 
             this.build = entity;
@@ -436,13 +431,10 @@ public class Tile implements Position, QuadTreeObject, Displayable{
      */
     public void getLinkedTiles(Cons<Tile> cons){
         if(block.isMultiblock()){
-            int size = block.size, o = block.sizeOffset;
-            for(int dx = 0; dx < size; dx++){
-                for(int dy = 0; dy < size; dy++){
-                    Tile other = world.tile(x + dx + o, y + dy + o);
-                    if(other != null) cons.get(other);
-                }
-            }
+            block.iterateTaken(x, y, (cx, cy) -> {
+                Tile other = world.tile(cx, cy);
+                if(other != null) cons.get(other);
+            });
         }else{
             cons.get(this);
         }
@@ -474,24 +466,21 @@ public class Tile implements Position, QuadTreeObject, Displayable{
      */
     public void getLinkedTilesAs(Block block, Cons<Tile> tmpArray){
         if(block.isMultiblock()){
-            int size = block.size, o = block.sizeOffset;
-            for(int dx = 0; dx < size; dx++){
-                for(int dy = 0; dy < size; dy++){
-                    Tile other = world.tile(x + dx + o, y + dy + o);
-                    if(other != null) tmpArray.get(other);
-                }
-            }
+            block.iterateTaken(x, y, (cx, cy) -> {
+                Tile other = world.tile(cx, cy);
+                if(other != null) tmpArray.get(other);
+            });
         }else{
             tmpArray.get(this);
         }
     }
 
     public Rect getHitbox(Rect rect){
-        return rect.setCentered(drawx(), drawy(), block.size * tilesize, block.size * tilesize);
+        return block.bounds(x, y, rect);
     }
 
     public Rect getBounds(Rect rect){
-        return rect.set(x * tilesize - tilesize/2f, y * tilesize - tilesize/2f, tilesize, tilesize);
+        return rect.setCentered(Hex.worldX(x, y), Hex.worldY(y), tilesize, tilesize);
     }
 
     @Override
@@ -561,27 +550,22 @@ public class Tile implements Position, QuadTreeObject, Displayable{
             //remove this tile's dangling entities
             if(build.block.isMultiblock()){
                 int cx = build.tileX(), cy = build.tileY();
-                int size = build.block.size;
-                int offsetx = -(size - 1) / 2;
-                int offsety = -(size - 1) / 2;
-                for(int dx = 0; dx < size; dx++){
-                    for(int dy = 0; dy < size; dy++){
-                        Tile other = world.tile(cx + dx + offsetx, cy + dy + offsety);
-                        if(other != null){
-                            //reset entity and block *manually* - thus, preChanged() will not be called anywhere else, for multiblocks
-                            if(other != this){ //do not remove own entity so it can be processed in changed()
-                                //manually call pre-change event for other tile
-                                other.firePreChanged();
+                build.block.iterateTaken(cx, cy, (worldx, worldy) -> {
+                    Tile other = world.tile(worldx, worldy);
+                    if(other != null){
+                        //reset entity and block *manually* - thus, preChanged() will not be called anywhere else, for multiblocks
+                        if(other != this){ //do not remove own entity so it can be processed in changed()
+                            //manually call pre-change event for other tile
+                            other.firePreChanged();
 
-                                other.build = null;
-                                other.block = Blocks.air;
+                            other.build = null;
+                            other.block = Blocks.air;
 
-                                //manually call changed event
-                                other.fireChanged();
-                            }
+                            //manually call changed event
+                            other.fireChanged();
                         }
                     }
-                }
+                });
             }
         }
     }

@@ -497,12 +497,12 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public void eachEdge(Cons<Tile> cons){
-        for(var edge : block.getEdges()){
-            Tile other = world.tile(tile.x + edge.x, tile.y + edge.y);
+        block.iterateEdges(tile.x, tile.y, (ex, ey) -> {
+            Tile other = world.tile(ex, ey);
             if(other != null){
                 cons.get(other);
             }
-        }
+        });
     }
 
     public Building nearby(int dx, int dy){

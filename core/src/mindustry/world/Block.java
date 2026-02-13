@@ -460,8 +460,9 @@ public class Block extends UnlockableContent implements Senseable{
     public float percentSolid(int x, int y){
         Tile tile = world.tile(x, y);
         if(tile == null) return 0;
+        float area = 3 * size * (size - 1) + 1;
         return tile.getLinkedTilesAs(this, tempTiles)
-            .sumf(other -> !other.floor().isLiquid ? 1f : 0f) / size / size;
+            .sumf(other -> !other.floor().isLiquid ? 1f : 0f) / area;
     }
 
     public void drawEnvironmentLight(Tile tile){
@@ -880,12 +881,12 @@ public class Block extends UnlockableContent implements Senseable{
         out.set(p.x, p.y);
     }
 
-    public Point2[] getEdges(){
-        return Edges.getEdges(size);
+    public void iterateEdges(int x, int y, Intc2 consumer){
+        Edges.iterateEdges(size, x, y, consumer);
     }
 
-    public Point2[] getInsideEdges(){
-        return Edges.getInsideEdges(size);
+    public void iterateInsideEdges(int x, int y, Intc2 consumer){
+        Edges.iterateInsideEdges(size, x, y, consumer);
     }
 
     /** Iterate through ever grid position taken up by this block. */
@@ -945,7 +946,7 @@ public class Block extends UnlockableContent implements Senseable{
     }
 
     public Rect bounds(int x, int y, Rect rect){
-        return rect.setSize(size * tilesize).setCenter(x * tilesize + offset, y * tilesize + offset);
+        return rect.setSize((size * 2 - 1) * tilesize).setCenter(Hex.worldX(x, y) + offset, Hex.worldY(y) + offset);
     }
 
     public boolean isMultiblock(){
@@ -1363,8 +1364,8 @@ public class Block extends UnlockableContent implements Senseable{
             acceptsItems = true;
         }
 
-        offset = ((size + 1) % 2) * tilesize / 2f;
-        sizeOffset = -((size - 1) / 2);
+        offset = 0f;
+        sizeOffset = 0;
 
         if(requirements.length > 0 && buildTime < 0){
             buildTime = 0f;
