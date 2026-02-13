@@ -91,11 +91,11 @@ public class StackConveyor extends Block implements Autotiler{
         if(bits == null) return;
 
         TextureRegion region = regions[0];
-        Draw.rect(region, plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(region, plan.drawx(), plan.drawy(), plan.rotation * 60);
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 6; i++){
             if((bits[3] & (1 << i)) == 0){
-                Draw.rect(edgeRegion, plan.drawx(), plan.drawy(), (plan.rotation - i) * 90);
+                Draw.rect(edgeRegion, plan.drawx(), plan.drawy(), (plan.rotation - i) * 60);
             }
         }
     }
@@ -124,25 +124,27 @@ public class StackConveyor extends Block implements Autotiler{
 
             Draw.rect(regions[state], x, y, rotdeg());
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if((blendprox & (1 << i)) == 0){
-                    Draw.rect(edgeRegion, x, y, (rotation - i) * 90);
+                    Draw.rect(edgeRegion, x, y, (rotation - i) * 60);
                 }
             }
 
             //draw inputs
             if(state == stateLoad){
-                for(int i = 0; i < 4; i++){
-                    int dir = Mathf.mod(rotation - i, 4);
+                for(int i = 0; i < 6; i++){
+                    int dir = Mathf.mod(rotation - i, 6);
                     var near = nearby(dir);
                     if((blendprox & (1 << i)) != 0 && i != 0 && near != null && !near.block.squareSprite){
-                        Draw.rect(sliced(regions[0], SliceMode.bottom), x + Geometry.d4x(dir) * tilesize*0.75f, y + Geometry.d4y(dir) * tilesize*0.75f, (float)(dir*90));
+                        Tmp.v1.trns(dir * 60, tilesize*0.75f);
+                        Draw.rect(sliced(regions[0], SliceMode.bottom), x + Tmp.v1.x, y + Tmp.v1.y, (float)(dir*60));
                     }
                 }
             }else if(state == stateUnload){ //front unload
                 //TOOD hacky front check
                 if((blendprox & (1)) != 0 && front() != null && !front().block.squareSprite){
-                    Draw.rect(sliced(regions[0], SliceMode.top), x + Geometry.d4x(rotation) * tilesize*0.75f, y + Geometry.d4y(rotation) * tilesize*0.75f, rotation * 90f);
+                    Tmp.v1.trns(rotation * 60, tilesize*0.75f);
+                    Draw.rect(sliced(regions[0], SliceMode.top), x + Tmp.v1.x, y + Tmp.v1.y, rotation * 60f);
                 }
             }
 
@@ -155,7 +157,7 @@ public class StackConveyor extends Block implements Autotiler{
                 Draw.z(Layer.blockAdditive);
                 Draw.color(glowColor, glowAlpha * power.status);
                 Draw.blend(Blending.additive);
-                Draw.rect(state == stateLoad ? edgeGlowRegion : glowRegion, x, y, rotation * 90);
+                Draw.rect(state == stateLoad ? edgeGlowRegion : glowRegion, x, y, rotation * 60);
                 Draw.blend();
                 Draw.color();
                 Draw.z(Layer.block - 0.1f);
@@ -171,10 +173,10 @@ public class StackConveyor extends Block implements Autotiler{
             Tmp.v1.interpolate(Tmp.v2, 1f - cooldown, Interp.linear);
 
             //rotation
-            float a = (fromRot%4) * 90;
-            float b = (rotation%4) * 90;
-            if((fromRot%4) == 3 && (rotation%4) == 0) a = -1 * 90;
-            if((fromRot%4) == 0 && (rotation%4) == 3) a =  4 * 90;
+            float a = (fromRot%6) * 60;
+            float b = (rotation%6) * 60;
+            if((fromRot%6) == 5 && (rotation%6) == 0) a = -1 * 60;
+            if((fromRot%6) == 0 && (rotation%6) == 5) a =  6 * 60;
 
             if(glowRegion.found()){
                 Draw.z(Layer.blockAdditive + 0.01f);
@@ -192,7 +194,7 @@ public class StackConveyor extends Block implements Autotiler{
         @Override
         public void dropped(){
             super.dropped();
-            var prev = Geometry.d4[(rotation + 2) % 4];
+            var prev = Hex.getOffset(tile.y, (rotation + 3) % 6);
             if(items.any()){
                 link = Point2.pack(tile.x + prev.x, tile.y + prev.y);
                 cooldown = 0f;
@@ -228,8 +230,8 @@ public class StackConveyor extends Block implements Autotiler{
             if(!headless){
                 blendprox = 0;
 
-                for(int i = 0; i < 4; i++){
-                    if(blends(tile, rotation, i) && (state != stateUnload || outputRouter || i == 0 || nearby(Mathf.mod(rotation - i, 4)) instanceof StackConveyorBuild)){
+                for(int i = 0; i < 6; i++){
+                    if(blends(tile, rotation, i) && (state != stateUnload || outputRouter || i == 0 || nearby(Mathf.mod(rotation - i, 6)) instanceof StackConveyorBuild)){
                         blendprox |= (1 << i);
                     }
                 }

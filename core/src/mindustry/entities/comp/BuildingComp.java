@@ -363,16 +363,16 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
 
     public @Nullable Tile findClosestEdge(Position to, Boolf<Tile> solid){
         if(to == null) return null;
-        Tile best = null;
-        float mindst = 0f;
-        for(var point : Edges.getEdges(block.size)){
-            Tile other = Vars.world.tile(tile.x + point.x, tile.y + point.y);
-            if(other != null && !solid.get(other) && (best == null || to.dst2(other) < mindst)){
-                best = other;
-                mindst = other.dst2(to);
+        Tile[] best = {null};
+        float[] mindst = {0f};
+        Hex.getRing(tile.x, tile.y, block.size, (x, y) -> {
+            Tile other = Vars.world.tile(x, y);
+            if(other != null && !solid.get(other) && (best[0] == null || to.dst2(other) < mindst[0])){
+                best[0] = other;
+                mindst[0] = other.dst2(to);
             }
-        }
-        return best;
+        });
+        return best[0];
     }
 
     /** Configure with the current, local player. */
@@ -497,12 +497,12 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public void eachEdge(Cons<Tile> cons){
-        for(var edge : block.getEdges()){
-            Tile other = world.tile(tile.x + edge.x, tile.y + edge.y);
+        block.iterateEdges(tile.x, tile.y, (ex, ey) -> {
+            Tile other = world.tile(ex, ey);
             if(other != null){
                 cons.get(other);
             }
-        }
+        });
     }
 
     public Building nearby(int dx, int dy){
@@ -510,13 +510,8 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public Building nearby(int rotation){
-        return switch(rotation){
-            case 0 -> world.build(tile.x + 1, tile.y);
-            case 1 -> world.build(tile.x, tile.y + 1);
-            case 2 -> world.build(tile.x - 1, tile.y);
-            case 3 -> world.build(tile.x, tile.y - 1);
-            default -> null;
-        };
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation);
+        return world.build(p.x, p.y);
     }
 
     public byte relativeTo(Tile tile){
@@ -524,14 +519,7 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public byte relativeTo(Building build){
-        if(Math.abs(x - build.x) > Math.abs(y - build.y)){
-            if(x <= build.x - 1) return 0;
-            if(x >= build.x + 1) return 2;
-        }else{
-            if(y <= build.y - 1) return 1;
-            if(y >= build.y + 1) return 3;
-        }
-        return -1;
+        return tile.relativeTo(build.tile);
     }
 
     public byte relativeToEdge(Tile other){
@@ -545,25 +533,29 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     /** Multiblock front. */
     public @Nullable Building front(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation).x * trns, Geometry.d4(rotation).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Multiblock back. */
     public @Nullable Building back(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation + 2).x * trns, Geometry.d4(rotation + 2).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation + 3, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Multiblock left. */
     public @Nullable Building left(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation + 1).x * trns, Geometry.d4(rotation + 1).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation + 5, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Multiblock right. */
     public @Nullable Building right(){
         int trns = block.size/2 + 1;
-        return nearby(Geometry.d4(rotation + 3).x * trns, Geometry.d4(rotation + 3).y * trns);
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation + 1, trns);
+        return world.build(p.x, p.y);
     }
 
     /** Any class that overrides this method and changes the value must call Vars.fogControl.forceUpdate(team). */
@@ -576,12 +568,12 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public float rotdeg(){
-        return rotation * 90;
+        return rotation * 60f;
     }
 
     /** @return preferred rotation of main texture region to be drawn */
     public float drawrot(){
-        return block.rotate && block.rotateDraw ? rotation * 90 : 0f;
+        return block.rotate && block.rotateDraw ? rotation * 60f : 0f;
     }
 
     public Floor floor(){
@@ -809,11 +801,10 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
      * @return whether the payload was moved successfully
      */
     public boolean movePayload(Payload todump){
-        int trns = block.size/2 + 1;
-        Tile next = tile.nearby(Geometry.d4(rotation).x * trns, Geometry.d4(rotation).y * trns);
+        Building next = front();
 
-        if(next != null && next.build != null && next.build.team == team && next.build.acceptPayload(self(), todump)){
-            next.build.handlePayload(self(), todump);
+        if(next != null && next.team == team && next.acceptPayload(self(), todump)){
+            next.handlePayload(self(), todump);
             return true;
         }
 
@@ -1226,7 +1217,7 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
         TextureRegion region = renderer.blocks.cracks[block.size - 1][Mathf.clamp((int)((1f - healthf()) * BlockRenderer.crackRegions), 0, BlockRenderer.crackRegions-1)];
         Draw.colorl(0.2f, 0.1f + (1f - healthf())* 0.6f);
         //TODO could be random, flipped, pseudorandom, etc
-        Draw.rect(region, x, y, (id%4)*90);
+        Draw.rect(region, x, y, (id%6)*60f);
         Draw.color();
     }
 
@@ -1816,14 +1807,13 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
         onProximityRemoved();
         tmpTiles.clear();
 
-        Point2[] nearby = Edges.getEdges(block.size);
-        for(Point2 point : nearby){
-            Building other = world.build(tile.x + point.x, tile.y + point.y);
+        Hex.getRing(tile.x, tile.y, block.size, (x, y) -> {
+            Building other = world.build(x, y);
             //remove this tile from all nearby tile's proximities
             if(other != null){
                 tmpTiles.add(other);
             }
-        }
+        });
 
         for(Building other : tmpTiles){
             other.proximity.remove(self(), true);
@@ -1836,16 +1826,14 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
         tmpTiles.clear();
         proximity.clear();
 
-        Point2[] nearby = Edges.getEdges(block.size);
-        for(Point2 point : nearby){
-            Building other = world.build(tile.x + point.x, tile.y + point.y);
+        Hex.getRing(tile.x, tile.y, block.size, (x, y) -> {
+            Building other = world.build(x, y);
 
-            if(other == null || other.team != team) continue;
-
-            other.proximity.addUnique(self());
-
-            tmpTiles.add(other);
-        }
+            if(other != null && other.team == team){
+                other.proximity.addUnique(self());
+                tmpTiles.add(other);
+            }
+        });
 
         //using a set to prevent duplicates
         for(Building tile : tmpTiles){

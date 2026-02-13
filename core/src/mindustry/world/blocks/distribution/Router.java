@@ -102,7 +102,7 @@ public class Router extends Block{
                 unit.team(team);
                 unit.set(x, y);
 
-                int angle = Mathf.mod((int)((angleTo(unit.aimX(), unit.aimY()) + 45) / 90), 4);
+                int angle = Mathf.mod((int)((angleTo(unit.aimX(), unit.aimY()) + 30) / 60), 6);
 
                 if(unit.isShooting()){
                     Building other = nearby(rotation = angle);

@@ -460,8 +460,9 @@ public class Block extends UnlockableContent implements Senseable{
     public float percentSolid(int x, int y){
         Tile tile = world.tile(x, y);
         if(tile == null) return 0;
+        float area = 3 * size * (size - 1) + 1;
         return tile.getLinkedTilesAs(this, tempTiles)
-            .sumf(other -> !other.floor().isLiquid ? 1f : 0f) / size / size;
+            .sumf(other -> !other.floor().isLiquid ? 1f : 0f) / area;
     }
 
     public void drawEnvironmentLight(Tile tile){
@@ -471,18 +472,18 @@ public class Block extends UnlockableContent implements Senseable{
     /** Drawn when you are placing a block. */
     public void drawPlace(int x, int y, int rotation, boolean valid){
         drawPotentialLinks(x, y);
-        drawOverlay(x * tilesize + offset, y * tilesize + offset, rotation);
+        drawOverlay(Hex.worldX(x, y), Hex.worldY(y), rotation);
     }
 
     /** Draws a region to overlay a specific side of this block. This method makes sure it is placed at the edge of the side. */
     public void drawSideRegion(TextureRegion region, float x, float y, int rotation){
-        var p = Geometry.d4[Mathf.mod(rotation, 4)];
+        Tmp.v1.trns(rotation * 60, 1);
         float s = size * tilesize/2f;
 
         Draw.rect(region,
-        x + p.x * (s - region.width/2f * region.scl()),
-        y + p.y * (s - region.width/2f * region.scl()),
-        rotation * 90f
+        x + Tmp.v1.x * (s - region.width/2f * region.scl()),
+        y + Tmp.v1.y * (s - region.width/2f * region.scl()),
+        rotation * 60f
         );
     }
 
@@ -736,12 +737,6 @@ public class Block extends UnlockableContent implements Senseable{
         setBars();
         offset = ((size + 1) % 2) * tilesize / 2f;
         sizeOffset = -((size - 1) / 2);
-
-        if(consumeBuilder.size != 0){
-            for(var consume : consumeBuilder){
-                consume.apply(this);
-            }
-        }
     }
 
     public boolean consumesItem(Item item){
@@ -818,7 +813,7 @@ public class Block extends UnlockableContent implements Senseable{
     /** this is a different method so subclasses can call it even after overriding the base */
     public void drawDefaultPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         TextureRegion reg = getPlanRegion(plan, list);
-        Draw.rect(reg, plan.drawx(), plan.drawy(), !rotate || !rotateDraw ? 0 : plan.rotation * 90);
+        Draw.rect(reg, plan.drawx(), plan.drawy(), !rotate || !rotateDraw ? 0 : plan.rotation * 60);
 
         if(plan.worldContext && player != null && teamRegion != null && teamRegion.found()){
             if(teamRegions[player.team().id] == teamRegion) Draw.color(player.team().color);
@@ -881,35 +876,26 @@ public class Block extends UnlockableContent implements Senseable{
 
     /** sets {@param out} to the index-th side outside of this block, using the given rotation. */
     public void nearbySide(int x, int y, int rotation, int index, Point2 out){
-        int cornerX = x - (size-1)/2, cornerY = y - (size-1)/2, s = size;
-        switch(rotation){
-            case 0 -> out.set(cornerX + s, cornerY + index);
-            case 1 -> out.set(cornerX + index, cornerY + s);
-            case 2 -> out.set(cornerX - 1, cornerY + index);
-            case 3 -> out.set(cornerX + index, cornerY - 1);
-        }
+        // TODO: size > 1 geometry for hex is undefined. This is a fallback.
+        Point2 p = Hex.nearby(x, y, rotation);
+        out.set(p.x, p.y);
     }
 
-    public Point2[] getEdges(){
-        return Edges.getEdges(size);
+    public void iterateEdges(int x, int y, Intc2 consumer){
+        Edges.iterateEdges(size, x, y, consumer);
     }
 
-    public Point2[] getInsideEdges(){
-        return Edges.getInsideEdges(size);
+    public void iterateInsideEdges(int x, int y, Intc2 consumer){
+        Edges.iterateInsideEdges(size, x, y, consumer);
     }
 
     /** Iterate through ever grid position taken up by this block. */
     public void iterateTaken(int x, int y, Intc2 placer){
         if(isMultiblock()){
-            int offsetx = -(size - 1) / 2;
-            int offsety = -(size - 1) / 2;
-
-            for(int dx = 0; dx < size; dx++){
-                for(int dy = 0; dy < size; dy++){
-                    placer.get(dx + offsetx + x, dy + offsety + y);
-                }
+            placer.get(x, y);
+            for(int i = 1; i < size; i++){
+                Hex.getRing(x, y, i, placer);
             }
-
         }else{
             placer.get(x, y);
         }
@@ -955,7 +941,7 @@ public class Block extends UnlockableContent implements Senseable{
     }
 
     public Rect bounds(int x, int y, Rect rect){
-        return rect.setSize(size * tilesize).setCenter(x * tilesize + offset, y * tilesize + offset);
+        return rect.setSize((size * 2 - 1) * tilesize).setCenter(Hex.worldX(x, y) + offset, Hex.worldY(y) + offset);
     }
 
     public boolean isMultiblock(){
@@ -1373,8 +1359,8 @@ public class Block extends UnlockableContent implements Senseable{
             acceptsItems = true;
         }
 
-        offset = ((size + 1) % 2) * tilesize / 2f;
-        sizeOffset = -((size - 1) / 2);
+        offset = 0f;
+        sizeOffset = 0;
 
         if(requirements.length > 0 && buildTime < 0){
             buildTime = 0f;
@@ -1575,7 +1561,7 @@ public class Block extends UnlockableContent implements Senseable{
 
     public void flipRotation(BuildPlan req, boolean x){
         if((x == (req.rotation % 2 == 0)) != invertFlip){
-            req.rotation = planRotation(Mathf.mod(req.rotation + 2, 4));
+            req.rotation = planRotation(Mathf.mod(req.rotation + 3, 6));
         }
     }
 

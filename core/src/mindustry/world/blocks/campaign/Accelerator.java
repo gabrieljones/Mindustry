@@ -154,8 +154,8 @@ public class Accelerator extends Block{
                 float length = 7f + l * 5f;
                 Draw.color(Tmp.c1.set(Pal.darkMetal).lerp(team.color, statusLerp), Pal.darkMetal, Mathf.absin(Time.time + l*50f, 10f, 1f));
 
-                for(int i = 0; i < 4; i++){
-                    float rot = i*90f + 45f;
+                for(int i = 0; i < 6; i++){
+                    float rot = i*60f + 30f;
                     Draw.rect(arrowRegion, x + Angles.trnsx(rot, length), y + Angles.trnsy(rot, length), rot + 180f);
                 }
             }
@@ -214,8 +214,8 @@ public class Accelerator extends Block{
             Draw.color(team.color);
             Draw.alpha(Mathf.clamp(heat * 3f));
 
-            for(int i = 0; i < 4; i++){
-                float rot = i*90f + 45f + (-time/3f)%360f;
+            for(int i = 0; i < 6; i++){
+                float rot = i*60f + 30f + (-time/3f)%360f;
                 float length = 26f * heat * Mathf.lerp(1f, 1.5f, launchHeat);
                 Draw.rect(arrowRegion, x + Angles.trnsx(rot, length), y + Angles.trnsy(rot, length), rot + 180f);
             }
@@ -520,8 +520,8 @@ public class Accelerator extends Block{
             Draw.color(Pal.command, ringColor, fin);
 
             //handles
-            for(int i = 0; i < 4; i++){
-                float angle = i * 90f + 45f + rotate;
+            for(int i = 0; i < 6; i++){
+                float angle = i * 60f + 30f + rotate;
                 Lines.beginLine();
                 Lines.linePoint(Tmp.v1.trns(angle - ringHandleLen, rad * ringHandleTilt).add(x, y));
                 Lines.linePoint(Tmp.v2.trns(angle, rad).add(x, y));
@@ -533,11 +533,11 @@ public class Accelerator extends Block{
             Draw.scl(fin);
 
             //selection triangles
-            for(int i = 0; i < 4; i++){
-                float angle = i * 90f + rotate;
+            for(int i = 0; i < 6; i++){
+                float angle = i * 60f + rotate;
 
 
-                Draw.rect(selectArrowRegion, x + Angles.trnsx(angle, rad), y + Angles.trnsy(angle, rad), angle + 180f + 45f);
+                Draw.rect(selectArrowRegion, x + Angles.trnsx(angle, rad), y + Angles.trnsy(angle, rad), angle + 180f + 30f);
 
                 //shape variant:
                 //Lines.poly(x + Angles.trnsx(angle, rad), y + Angles.trnsy(angle, rad), 3, ringArrowRad * fin, angle + 180f);
@@ -578,8 +578,8 @@ public class Accelerator extends Block{
             float strength = (1f + (launchBlock.size - 3)/2.5f) * scl * thrusterSize * (0.95f + Mathf.absin(2f, 0.1f));
             float offset = (launchBlock.size - 3) * 3f * scl;
 
-            for(int i = 0; i < 4; i++){
-                Tmp.v1.trns(i * 90 + rotation, 1f);
+            for(int i = 0; i < 6; i++){
+                Tmp.v1.trns(i * 60 + rotation, 1f);
 
                 Tmp.v1.setLength((launchBlock.size * tilesize/2f + 1f)*scl + strength*2f + offset);
                 Draw.color(team.color);
@@ -614,16 +614,16 @@ public class Accelerator extends Block{
 
             //two passes for consistent lighting
             for(int j = 0; j < 2; j++){
-                for(int i = 0; i < 4; i++){
-                    var reg = i >= 2 ? core.thruster2 : core.thruster1;
-                    float rot = (i * 90) + rotation % 90f;
+                for(int i = 0; i < 6; i++){
+                    var reg = i % 2 == 0 ? core.thruster1 : core.thruster2;
+                    float rot = (i * 60) + rotation % 60f;
                     Tmp.v1.trns(rot, length * Draw.xscl);
 
                     //second pass applies extra layer of shading
                     if(j == 1){
-                        Tmp.v1.rotate(-90f);
-                        Draw.alpha((rotation % 90f) / 90f * alpha);
-                        rot -= 90f;
+                        Tmp.v1.rotate(-60f);
+                        Draw.alpha((rotation % 60f) / 60f * alpha);
+                        rot -= 60f;
                         Draw.rect(reg, x + Tmp.v1.x, y + Tmp.v1.y, rot);
                     }else{
                         Draw.alpha(alpha);

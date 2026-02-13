@@ -32,7 +32,6 @@ public class MissileAI extends AIController{
 
         //kill instantly on enemy building contact
         if(build != null && build.team != unit.team && (build == target || !build.block.underBullets)){
-            unit.hasTarget = true;
             unit.kill();
         }
     }

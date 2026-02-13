@@ -60,13 +60,23 @@ public class DirectionBridge extends Block{
     public void drawPlanConfigTop(BuildPlan plan, Eachable<BuildPlan> list){
         otherReq = null;
         otherDst = range;
-        Point2 d = Geometry.d4(plan.rotation);
+
         list.each(other -> {
-            if(other.block == this && plan != other && Mathf.clamp(other.x - plan.x, -1, 1) == d.x && Mathf.clamp(other.y - plan.y, -1, 1) == d.y){
-                int dst = Math.max(Math.abs(other.x - plan.x), Math.abs(other.y - plan.y));
-                if(dst <= otherDst){
-                    otherReq = other;
-                    otherDst = dst;
+            if(other.block == this && plan != other){
+                //check if 'other' is reachable from 'plan' in 'plan.rotation'
+                int cx = plan.x, cy = plan.y;
+                for(int i = 1; i <= range; i++){
+                    Point2 next = Hex.nearby(cx, cy, plan.rotation);
+                    cx = next.x;
+                    cy = next.y;
+
+                    if(other.x == cx && other.y == cy){
+                        if(i <= otherDst){
+                            otherReq = other;
+                            otherDst = i;
+                        }
+                        break;
+                    }
                 }
             }
         });
@@ -83,7 +93,7 @@ public class DirectionBridge extends Block{
 
     @Override
     public void changePlacementPath(Seq<Point2> points, int rotation){
-        Placement.calculateNodes(points, this, rotation, (point, other) -> Math.max(Math.abs(point.x - other.x), Math.abs(point.y - other.y)) <= range);
+        Placement.calculateNodes(points, this, rotation, (point, other) -> positionsValid(point.x, point.y, other.x, other.y));
     }
 
     public void drawPlace(int x, int y, int rotation, boolean valid, boolean line){
@@ -91,25 +101,29 @@ public class DirectionBridge extends Block{
 
         if(line){
             //find input links
-            for(int d = 0; d < 4; d++){
-                if(d == (rotation+2)%4) continue;
+            for(int d = 0; d < 6; d++){
+                if(d == (rotation + 3) % 6) continue;
 
-                int dx = Geometry.d4x(d), dy = Geometry.d4y(d);
+                //look in opposite direction of d
+                int lookDir = (d + 3) % 6;
+                int cx = x, cy = y;
 
                 for(int i = 1; i <= range; i++){
-                    Tile other = world.tile(x - dx * i, y - dy * i);
+                    Point2 p = Hex.nearby(cx, cy, lookDir);
+                    cx = p.x;
+                    cy = p.y;
+
+                    Tile other = world.tile(cx, cy);
 
                     if(other != null && other.build instanceof DirectionBridgeBuild build && build.block == this && build.team == player.team()){
                         if(build.rotation == d){
                             var from = other.build;
 
-                            Drawf.dashLine(Pal.place,
-                            from.x + dx * (tilesize / 2f + 2),
-                            from.y + dy * (tilesize / 2f + 2),
-                            from.x + dx * (i) * tilesize,
-                            from.y + dy * (i) * tilesize
-                            );
+                            //draw from 'from' to 'this'
+                            //Since we don't have exact coordinates of intermediate steps easily here without re-looping,
+                            //we just draw a straight line between the two world positions.
 
+                            Drawf.dashLine(Pal.place, from.x, from.y, Hex.worldX(x, y), Hex.worldY(y));
                             Drawf.square(from.x, from.y, from.block.size * tilesize/2f + 2.5f, 0f, Pal.place);
                         }
                         //always stop when a bridge is encountered, as it blocks incoming bridges from this side
@@ -120,11 +134,15 @@ public class DirectionBridge extends Block{
         }
 
         Building found = null;
-        int dx = Geometry.d4x(rotation), dy = Geometry.d4y(rotation);
+        int cx = x, cy = y;
 
         //find the output link
         for(int i = 1; i <= range; i++){
-            Tile other = world.tile(x + dx * i, y + dy * i);
+            Point2 p = Hex.nearby(cx, cy, rotation);
+            cx = p.x;
+            cy = p.y;
+
+            Tile other = world.tile(cx, cy);
 
             if(other != null && other.build instanceof DirectionBridgeBuild build && build.block == this && build.team == player.team()){
                 length = i;
@@ -134,12 +152,10 @@ public class DirectionBridge extends Block{
         }
 
         if(line || found != null){
-            Drawf.dashLine(Pal.placing,
-            x * tilesize + dx * (tilesize / 2f + 2),
-            y * tilesize + dy * (tilesize / 2f + 2),
-            x * tilesize + dx * (length) * tilesize,
-            y * tilesize + dy * (length) * tilesize
-            );
+            float endX = (found != null) ? found.x : Hex.worldX(cx, cy);
+            float endY = (found != null) ? found.y : Hex.worldY(cy);
+
+            Drawf.dashLine(Pal.placing, Hex.worldX(x, y), Hex.worldY(y), endX, endY);
         }
 
         if(found != null){
@@ -164,7 +180,7 @@ public class DirectionBridge extends Block{
         angle = Angles.angle(x1, y1, x2, y2),
         cx = (x1 + x2)/2f,
         cy = (y1 + y2)/2f,
-        len = Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)) - size * tilesize;
+        len = Mathf.dst(x1, y1, x2, y2) - size * tilesize;
 
         Draw.rect(bridgeRegion, cx, cy, len, bridgeRegion.height * bridgeRegion.scl(), angle);
         if(liquidColor != null){
@@ -181,24 +197,28 @@ public class DirectionBridge extends Block{
         Draw.alpha(Renderer.bridgeOpacity);
 
         for(float i = 6f; i <= len + size * tilesize - 5f; i += 5f){
-            Draw.rect(arrowRegion, x1 + Geometry.d4x(rotation) * i, y1 + Geometry.d4y(rotation) * i, angle);
+            Draw.rect(arrowRegion, x1 + Angles.trnsx(angle, i), y1 + Angles.trnsy(angle, i), angle);
         }
 
         Draw.reset();
     }
 
     public boolean positionsValid(int x1, int y1, int x2, int y2){
-        if(x1 == x2){
-            return Math.abs(y1 - y2) <= range;
-        }else if(y1 == y2){
-            return Math.abs(x1 - x2) <= range;
-        }else{
-            return false;
+        //check if x2/y2 is reachable from x1/y1 by iterating 6 directions
+        for(int i = 0; i < 6; i++){
+            int cx = x1, cy = y1;
+            for(int j = 1; j <= range; j++){
+                Point2 p = Hex.nearby(cx, cy, i);
+                cx = p.x;
+                cy = p.y;
+                if(cx == x2 && cy == y2) return true;
+            }
         }
+        return false;
     }
 
     public class DirectionBridgeBuild extends Building{
-        public DirectionBridgeBuild[] occupied = new DirectionBridgeBuild[4];
+        public DirectionBridgeBuild[] occupied = new DirectionBridgeBuild[6];
         public @Nullable DirectionBridgeBuild lastLink;
 
         @Override
@@ -216,20 +236,13 @@ public class DirectionBridge extends Block{
         public void drawSelect(){
             drawPlace(tile.x, tile.y, rotation, true, false);
             //draw incoming bridges
-            for(int dir = 0; dir < 4; dir++){
+            for(int dir = 0; dir < 6; dir++){
                 if(dir != rotation){
-                    int dx = Geometry.d4x(dir), dy = Geometry.d4y(dir);
-                    Building found = occupied[(dir + 2) % 4];
+                    Building found = occupied[(dir + 3) % 6];
 
                     if(found != null){
-                        int length = Math.max(Math.abs(found.tileX() - tileX()), Math.abs(found.tileY() - tileY()));
-                        Drawf.dashLine(Pal.place,
-                        found.x - dx * (tilesize / 2f + 2),
-                        found.y - dy * (tilesize / 2f + 2),
-                        found.x - dx * (length) * tilesize,
-                        found.y - dy * (length) * tilesize
-                        );
-
+                        //draw line from found to this
+                        Drawf.dashLine(Pal.place, found.x, found.y, x, y);
                         Drawf.square(found.x, found.y, 2f, 45f, Pal.place);
                     }
                 }
@@ -238,8 +251,13 @@ public class DirectionBridge extends Block{
 
         @Nullable
         public DirectionBridgeBuild findLink(){
+            int cx = tile.x, cy = tile.y;
             for(int i = 1; i <= range; i++){
-                Tile other = tile.nearby(Geometry.d4x(rotation) * i, Geometry.d4y(rotation) * i);
+                Point2 p = Hex.nearby(cx, cy, rotation);
+                cx = p.x;
+                cy = p.y;
+
+                Tile other = world.tile(cx, cy);
                 if(other != null && other.build instanceof DirectionBridgeBuild build && build.block == DirectionBridge.this && build.team == team){
                     return build;
                 }

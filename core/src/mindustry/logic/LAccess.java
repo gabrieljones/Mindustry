@@ -51,10 +51,6 @@ public enum LAccess{
     mineX,
     mineY,
     mining,
-    buildX,
-    buildY,
-    building,
-    breaking,
     speed,
     team,
     type,
@@ -68,8 +64,6 @@ public enum LAccess{
     payloadCapacity,
     maxUnits,
     id,
-    selectedBlock,
-    selectedRotation,
 
     //values with parameters are considered controllable
     enabled("to"), //"to" is standard for single parameter access

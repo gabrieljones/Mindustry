@@ -76,19 +76,21 @@ public class Duct extends Block implements Autotiler{
 
         Draw.scl(bits[1], bits[2]);
         Draw.alpha(0.5f);
-        Draw.rect(botRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(botRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.color();
-        Draw.rect(topRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(topRegions[bits[0]], plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.scl();
     }
 
     @Override
     public boolean blendsArmored(Tile tile, int rotation, int otherx, int othery, int otherrot, Block otherblock){
-        return Point2.equals(tile.x + Geometry.d4(rotation).x, tile.y + Geometry.d4(rotation).y, otherx, othery)
+        Point2 p = Hex.nearby(tile.x, tile.y, rotation);
+        Point2 pOther = Hex.nearby(otherx, othery, otherrot);
+        return Point2.equals(p.x, p.y, otherx, othery)
             || ((!otherblock.rotatedOutput(otherx, othery, tile) && Edges.getFacingEdge(otherblock, otherx, othery, tile) != null &&
             Edges.getFacingEdge(otherblock, otherx, othery, tile).relativeTo(tile) == rotation) ||
 
-            ((otherblock.rotatedOutput(otherx, othery, tile)) && (otherblock.isDuct) && Point2.equals(otherx + Geometry.d4(otherrot).x, othery + Geometry.d4(otherrot).y, tile.x, tile.y)));
+            ((otherblock.rotatedOutput(otherx, othery, tile)) && (otherblock.isDuct) && Point2.equals(pOther.x, pOther.y, tile.x, tile.y)));
     }
 
     @Override
@@ -111,11 +113,13 @@ public class Duct extends Block implements Autotiler{
         if(junctionReplacement == null || !junctionReplacement.unlockedNow() || junctionReplacement.isHidden()) return this;
 
         Boolf<Point2> cont = p -> plans.contains(o -> o.x == req.x + p.x && o.y == req.y + p.y && (req.block instanceof Duct || req.block instanceof DuctJunction));
-        return cont.get(Geometry.d4(req.rotation)) &&
-            cont.get(Geometry.d4(req.rotation - 2)) &&
+        //check for neighbors in front (rotation) and back (rotation - 3)
+        //check if existing tile rotation is not collinear
+        return cont.get(Hex.getOffset(req.y, req.rotation)) &&
+            cont.get(Hex.getOffset(req.y, req.rotation - 3)) &&
             req.tile() != null &&
             req.tile().block() instanceof Duct &&
-            Mathf.mod(req.tile().build.rotation - req.rotation, 2) == 1 ? junctionReplacement : this;
+            Mathf.mod(req.tile().build.rotation - req.rotation, 3) != 0 ? junctionReplacement : this;
     }
 
     @Override
@@ -140,20 +144,21 @@ public class Duct extends Block implements Autotiler{
             int r = this.rotation;
 
             //draw extra ducts facing this one for tiling purposes
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if((blending & (1 << i)) != 0){
                     int dir = r - i;
-                    float rot = i == 0 ? rotation : (dir)*90;
-                    drawAt(x + Geometry.d4x(dir) * tilesize*0.75f, y + Geometry.d4y(dir) * tilesize*0.75f, 0, rot, i != 0 ? SliceMode.bottom : SliceMode.top);
+                    float rot = i == 0 ? rotation : (dir)*60;
+                    Tmp.v1.trns(dir * 60, tilesize * 0.75f);
+                    drawAt(x + Tmp.v1.x, y + Tmp.v1.y, 0, rot, i != 0 ? SliceMode.bottom : SliceMode.top);
                 }
             }
 
             //draw item
             if(current != null){
                 Draw.z(Layer.blockUnder + 0.1f);
-                Tmp.v1.set(Geometry.d4x(recDir) * tilesize / 2f, Geometry.d4y(recDir) * tilesize / 2f)
-                .lerp(Geometry.d4x(r) * tilesize / 2f, Geometry.d4y(r) * tilesize / 2f,
-                Mathf.clamp((progress + 1f) / (2f - 1f/speed)));
+                Tmp.v1.trns(recDir * 60, tilesize / 2f);
+                Tmp.v2.trns(r * 60, tilesize / 2f);
+                Tmp.v1.lerp(Tmp.v2, Mathf.clamp((progress + 1f) / (2f - 1f/speed)));
 
                 Draw.rect(current.fullIcon, x + Tmp.v1.x, y + Tmp.v1.y, itemSize, itemSize);
             }
@@ -206,7 +211,7 @@ public class Duct extends Block implements Autotiler{
                     ((source.block.rotate && source.front() == this && source.block.hasItems && source.block.isDuct) ||
                     Edges.getFacingEdge(source.tile, tile).relativeTo(tile) == rotation) :
                     //standard acceptance - do not accept from front
-                    !(source.block.rotate && next == source) && Edges.getFacingEdge(source.tile, tile) != null && Math.abs(Edges.getFacingEdge(source.tile, tile).relativeTo(tile.x, tile.y) - rotation) != 2
+                    !(source.block.rotate && next == source) && Edges.getFacingEdge(source.tile, tile) != null && Math.abs(Edges.getFacingEdge(source.tile, tile).relativeTo(tile.x, tile.y) - rotation) != 3
                 );
         }
 
