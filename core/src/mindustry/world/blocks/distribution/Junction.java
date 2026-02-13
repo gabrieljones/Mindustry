@@ -30,9 +30,7 @@ public class Junction extends Block{
 
         //(60f / speed * capacity) returns 13.84 which is not the actual value (non linear, depends on fps)
         stats.add(Stat.itemsMoved, displayedSpeed, StatUnit.itemsSecond);
-        stats.add(Stat.itemCapacity, table -> {
-            table.add(Strings.autoFixed(capacity, 2) + " " + StatUnit.items.localized() + " " + StatUnit.perSide.localized());
-        });
+        stats.add(Stat.itemCapacity, capacity, StatUnit.items);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class Junction extends Block{
         @Override
         public void updateTile(){
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(buffer.indexes[i] > 0){
                     if(buffer.indexes[i] > capacity) buffer.indexes[i] = capacity;
                     long l = buffer.buffers[i][0];
@@ -92,7 +90,7 @@ public class Junction extends Block{
 
         @Override
         public byte version(){
-            return 1;
+            return 2;
         }
 
         @Override
@@ -104,7 +102,7 @@ public class Junction extends Block{
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
-            buffer.read(read, revision == 0);
+            buffer.read(read, revision < 2);
         }
     }
 }

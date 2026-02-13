@@ -49,15 +49,15 @@ public class OverflowGate extends Block{
         public @Nullable Building getTileTarget(Item item, Building src, boolean flip){
             int from = relativeToEdge(src.tile);
             if(from == -1) return null;
-            Building to = nearby((from + 2) % 4);
+            Building to = nearby((from + 3) % 6);
             boolean
                 fromInst = src.block.instantTransfer,
                 canForward = to != null && to.team == team && !(fromInst && to.block.instantTransfer) && to.acceptItem(this, item),
                 inv = invert == enabled;
 
             if(!canForward || inv){
-                Building a = nearby(Mathf.mod(from - 1, 4));
-                Building b = nearby(Mathf.mod(from + 1, 4));
+                Building a = nearby(Mathf.mod(from - 2, 6));
+                Building b = nearby(Mathf.mod(from + 2, 6));
                 boolean ac = a != null && !(fromInst && a.block.instantTransfer) && a.team == team && a.acceptItem(this, item);
                 boolean bc = b != null && !(fromInst && b.block.instantTransfer) && b.team == team && b.acceptItem(this, item);
 
@@ -88,7 +88,7 @@ public class OverflowGate extends Block{
             super.read(read, revision);
 
             if(revision == 1){
-                new DirectionalItemBuffer(25).read(read);
+                new DirectionalItemBuffer(25).read(read, true);
             }else if(revision == 3){
                 read.i();
             }

@@ -714,15 +714,18 @@ public class ApplicationTests{
     }
 
     @Test
-    void edges(){
-        Point2[] edges = Edges.getEdges(1);
-        assertEquals(edges[0], new Point2(1, 0));
-        assertEquals(edges[1], new Point2(0, 1));
-        assertEquals(edges[2], new Point2(-1, 0));
-        assertEquals(edges[3], new Point2(0, -1));
+    void hexEdges(){
+        int[] count = {0};
+        Edges.iterateEdges(1, 0, 0, (x, y) -> count[0]++);
+        assertEquals(6, count[0]);
 
-        Point2[] edges2 = Edges.getEdges(2);
-        assertEquals(8, edges2.length);
+        count[0] = 0;
+        Edges.iterateEdges(2, 0, 0, (x, y) -> count[0]++);
+        assertEquals(12, count[0]);
+
+        count[0] = 0;
+        Edges.iterateEdges(3, 0, 0, (x, y) -> count[0]++);
+        assertEquals(18, count[0]);
     }
 
     @Test

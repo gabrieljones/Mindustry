@@ -1,0 +1,90 @@
+
+> Configure project :
+Compiling with build: 'custom build'
+
+> Configure project :android
+No keystore property found. Releases will be unsigned.
+Configuration 'natives' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+
+> Configure project :desktop
+Scheduling sprite packing.
+
+> Task :annotations:clearCache
+> Task :annotations:compileJava UP-TO-DATE
+> Task :core:clearCache
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :annotations:processResources UP-TO-DATE
+> Task :annotations:classes UP-TO-DATE
+> Task :annotations:jar UP-TO-DATE
+> Task :core:kaptGenerateStubsKotlin SKIPPED
+> Task :core:kaptKotlin UP-TO-DATE
+> Task :core:compileKotlin SKIPPED
+> Task :core:preGen UP-TO-DATE
+> Task :core:compileJava UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar
+> Task :tests:clearCache
+> Task :tests:compileJava NO-SOURCE
+> Task :tests:processResources NO-SOURCE
+> Task :tests:classes UP-TO-DATE
+> Task :tests:compileTestJava UP-TO-DATE
+> Task :tests:processTestResources UP-TO-DATE
+> Task :tests:testClasses UP-TO-DATE
+
+> Task :tests:test
+
+ApplicationTests > sorterOutputCorrect() FAILED
+    org.opentest4j.AssertionFailedError: expected: <copper> but was: <null>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.sorterOutputCorrect(ApplicationTests.java:488)
+
+ApplicationTests > liquidRouterOutputAll() FAILED
+    org.opentest4j.AssertionFailedError: Liquid router did not distribute to topTank ==> expected: <true> but was: <false>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:40)
+        at app//org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:193)
+        at app//ApplicationTests.liquidRouterOutputAll(ApplicationTests.java:456)
+
+ApplicationTests > junctionOutputCorrect() FAILED
+    org.opentest4j.AssertionFailedError: expected: <coal> but was: <null>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.junctionOutputCorrect(ApplicationTests.java:543)
+
+ApplicationTests > conveyorBench() STANDARD_OUT
+    1875.9827ms to process 21127 items
+
+129 tests completed, 3 failed
+
+> Task :tests:test FAILED
+
+[Incubating] Problems report is available at: file:///app/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':tests:test'.
+> There were failing tests. See the report at: file:///app/tests/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 48s
+12 actionable tasks: 5 executed, 7 up-to-date

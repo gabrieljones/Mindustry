@@ -300,8 +300,7 @@ public class LogicDialog extends BaseDialog{
                     for(Prov<LStatement> prov : LogicIO.allStatements){
                         LStatement example = prov.get();
                         if(example instanceof InvalidStatement || example.hidden() || (example.privileged() && !privileged) || (example.nonPrivileged() && privileged) ||
-                            (!text.isEmpty() && !example.name().toLowerCase(Locale.ROOT).contains(text) && !example.typeName().toLowerCase(Locale.ROOT).contains(text)) ||
-                            (!privileged && !state.rules.logicUnitControl && example.category() == LCategory.unit)) continue;
+                            (!text.isEmpty() && !example.name().toLowerCase(Locale.ROOT).contains(text) && !example.typeName().toLowerCase(Locale.ROOT).contains(text))) continue;
 
                         if(matched[0] == null){
                             matched[0] = prov;

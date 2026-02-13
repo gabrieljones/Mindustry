@@ -230,8 +230,8 @@ public class LandingPad extends Block{
                 Fill.light(cx, cy, 10, 25f * (rad + scale-1f), Tmp.c2.set(Pal.engine).a(alpha), Tmp.c1.set(Pal.engine).a(0f));
 
                 Draw.alpha(alpha);
-                for(int i = 0; i < 4; i++){
-                    Drawf.tri(cx, cy, 6f, 40f * (rad + scale-1f), i * 90f + rotation);
+                for(int i = 0; i < 6; i++){
+                    Drawf.tri(cx, cy, 6f, 40f * (rad + scale-1f), i * 60f + rotation);
                 }
 
                 Draw.color();

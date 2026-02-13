@@ -18,13 +18,17 @@ public class LogicFilter extends GenerateFilter{
     public FilterOption[] options(){
         return new FilterOption[]{
             new FilterOption(){
+                final String name;
+                {
+                    name = "code";
+                }
                 @Override
                 public void build(Table table){
                     table.button(b -> b.image(Icon.pencil).size(iconSmall), () -> {
                         ui.logic.show(code, null, true, code -> LogicFilter.this.code = code);
                     }).pad(4).margin(12f);
 
-                    table.add("@filter.option.code");
+                    table.add("@filter.option." + name);
                 }
             },
             new ToggleOption("loop", () -> loop, f -> loop = f)

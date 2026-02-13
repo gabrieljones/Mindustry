@@ -1,0 +1,1038 @@
+
+> Configure project :
+Compiling with build: 'custom build'
+
+> Configure project :android
+No keystore property found. Releases will be unsigned.
+Configuration 'natives' was resolved during configuration time.
+This is a build performance and scalability issue.
+See https://github.com/gradle/gradle/issues/2298
+Run with --info for a stacktrace.
+
+> Configure project :desktop
+Scheduling sprite packing.
+WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 36
+
+This Android Gradle plugin (8.2.2) was tested up to compileSdk = 34.
+
+You are strongly encouraged to update your project to use a newer
+Android Gradle plugin that has been tested with compileSdk = 36.
+
+If you are already using the latest version of the Android Gradle plugin,
+you may need to wait until a newer version with support for compileSdk = 36 is available.
+
+To suppress this warning, add/update
+    android.suppressUnsupportedCompileSdk=36
+to this project's gradle.properties.
+
+> Task :clearCache
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :kaptGenerateStubsKotlin SKIPPED
+> Task :kaptKotlin SKIPPED
+> Task :compileKotlin NO-SOURCE
+> Task :compileJava NO-SOURCE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :jar UP-TO-DATE
+> Task :kaptGenerateStubsTestKotlin SKIPPED
+> Task :kaptTestKotlin SKIPPED
+> Task :compileTestKotlin NO-SOURCE
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :annotations:clearCache
+> Task :annotations:compileJava UP-TO-DATE
+> Task :core:clearCache
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :annotations:processResources UP-TO-DATE
+> Task :annotations:classes UP-TO-DATE
+> Task :annotations:jar UP-TO-DATE
+> Task :core:kaptGenerateStubsKotlin SKIPPED
+> Task :core:kaptKotlin UP-TO-DATE
+> Task :core:compileKotlin SKIPPED
+> Task :core:preGen UP-TO-DATE
+> Task :core:compileJava UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :android:clearCache
+> Task :android:preBuild UP-TO-DATE
+> Task :android:preDebugBuild UP-TO-DATE
+> Task :android:javaPreCompileDebug UP-TO-DATE
+> Task :android:checkDebugAarMetadata UP-TO-DATE
+> Task :android:generateDebugResValues UP-TO-DATE
+> Task :android:mapDebugSourceSetPaths UP-TO-DATE
+> Task :android:generateDebugResources UP-TO-DATE
+> Task :android:mergeDebugResources UP-TO-DATE
+> Task :android:packageDebugResources UP-TO-DATE
+> Task :android:parseDebugLocalResources UP-TO-DATE
+> Task :android:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :android:extractDeepLinksDebug UP-TO-DATE
+> Task :android:processDebugMainManifest UP-TO-DATE
+> Task :android:processDebugManifest UP-TO-DATE
+> Task :android:processDebugManifestForPackage UP-TO-DATE
+> Task :android:processDebugResources UP-TO-DATE
+> Task :android:compileDebugJavaWithJavac UP-TO-DATE
+> Task :android:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :android:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :android:preDebugUnitTestBuild UP-TO-DATE
+> Task :android:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :android:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :android:processDebugJavaRes NO-SOURCE
+> Task :android:processDebugUnitTestJavaRes NO-SOURCE
+> Task :android:testDebugUnitTest NO-SOURCE
+> Task :android:preReleaseBuild UP-TO-DATE
+> Task :android:javaPreCompileRelease UP-TO-DATE
+> Task :android:checkReleaseAarMetadata UP-TO-DATE
+> Task :android:generateReleaseResValues UP-TO-DATE
+> Task :android:mapReleaseSourceSetPaths UP-TO-DATE
+> Task :android:generateReleaseResources UP-TO-DATE
+> Task :android:mergeReleaseResources UP-TO-DATE
+> Task :android:packageReleaseResources UP-TO-DATE
+> Task :android:parseReleaseLocalResources UP-TO-DATE
+> Task :android:createReleaseCompatibleScreenManifests UP-TO-DATE
+> Task :android:extractDeepLinksRelease UP-TO-DATE
+> Task :android:processReleaseMainManifest UP-TO-DATE
+> Task :android:processReleaseManifest UP-TO-DATE
+> Task :android:processReleaseManifestForPackage UP-TO-DATE
+> Task :android:processReleaseResources UP-TO-DATE
+> Task :android:compileReleaseJavaWithJavac UP-TO-DATE
+> Task :android:bundleReleaseClassesToRuntimeJar UP-TO-DATE
+> Task :android:bundleReleaseClassesToCompileJar UP-TO-DATE
+> Task :android:preReleaseUnitTestBuild UP-TO-DATE
+> Task :android:javaPreCompileReleaseUnitTest UP-TO-DATE
+> Task :android:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :android:processReleaseJavaRes NO-SOURCE
+> Task :android:processReleaseUnitTestJavaRes NO-SOURCE
+> Task :android:testReleaseUnitTest NO-SOURCE
+> Task :android:test UP-TO-DATE
+> Task :annotations:compileTestJava NO-SOURCE
+> Task :annotations:processTestResources NO-SOURCE
+> Task :annotations:testClasses UP-TO-DATE
+> Task :annotations:test NO-SOURCE
+> Task :core:kaptGenerateStubsTestKotlin UP-TO-DATE
+> Task :core:kaptTestKotlin UP-TO-DATE
+> Task :core:compileTestKotlin NO-SOURCE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:processTestResources NO-SOURCE
+> Task :core:testClasses UP-TO-DATE
+> Task :core:test NO-SOURCE
+> Task :desktop:clearCache
+> Task :desktop:compileJava UP-TO-DATE
+> Task :desktop:processResources NO-SOURCE
+> Task :desktop:classes UP-TO-DATE
+> Task :desktop:compileTestJava NO-SOURCE
+> Task :desktop:processTestResources NO-SOURCE
+> Task :desktop:testClasses UP-TO-DATE
+> Task :desktop:test NO-SOURCE
+> Task :ios:clearCache
+> Task :ios:compileJava UP-TO-DATE
+> Task :ios:processResources NO-SOURCE
+> Task :ios:classes UP-TO-DATE
+> Task :ios:compileTestJava NO-SOURCE
+> Task :ios:processTestResources NO-SOURCE
+> Task :ios:testClasses UP-TO-DATE
+> Task :ios:test NO-SOURCE
+> Task :server:clearCache
+> Task :server:compileJava UP-TO-DATE
+> Task :server:processResources NO-SOURCE
+> Task :server:classes UP-TO-DATE
+> Task :server:compileTestJava NO-SOURCE
+> Task :server:processTestResources NO-SOURCE
+> Task :server:testClasses UP-TO-DATE
+> Task :server:test NO-SOURCE
+> Task :tests:clearCache
+> Task :tests:compileJava NO-SOURCE
+> Task :tests:processResources NO-SOURCE
+> Task :tests:classes UP-TO-DATE
+> Task :tests:compileTestJava UP-TO-DATE
+> Task :tests:processTestResources UP-TO-DATE
+> Task :tests:testClasses UP-TO-DATE
+
+> Task :tests:test
+
+ApplicationTests > saveLoad() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.saveLoad(ApplicationTests.java:356)
+
+ApplicationTests > sorterOutputCorrect() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.sorterOutputCorrect(ApplicationTests.java:462)
+
+ApplicationTests > buildingOverlap() FAILED
+    org.opentest4j.AssertionFailedError: expected: <copper-wall-large> but was: <air>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.buildingOverlap(ApplicationTests.java:752)
+
+ApplicationTests > blockOverlapRemoved() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.blockOverlapRemoved(ApplicationTests.java:549)
+
+ApplicationTests > liquidOutput() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.liquidOutput(ApplicationTests.java:396)
+
+ApplicationTests > liquidRouterOutputAll() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.liquidRouterOutputAll(ApplicationTests.java:436)
+
+ApplicationTests > playMap() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.playMap(ApplicationTests.java:253)
+
+ApplicationTests > routerOutputAll() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.routerOutputAll(ApplicationTests.java:495)
+
+ApplicationTests > save() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.save(ApplicationTests.java:349)
+
+ApplicationTests > buildingDestruction() FAILED
+    org.opentest4j.AssertionFailedError: expected: <build2> but was: <air>
+        at app//org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
+        at app//org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+        at app//org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
+        at app//org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1124)
+        at app//ApplicationTests.buildingDestruction(ApplicationTests.java:776)
+
+ApplicationTests > spawnWaves() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.spawnWaves(ApplicationTests.java:258)
+
+ApplicationTests > liquidJunctionOutput() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.liquidJunctionOutput(ApplicationTests.java:413)
+
+ApplicationTests > testSectorValidity() > groundZero FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > saltFlats FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > testingGrounds FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > frozenForest FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > biomassFacility FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > taintedWoods FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > craters FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > ruinousShores FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > perilousHarbor FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > facility32m FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > windsweptIslands FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > stainedMountains FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > extractionOutpost FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > coastline FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > weatheredChannels FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > navalFortress FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > frontier FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > fungalPass FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > infestedCanyons FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > atolls FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sunkenPier FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > mycelialBastion FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > overgrowth FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > tarFields FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > impact0078 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > desolateRift FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > fallenVessel FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > nuclearComplex FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > planetaryTerminal FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > geothermalStronghold FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > cruxscape FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-76 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-47 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-225 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-111 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-176 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-13 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-259 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-192 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-127 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-207 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-94 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-16 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-116 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-69 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-92 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-197 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-67 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-180 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-55 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-19 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-200 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-191 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-6 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-265 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-161 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-24 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-263 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-66 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-248 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-133 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-185 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-254 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-0 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-103 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-30 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-20 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-162 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-230 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-240 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > sector-serpulo-202 FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > onset FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > aegis FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > lake FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > intersect FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > atlas FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > split FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > basin FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > marsh FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > peaks FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > ravine FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > caldera-erekir FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > stronghold FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > crevice FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > siege FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > crossroads FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > karst FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > testSectorValidity() > origin FAILED
+    java.lang.IllegalArgumentException: All maps must have a core.
+        at mindustry.maps.generators.FileMapGenerator.generate(FileMapGenerator.java:144)
+        at ApplicationTests.lambda$testSectorValidity$18(ApplicationTests.java:911)
+        at mindustry.core.World.loadGenerator(World.java:258)
+        at ApplicationTests.lambda$testSectorValidity$19(ApplicationTests.java:911)
+
+ApplicationTests > junctionOutputCorrect() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.junctionOutputCorrect(ApplicationTests.java:523)
+
+ApplicationTests > conveyorBench() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.conveyorBench(ApplicationTests.java:574)
+
+ApplicationTests > conveyorCrash() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ApplicationTests.conveyorCrash(ApplicationTests.java:563)
+
+ModTestAllure > begin() STANDARD_OUT
+    [0b04-01-solar-heater.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-03-thermal-boiler.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-04-gaseous-reactor.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-05-energia-converter.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [annihilatron.hjson]: Unknown field 'visualElevationScl' for class 'UnitType'
+    [chlorine.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7.98e50'
+    [granite.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 4.24e87'
+    [wandura.hjson]: Unknown field 'allowWaveSimulation' for class 'Planet'
+
+ModTestAllure > begin() FAILED
+    mindustry.maps.MapException: Map has no cores!
+        at app//mindustry.core.World.loadMap(World.java:391)
+        at app//mindustry.core.World.loadMap(World.java:345)
+        at app//ModTestAllure.begin(ModTestAllure.java:27)
+
+PatcherTests STANDARD_OUT
+    [0b04-01-solar-heater.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-03-thermal-boiler.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-04-gaseous-reactor.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-05-energia-converter.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-06-vapourization-generator.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [0b04-09-ohr-burner.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7693000'
+    [annihilatron.hjson]: Unknown field 'visualElevationScl' for class 'UnitType'
+    [chlorine.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 7.98e50'
+    [granite.hjson]: Colors should strings, not numbers. Make sure you have quotes around the value, or they will not be parsed correctly: 'color: 4.24e87'
+    [wandura.hjson]: Unknown field 'allowWaveSimulation' for class 'Planet'
+
+PatcherTests > unknownFieldWarn() STANDARD_OUT
+    [ContentPatcher] Unknown field 'frogs' for class 'BasicBulletType'
+    [ContentPatcher] Unknown field 'frogs' for class 'UnitType'
+
+PatcherTests > assignStringToObject() STANDARD_OUT
+    [ContentPatcher] Failed to read value dagger.weapons = unit.dagger.weapons: [
+    frog
+    ]: (type = class arc.struct.Seq elementType = class mindustry.type.Weapon)
+    SerializationException: Expecting an object, but found: 'frog'
+
+PatcherTests > noResolution() STANDARD_OUT
+    [ContentPatcher] Field 'public java.lang.Object mindustry.world.Block.lastConfig' cannot be edited.
+
+PatcherTests > noIdAssign() STANDARD_OUT
+    [ContentPatcher] Field 'public short mindustry.ctype.Content.id' cannot be edited.
+
+PatcherTests > gibberish() STANDARD_OUT
+    Failed to apply patch: }[35209509()jfkjhadsf,
+    ,,,,,[]
+    ]{
+    : arc.util.serialization.Jval$JsonParseException: Found '}' where a key name was expected (check your syntax or use quotes if the key name includes {}[],: or whitespace) at 1:0
+	at arc.util.serialization.Jval$Hparser.error(Jval.java:852)
+	at arc.util.serialization.Jval$Hparser.readName(Jval.java:567)
+	at arc.util.serialization.Jval$Hparser.readObject(Jval.java:536)
+	at arc.util.serialization.Jval$Hparser.parse(Jval.java:427)
+	at arc.util.serialization.Jval.read(Jval.java:67)
+	at mindustry.mod.DataPatcher.apply(DataPatcher.java:92)
+	at PatcherTests.gibberish(PatcherTests.java:344)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:688)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:210)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:206)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:131)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:65)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy1/jdk.proxy1.$Proxy4.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+
+PatcherTests > cannotPatch() STANDARD_OUT
+    [ContentPatcher] Field 'public int mindustry.world.Block.size' cannot be edited.
+
+200 tests completed, 104 failed
+
+> Task :tests:test FAILED
+
+[Incubating] Problems report is available at: file:///app/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':tests:test'.
+> There were failing tests. See the report at: file:///app/tests/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 44s
+57 actionable tasks: 9 executed, 48 up-to-date

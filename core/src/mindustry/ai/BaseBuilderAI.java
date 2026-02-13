@@ -215,12 +215,11 @@ public class BaseBuilderAI{
 
             if(tile.block instanceof PayloadConveyor || tile.block instanceof PayloadBlock){
                 //near a building
-                for(Point2 point : Edges.getEdges(tile.block.size)){
-                    var t = world.build(tile.x + point.x, tile.y + point.y);
-                    if(t != null){
-                        return false;
-                    }
-                }
+                boolean[] found = {false};
+                Edges.iterateEdges(tile.block.size, realX, realY, (ex, ey) -> {
+                    if(world.build(ex, ey) != null) found[0] = true;
+                });
+                if(found[0]) return false;
             }
 
             //may intersect AI path

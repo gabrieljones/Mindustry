@@ -30,7 +30,7 @@ public class DuctBridge extends DirectionBridge{
         public void updateTile(){
             var link = lastLink = findLink();
             if(link != null){
-                link.occupied[rotation % 4] = this;
+                link.occupied[rotation % 6] = this;
                 if(items.any() && link.items.total() < link.block.itemCapacity){
                     progress += edelta();
                     while(progress > speed){
@@ -50,7 +50,7 @@ public class DuctBridge extends DirectionBridge{
                 }
             }
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(occupied[i] == null || occupied[i].rotation != i || !occupied[i].isValid() || occupied[i].lastLink != this){
                     occupied[i] = null;
                 }
@@ -63,7 +63,7 @@ public class DuctBridge extends DirectionBridge{
             if(findLink() == null) return false;
 
             int rel = this.relativeToEdge(source.tile);
-            return items.total() < itemCapacity && rel != rotation && occupied[(rel + 2) % 4] == null;
+            return items.total() < itemCapacity && rel != rotation && occupied[(rel + 3) % 6] == null;
         }
     }
 }

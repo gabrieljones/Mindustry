@@ -72,8 +72,8 @@ public class UnitAssembler extends PayloadBlock{
         rect.setCentered(x, y, areaSize * tilesize);
         float len = tilesize * (areaSize + size)/2f;
 
-        rect.x += Geometry.d4x(rotation) * len;
-        rect.y += Geometry.d4y(rotation) * len;
+        rect.x += Angles.trnsx(rotation * 60, len);
+        rect.y += Angles.trnsy(rotation * 60, len);
 
         return rect;
     }
@@ -319,23 +319,25 @@ public class UnitAssembler extends PayloadBlock{
 
         public Vec2 getUnitSpawn(){
             float len = tilesize * (areaSize + size)/2f;
-            float unitX = x + Geometry.d4x(rotation) * len, unitY = y + Geometry.d4y(rotation) * len;
+            float unitX = x + Angles.trnsx(rotation * 60, len), unitY = y + Angles.trnsy(rotation * 60, len);
             return Tmp.v4.set(unitX, unitY);
         }
 
         public boolean moduleFits(Block other, float ox, float oy, int rotation){
             float
-            dx = ox + Geometry.d4x(rotation) * (other.size/2f + 0.5f) * tilesize,
-            dy = oy + Geometry.d4y(rotation) * (other.size/2f + 0.5f) * tilesize;
+            dx = ox + Angles.trnsx(rotation * 60, (other.size/2f + 0.5f) * tilesize),
+            dy = oy + Angles.trnsy(rotation * 60, (other.size/2f + 0.5f) * tilesize);
 
             Vec2 spawn = getUnitSpawn();
 
-            if(Tile.relativeTo(ox, oy, spawn.x, spawn.y) != rotation){
+            float angle = Angles.angle(ox, oy, spawn.x, spawn.y);
+            int dir = Math.round(angle / 60f) % 6;
+            if(dir != rotation){
                 return false;
             }
 
-            float dst = Math.max(Math.abs(dx - spawn.x), Math.abs(dy - spawn.y));
-            return Mathf.equal(dst, tilesize * areaSize / 2f - tilesize/2f);
+            float dst = Mathf.dst(dx, dy, spawn.x, spawn.y);
+            return Mathf.equal(dst, tilesize * areaSize / 2f - tilesize/2f, 0.001f);
         }
 
         public void updateModules(UnitAssemblerModuleBuild build){
@@ -488,8 +490,9 @@ public class UnitAssembler extends PayloadBlock{
                 var unit = units.get(i);
                 var ai = (AssemblerAI)unit.controller();
 
-                ai.targetPos.trns(i * 90f + 45f, areaSize / 2f * Mathf.sqrt2 * tilesize).add(spawn);
-                ai.targetAngle = i * 90f + 45f + 180f;
+                float angle = i * 360f / dronesCreated + 30f;
+                ai.targetPos.trns(angle, areaSize * tilesize / 2f).add(spawn);
+                ai.targetAngle = angle + 180f;
             }
 
             wasOccupied = checkSolid(spawn, false);
@@ -554,9 +557,9 @@ public class UnitAssembler extends PayloadBlock{
             Draw.rect(region, x, y);
 
             //draw input conveyors
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(blends(i) && i != rotation){
-                    Draw.rect(inRegion, x, y, (i * 90) - 180);
+                    Draw.rect(inRegion, x, y, (i * 60) - 180);
                 }
             }
 

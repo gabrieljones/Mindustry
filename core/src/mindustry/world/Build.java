@@ -176,7 +176,9 @@ public class Build{
 
     /** @return whether a tile can be placed at this location by this team. */
     public static boolean checkNoUnitOverlap(Block type, int x, int y){
-        return (!type.solid && !type.solidifes) || !Units.anyEntities(x * tilesize + type.offset - type.size * tilesize / 2f, y * tilesize + type.offset - type.size * tilesize / 2f, type.size * tilesize, type.size * tilesize);
+        if(!type.solid && !type.solidifes) return true;
+        Rect r = type.bounds(x, y, Tmp.r1);
+        return !Units.anyEntities(r.x, r.y, r.width, r.height);
     }
 
     /** @return whether a tile can be placed at this location by this team. Ignores units at this location. */
@@ -234,33 +236,31 @@ public class Build{
             return false;
         }
 
-        int offsetx = -(type.size - 1) / 2;
-        int offsety = -(type.size - 1) / 2;
+        boolean[] fail = {false};
+        type.iterateTaken(tile.x, tile.y, (wx, wy) -> {
+            if(fail[0]) return;
 
-        for(int dx = 0; dx < type.size; dx++){
-            for(int dy = 0; dy < type.size; dy++){
-                int wx = dx + offsetx + tile.x, wy = dy + offsety + tile.y;
+            Tile check = world.tile(wx, wy);
 
-                Tile check = world.tile(wx, wy);
+            if(
+            check == null || //nothing there
+            (type.size == 2 && world.getDarkness(wx, wy) >= 3) ||
+            (state.rules.staticFog && state.rules.fog && !fogControl.isDiscovered(team, wx, wy)) ||
+            (check.floor().isDeep() && !type.floating && !type.requiresWater && !type.placeableLiquid) || //deep water
+            (!state.rules.derelictRepair && check.team() == Team.derelict && check.build != null) ||
+            (type == check.block() && check.build != null && rotation == check.build.rotation && type.rotate && !((type == check.block && team != Team.derelict && check.team() == Team.derelict))) || //same block, same rotation
+            !check.interactable(team) || //cannot interact
+            !check.floor().placeableOn && !type.ignoreBuildDarkness || //solid floor
+            //when you have a payload, you cannot place blocks on things, even if normal placement rules allow it. this is a hack that assumes checkVisible = true means it's coming from a payload
+            (!checkVisible && checkCoreRadius && !check.block().alwaysReplace) || //replacing a block that should be replaced (e.g. payload placement)
+                !(((type.canReplace(check.block()) || (check.build != null && check.build.canBeReplaced(type)) || (type == check.block && team != Team.derelict && check.team() == Team.derelict)) || //can replace type OR can replace derelict block of same type
+                    (check.build instanceof ConstructBuild build && build.current == type && check.centerX() == tile.x && check.centerY() == tile.y)) && //same type in construction
+                type.bounds(tile.x, tile.y, Tmp.r1).grow(0.01f).contains(check.block.bounds(check.centerX(), check.centerY(), Tmp.r2))) || //no replacement
+            (type.requiresWater && check.floor().liquidDrop != Liquids.water) //requires water but none found
+            ) fail[0] = true;
+        });
 
-                if(
-                check == null || //nothing there
-                (type.size == 2 && world.getDarkness(wx, wy) >= 3) ||
-                (state.rules.staticFog && state.rules.fog && !fogControl.isDiscovered(team, wx, wy)) ||
-                (check.floor().isDeep() && !type.floating && !type.requiresWater && !type.placeableLiquid) || //deep water
-                (!state.rules.derelictRepair && check.team() == Team.derelict && check.build != null) ||
-                (type == check.block() && check.build != null && rotation == check.build.rotation && type.rotate && !((type == check.block && team != Team.derelict && check.team() == Team.derelict))) || //same block, same rotation
-                !check.interactable(team) || //cannot interact
-                !check.floor().placeableOn && !type.ignoreBuildDarkness || //solid floor
-                //when you have a payload, you cannot place blocks on things, even if normal placement rules allow it. this is a hack that assumes checkVisible = true means it's coming from a payload
-                (!checkVisible && checkCoreRadius && !check.block().alwaysReplace) || //replacing a block that should be replaced (e.g. payload placement)
-                    !(((type.canReplace(check.block()) || (check.build != null && check.build.canBeReplaced(type)) || (type == check.block && team != Team.derelict && check.team() == Team.derelict)) || //can replace type OR can replace derelict block of same type
-                        (check.build instanceof ConstructBuild build && build.current == type && check.centerX() == tile.x && check.centerY() == tile.y)) && //same type in construction
-                    type.bounds(tile.x, tile.y, Tmp.r1).grow(0.01f).contains(check.block.bounds(check.centerX(), check.centerY(), Tmp.r2))) || //no replacement
-                (type.requiresWater && check.floor().liquidDrop != Liquids.water) //requires water but none found
-                ) return false;
-            }
-        }
+        if(fail[0]) return false;
 
         if(state.rules.placeRangeCheck && checkCoreRadius && !state.isEditor() && getEnemyOverlap(type, team, x, y) != null){
             return false;
@@ -274,40 +274,27 @@ public class Build{
     }
 
     public static boolean contactsGround(int x, int y, Block block){
-        if(block.isMultiblock()){
-            for(Point2 point : Edges.getEdges(block.size)){
-                Tile tile = world.tile(x + point.x, y + point.y);
-                if(tile != null && !tile.floor().isLiquid) return true;
-            }
-        }else{
-            for(Point2 point : Geometry.d4){
-                Tile tile = world.tile(x + point.x, y + point.y);
-                if(tile != null && !tile.floor().isLiquid) return true;
-            }
-        }
-        return false;
+        boolean[] found = {false};
+        block.iterateEdges(x, y, (ex, ey) -> {
+            Tile tile = world.tile(ex, ey);
+            if(tile != null && !tile.floor().isLiquid) found[0] = true;
+        });
+        return found[0];
     }
 
     public static boolean contactsShallows(int x, int y, Block block){
-        if(block.isMultiblock()){
-            for(Point2 point : block.getInsideEdges()){
-                Tile tile = world.tile(x + point.x, y + point.y);
-                if(tile != null && !tile.floor().isDeep()) return true;
-            }
+        boolean[] found = {false};
+        block.iterateInsideEdges(x, y, (ex, ey) -> {
+            Tile tile = world.tile(ex, ey);
+            if(tile != null && !tile.floor().isDeep()) found[0] = true;
+        });
+        if(found[0]) return true;
 
-            for(Point2 point : block.getEdges()){
-                Tile tile = world.tile(x + point.x, y + point.y);
-                if(tile != null && !tile.floor().isDeep()) return true;
-            }
-        }else{
-            for(Point2 point : Geometry.d4){
-                Tile tile = world.tile(x + point.x, y + point.y);
-                if(tile != null && !tile.floor().isDeep()) return true;
-            }
-            Tile tile = world.tile(x, y);
-            return tile != null && !tile.floor().isDeep();
-        }
-        return false;
+        block.iterateEdges(x, y, (ex, ey) -> {
+            Tile tile = world.tile(ex, ey);
+            if(tile != null && !tile.floor().isDeep()) found[0] = true;
+        });
+        return found[0];
     }
 
     /** @return whether the tile at this position is breakable by this team */

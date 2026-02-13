@@ -149,16 +149,16 @@ public class BurstDrill extends Drill{
 
             float fract = smoothProgress;
             Draw.color(arrowColor);
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 for(int j = 0; j < arrows; j++){
                     float arrowFract = (arrows - 1 - j);
                     float a = Mathf.clamp(fract * arrows - arrowFract);
-                    Tmp.v1.trns(i * 90 + 45, j * arrowSpacing + arrowOffset);
+                    Tmp.v1.trns(i * 60 + 30, j * arrowSpacing + arrowOffset);
 
                     //TODO maybe just use arrow alpha and draw gray on the base?
                     Draw.z(Layer.block);
                     Draw.color(baseArrowColor, arrowColor, a);
-                    Draw.rect(arrowRegion, x + Tmp.v1.x, y + Tmp.v1.y, i * 90);
+                    Draw.rect(arrowRegion, x + Tmp.v1.x, y + Tmp.v1.y, i * 60);
 
                     Draw.color(arrowColor);
 
@@ -166,7 +166,7 @@ public class BurstDrill extends Drill{
                         Draw.z(Layer.blockAdditive);
                         Draw.blend(Blending.additive);
                         Draw.alpha(Mathf.pow(a, 10f));
-                        Draw.rect(arrowBlurRegion, x + Tmp.v1.x, y + Tmp.v1.y, i * 90);
+                        Draw.rect(arrowBlurRegion, x + Tmp.v1.x, y + Tmp.v1.y, i * 60);
                         Draw.blend();
                     }
                 }
