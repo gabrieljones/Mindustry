@@ -100,7 +100,9 @@ public class GenericCrafter extends Block{
 
         Building crafter = world.build(fromX, fromY);
         if(crafter == null) return false;
-        int relative = Mathf.mod(crafter.relativeTo(destination) - crafter.rotation, 4);
+        int rel = crafter.relativeTo(destination);
+        if(rel == -1) return false;
+        int relative = Mathf.mod(rel - crafter.rotation, 6);
         for(int dir : liquidOutputDirections){
             if(dir == -1 || dir == relative) return false;
         }
@@ -162,10 +164,11 @@ public class GenericCrafter extends Block{
                 int dir = liquidOutputDirections.length > i ? liquidOutputDirections[i] : -1;
 
                 if(dir != -1){
+                    Tmp.v1.trns((dir + rotation) * 60f, size * tilesize / 2f + 4);
                     Draw.rect(
                         outputLiquids[i].liquid.fullIcon,
-                        x + Geometry.d4x(dir + rotation) * (size * tilesize / 2f + 4),
-                        y + Geometry.d4y(dir + rotation) * (size * tilesize / 2f + 4),
+                        x + Tmp.v1.x,
+                        y + Tmp.v1.y,
                         8f, 8f
                     );
                 }
@@ -198,7 +201,6 @@ public class GenericCrafter extends Block{
                     }
                 }
             }
-
             if(outputLiquids != null && !ignoreLiquidFullness){
                 boolean allFull = true;
                 for(var output : outputLiquids){

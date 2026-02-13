@@ -260,8 +260,8 @@ public class Floor extends Block{
 
             TextureRegion[] regions = autotileVariants > 1 ? autotileVariantRegions[variant(tile.x, tile.y, autotileVariantRegions.length)] : autotileRegions;
 
-            for(int i = 0; i < 8; i++){
-                Tile other = tile.nearby(Geometry.d8[i]);
+            for(int i = 0; i < 6; i++){
+                Tile other = tile.nearby(i);
                 if(checkAutotileSame(tile, other)){
                     bits |= (1 << i);
                 }
@@ -334,8 +334,8 @@ public class Floor extends Block{
         blenders.clear();
         blended.clear();
 
-        for(int i = 0; i < 8; i++){
-            Point2 point = Geometry.d8[i];
+        for(int i = 0; i < 6; i++){
+            Point2 point = Hex.getOffset(tile.y, i);
             Tile other = tile.nearby(point);
             //special case: empty is, well, empty, so never draw emptiness on top, as that would just be an incorrect black texture
             if(other != null && other.floor().drawEdgeOut && other.floor().cacheLayer == layer && other.floor().edges(tile.x, tile.y) != null){
@@ -355,8 +355,8 @@ public class Floor extends Block{
         Arrays.fill(dirs, 0);
         CacheLayer realCache = tile.floor().cacheLayer;
 
-        for(int i = 0; i < 8; i++){
-            Point2 point = Geometry.d8[i];
+        for(int i = 0; i < 6; i++){
+            Point2 point = Hex.getOffset(tile.y, i);
             Tile other = tile.nearby(point);
 
             if(other == null) continue;
@@ -379,8 +379,8 @@ public class Floor extends Block{
         blenders.sort(a -> a.id + (tile.floor() != this && a == tile.floor() ? 99999 : 0));
 
         for(Floor block : blenders){
-            for(int i = 0; i < 8; i++){
-                Point2 point = Geometry.d8[i];
+            for(int i = 0; i < 6; i++){
+                Point2 point = Hex.getOffset(tile.y, i);
                 Tile other = tile.nearby(point);
 
                 if(other == null) continue;

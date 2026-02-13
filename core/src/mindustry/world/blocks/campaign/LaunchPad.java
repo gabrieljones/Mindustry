@@ -115,13 +115,14 @@ public class LaunchPad extends Block{
                 Draw.color(lightColor);
                 float progress = Math.min((float)items.total() / itemCapacity, launchCounter / launchTime);
 
-                for(int i = 0; i < 4; i++){
+                for(int i = 0; i < 6; i++){
                     for(int j = 0; j < lightSteps; j++){
                         float alpha = Mathf.curve(progress, (float)j / lightSteps, (j+1f) / lightSteps);
                         float offset = -(j - 1f) * lightStep;
 
                         Draw.color(Pal.metalGrayDark, lightColor, alpha);
-                        Draw.rect(lightRegion, x + Geometry.d8edge(i).x * offset, y + Geometry.d8edge(i).y * offset, i * 90);
+                        Tmp.v1.trns(i * 60f, offset);
+                        Draw.rect(lightRegion, x + Tmp.v1.x, y + Tmp.v1.y, i * 60);
                     }
                 }
 
@@ -246,8 +247,8 @@ public class LaunchPad extends Block{
             Fill.light(cx, cy, 10, 25f * (rad + scale-1f), Tmp.c2.set(Pal.engine).a(alpha), Tmp.c1.set(Pal.engine).a(0f));
 
             Draw.alpha(alpha);
-            for(int i = 0; i < 4; i++){
-                Drawf.tri(cx, cy, 6f, 40f * (rad + scale-1f), i * 90f + rotation);
+            for(int i = 0; i < 6; i++){
+                Drawf.tri(cx, cy, 6f, 40f * (rad + scale-1f), i * 60f + rotation);
             }
 
             Draw.color();

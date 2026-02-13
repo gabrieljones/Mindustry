@@ -13,8 +13,8 @@ public class DirectionalItemBuffer{
     public final int[] indexes;
 
     public DirectionalItemBuffer(int capacity){
-        this.buffers = new long[4][capacity];
-        this.indexes = new int[5];
+        this.buffers = new long[6][capacity];
+        this.indexes = new int[6];
     }
 
     public boolean accepts(int buffer){
@@ -44,7 +44,7 @@ public class DirectionalItemBuffer{
     }
 
     public void write(Writes write){
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 6; i++){
             write.b(indexes[i]);
             write.b(buffers[i].length);
             for(long l : buffers[i]){
@@ -58,7 +58,8 @@ public class DirectionalItemBuffer{
     }
 
     public void read(Reads read, boolean legacy){
-        for(int i = 0; i < 4; i++){
+        int size = legacy ? 4 : 6;
+        for(int i = 0; i < size; i++){
             indexes[i] = read.b();
             byte length = read.b();
             for(int j = 0; j < length; j++){

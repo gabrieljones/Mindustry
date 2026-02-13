@@ -666,7 +666,8 @@ public class ControlPathfinder implements Runnable{
                 return costs.get(current);
             }
 
-            for(Point2 point : Geometry.d4){
+            for(int i = 0; i < 6; i++){
+                Point2 point = Hex.getOffset(cy, i);
                 int newx = cx + point.x, newy = cy + point.y;
                 int next = newx + wwidth * newy;
 
@@ -915,7 +916,8 @@ public class ControlPathfinder implements Runnable{
             int cost = curWeights[baseX % clusterSize + ((baseY % clusterSize) * clusterSize)];
 
             if(cost != impassable){
-                for(Point2 point : Geometry.d4){
+                for(int i = 0; i < 6; i++){
+                    Point2 point = Hex.getOffset(baseY, i);
 
                     int
                     dx = baseX + point.x, dy = baseY + point.y,
@@ -1184,8 +1186,8 @@ public class ControlPathfinder implements Runnable{
 
                         Tile current = null;
                         int minCost = 0;
-                        for(int dir = 0; dir < 4; dir ++){
-                            Point2 point = Geometry.d4[dir];
+                        for(int dir = 0; dir < 6; dir ++){
+                            Point2 point = Hex.getOffset(tileOn.y, dir);
                             int dx = tileOn.x + point.x, dy = tileOn.y + point.y;
 
                             Tile other = world.tile(dx, dy);

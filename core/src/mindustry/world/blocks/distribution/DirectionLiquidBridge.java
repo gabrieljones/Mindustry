@@ -58,7 +58,7 @@ public class DirectionLiquidBridge extends DirectionBridge{
             var link = lastLink = findLink();
             if(link != null){
                 moveLiquid(link, liquids.current());
-                link.occupied[rotation % 4] = this;
+                link.occupied[rotation % 6] = this;
             }
 
             if(link == null){
@@ -67,7 +67,7 @@ public class DirectionLiquidBridge extends DirectionBridge{
                 }
             }
 
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(occupied[i] == null || occupied[i].rotation != i || !occupied[i].isValid() || occupied[i].lastLink != this){
                     occupied[i] = null;
                 }
@@ -85,7 +85,7 @@ public class DirectionLiquidBridge extends DirectionBridge{
             return
                 hasLiquids && team == source.team &&
                 (liquids.current() == liquid || liquids.get(liquids.current()) < 0.2f) && rel != rotation &&
-                (occupied[(rel + 2) % 4] == null || occupied[(rel + 2) % 4] == source);
+                (occupied[(rel + 3) % 6] == null || occupied[(rel + 3) % 6] == source);
         }
     }
 }

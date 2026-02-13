@@ -68,8 +68,8 @@ public class PayloadLoader extends PayloadBlock{
     @Override
     public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         Draw.rect(region, plan.drawx(), plan.drawy());
-        Draw.rect(inRegion, plan.drawx(), plan.drawy(), plan.rotation * 90);
-        Draw.rect(outRegion, plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(inRegion, plan.drawx(), plan.drawy(), plan.rotation * 60);
+        Draw.rect(outRegion, plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.rect(topRegion, plan.drawx(), plan.drawy());
     }
 
@@ -122,13 +122,13 @@ public class PayloadLoader extends PayloadBlock{
 
             //draw input
             boolean fallback = true;
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 6; i++){
                 if(blends(i) && i != rotation){
-                    Draw.rect(inRegion, x, y, (i * 90) - 180);
+                    Draw.rect(inRegion, x, y, (i * 60) - 180);
                     fallback = false;
                 }
             }
-            if(fallback) Draw.rect(inRegion, x, y, rotation * 90);
+            if(fallback) Draw.rect(inRegion, x, y, rotation * 60);
 
             Draw.rect(outRegion, x, y, rotdeg());
 

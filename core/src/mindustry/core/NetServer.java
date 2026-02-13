@@ -647,7 +647,7 @@ public class NetServer implements ApplicationListener{
     float xVelocity, float yVelocity,
     Tile mining,
     boolean boosting, boolean shooting, boolean chatting, boolean building,
-    Block selectedBlock, int selectedRotation, @Nullable Queue<BuildPlan> plans,
+    @Nullable Queue<BuildPlan> plans,
     float viewX, float viewY, float viewWidth, float viewHeight
     ){
         NetConnection con = player.con;
@@ -686,8 +686,6 @@ public class NetServer implements ApplicationListener{
         player.typing = chatting;
         player.shooting = shooting;
         player.boosting = boosting;
-        player.selectedBlock = selectedBlock;
-        player.selectedRotation = selectedRotation;
 
         @Nullable var unit = player.unit();
 

@@ -211,27 +211,35 @@ public class PowerNode extends PowerBlock{
     protected void getPotentialLinks(Tile tile, Team team, Cons<Building> others){
         if(!autolink) return;
 
-        Boolf<Building> valid = other -> other != null && other.tile != tile && other.block.connectedPower && other.power != null &&
+        // Use array for boolean flag to use in lambda
+        boolean[] found = {false};
+
+        Boolf<Building> valid = other -> {
+            found[0] = false;
+            Edges.iterateEdges(size, tile.x, tile.y, (ex, ey) -> {
+                Tile t = world.tile(ex, ey);
+                if(t != null && t.build == other) found[0] = true;
+            });
+            if(found[0]) return false; //do not link to adjacent buildings
+
+            return other != null && other.tile != tile && other.block.connectedPower && other.power != null &&
             (other.block.outputsPower || other.block.consumesPower || other.block instanceof PowerNode) &&
             overlaps(tile.x * tilesize + offset, tile.y * tilesize + offset, other.tile, laserRange * tilesize) && other.team == team &&
             !graphs.contains(other.power.graph) &&
             !PowerNode.insulated(tile, other.tile) &&
-            !(other instanceof PowerNodeBuild obuild && obuild.power.links.size >= ((PowerNode)obuild.block).maxNodes) &&
-            !Structs.contains(Edges.getEdges(size), p -> { //do not link to adjacent buildings
-                var t = world.tile(tile.x + p.x, tile.y + p.y);
-                return t != null && t.build == other;
-            });
+            !(other instanceof PowerNodeBuild obuild && obuild.power.links.size >= ((PowerNode)obuild.block).maxNodes);
+        };
 
         tempBuilds.clear();
         graphs.clear();
 
         //add conducting graphs to prevent double link
-        for(var p : Edges.getEdges(size)){
-            Tile other = tile.nearby(p);
+        Edges.iterateEdges(size, tile.x, tile.y, (ex, ey) -> {
+            Tile other = world.tile(ex, ey);
             if(other != null && other.team() == team && other.build != null && other.build.power != null){
                 graphs.add(other.build.power.graph);
             }
-        }
+        });
 
         if(tile.build != null && tile.build.power != null){
             graphs.add(tile.build.power.graph);
@@ -266,28 +274,35 @@ public class PowerNode extends PowerBlock{
     //TODO code duplication w/ method above?
     /** Iterates through linked nodes of a block at a tile. All returned buildings are power nodes. */
     public static void getNodeLinks(Tile tile, Block block, Team team, Cons<Building> others){
-        Boolf<Building> valid = other -> other != null && other.tile != tile && other.block instanceof PowerNode node &&
-        node.autolink &&
-        other.power.links.size < node.maxNodes &&
-        node.overlaps(other.x, other.y, tile, block, node.laserRange * tilesize) && other.team == team
-        && !graphs.contains(other.power.graph) &&
-        !PowerNode.insulated(tile, other.tile) &&
-        !Structs.contains(Edges.getEdges(block.size), p -> { //do not link to adjacent buildings
-            var t = world.tile(tile.x + p.x, tile.y + p.y);
-            return t != null && t.build == other;
-        });
+        boolean[] found = {false};
+
+        Boolf<Building> valid = other -> {
+            found[0] = false;
+            Edges.iterateEdges(block.size, tile.x, tile.y, (ex, ey) -> {
+                Tile t = world.tile(ex, ey);
+                if(t != null && t.build == other) found[0] = true;
+            });
+            if(found[0]) return false;
+
+            return other != null && other.tile != tile && other.block instanceof PowerNode node &&
+            node.autolink &&
+            other.power.links.size < node.maxNodes &&
+            node.overlaps(other.x, other.y, tile, block, node.laserRange * tilesize) && other.team == team
+            && !graphs.contains(other.power.graph) &&
+            !PowerNode.insulated(tile, other.tile);
+        };
 
         tempBuilds.clear();
         graphs.clear();
 
         //add conducting graphs to prevent double link
-        for(var p : Edges.getEdges(block.size)){
-            Tile other = tile.nearby(p);
+        Edges.iterateEdges(block.size, tile.x, tile.y, (ex, ey) -> {
+            Tile other = world.tile(ex, ey);
             if(other != null && other.team() == team && other.build != null && other.build.power != null
                 && !(block.consumesPower && other.block().consumesPower && !block.outputsPower && !other.block().outputsPower)){
                 graphs.add(other.build.power.graph);
             }
-        }
+        });
 
         if(tile.build != null && tile.build.power != null){
             graphs.add(tile.build.power.graph);

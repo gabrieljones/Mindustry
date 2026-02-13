@@ -177,12 +177,6 @@ public class GameService{
             }
         });
 
-        Events.run(Trigger.unitCommandBoost, () -> {
-           if(campaign()){
-                boostUnit.complete();
-            }
-        });
-
         Events.run(Trigger.newGame, () -> Core.app.post(() -> {
             if(campaign() && player.core() != null && player.core().items.total() >= 10 * 1000){
                 drop10kitems.complete();

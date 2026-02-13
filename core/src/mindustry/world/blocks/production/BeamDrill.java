@@ -147,8 +147,10 @@ public class BeamDrill extends Block{
 
             int j = 0;
             Item found = null;
+            int rx = Tmp.p1.x, ry = Tmp.p1.y;
+            int endX = rx, endY = ry;
+
             for(; j < range; j++){
-                int rx = Tmp.p1.x + Geometry.d4x(rotation)*j, ry = Tmp.p1.y + Geometry.d4y(rotation)*j;
                 Tile other = world.tile(rx, ry);
                 if(other != null && other.solid()){
                     Item drop = other.wallDrop();
@@ -160,8 +162,16 @@ public class BeamDrill extends Block{
                             invalidItem = drop;
                         }
                     }
+                    endX = rx;
+                    endY = ry;
                     break;
                 }
+
+                Point2 offset = Hex.getOffset(ry, rotation);
+                endX = rx;
+                endY = ry;
+                rx += offset.x;
+                ry += offset.y;
             }
 
             if(found != null){
@@ -172,19 +182,18 @@ public class BeamDrill extends Block{
                 item = found;
             }
 
-            int len = Math.min(j, range - 1);
             Drawf.dashLine(found == null ? Pal.remove : Pal.placing,
-            Tmp.p1.x * tilesize,
-            Tmp.p1.y *tilesize,
-            (Tmp.p1.x + Geometry.d4x(rotation)*len) * tilesize,
-            (Tmp.p1.y + Geometry.d4y(rotation)*len) * tilesize
+            Hex.worldX(Tmp.p1.x, Tmp.p1.y),
+            Hex.worldY(Tmp.p1.y),
+            Hex.worldX(endX, endY),
+            Hex.worldY(endY)
             );
         }
 
         if(item != null){
             float width = drawPlaceText(Core.bundle.formatFloat("bar.drillspeed", 60f / getDrillTime(item) * count, 2), x, y, valid);
             if(!multiple){
-                float dx = x * tilesize + offset - width/2f - 4f, dy = y * tilesize + offset + size * tilesize / 2f + 5, s = iconSmall / 4f;
+                float dx = Hex.worldX(x, y) + offset - width/2f - 4f, dy = Hex.worldY(y) + offset + size * tilesize / 2f + 5, s = iconSmall / 4f;
                 Draw.mixcol(Color.darkGray, 1f);
                 Draw.rect(item.fullIcon, dx, dy - 1, s, s);
                 Draw.reset();
@@ -200,8 +209,10 @@ public class BeamDrill extends Block{
     public boolean canPlaceOn(Tile tile, Team team, int rotation){
         for(int i = 0; i < size; i++){
             nearbySide(tile.x, tile.y, rotation, i, Tmp.p1);
+            int rx = Tmp.p1.x, ry = Tmp.p1.y;
+
             for(int j = 0; j < range; j++){
-                Tile other = world.tile(Tmp.p1.x + Geometry.d4x(rotation)*j, Tmp.p1.y + Geometry.d4y(rotation)*j);
+                Tile other = world.tile(rx, ry);
                 if(other != null && other.solid()){
                     Item drop = other.wallDrop();
                     if(drop != null && drop.hardness <= tier && (blockedItems == null || !blockedItems.contains(drop))){
@@ -209,6 +220,9 @@ public class BeamDrill extends Block{
                     }
                     break;
                 }
+                Point2 offset = Hex.getOffset(ry, rotation);
+                rx += offset.x;
+                ry += offset.y;
             }
         }
 
@@ -280,8 +294,8 @@ public class BeamDrill extends Block{
 
             if(isPayload()) return;
 
-            var dir = Geometry.d4(rotation);
-            int ddx = Geometry.d4x(rotation + 1), ddy = Geometry.d4y(rotation + 1);
+            Tmp.v2.trns(rotation * 60f + 90f, 1f);
+            float ddx = Tmp.v2.x, ddy = Tmp.v2.y;
 
             for(int i = 0; i < size; i++){
                 Tile face = facing[i];
@@ -290,7 +304,9 @@ public class BeamDrill extends Block{
 
                     if(drop == null) continue;
                     Point2 p = lasers[i];
-                    float lx = face.worldx() - (dir.x/2f)*tilesize, ly = face.worldy() - (dir.y/2f)*tilesize;
+
+                    Tmp.v1.trns(rotation * 60f + 180f, tilesize / 2f);
+                    float lx = face.worldx() + Tmp.v1.x, ly = face.worldy() + Tmp.v1.y;
 
                     float width = (laserWidth + Mathf.absin(Time.time + i*5 + (id % 9)*9, glowScl, pulseIntensity)) * warmup;
 
@@ -311,7 +327,8 @@ public class BeamDrill extends Block{
 
                         Draw.scl();
                     }else{
-                        float lsx = (p.x - dir.x/2f) * tilesize, lsy = (p.y - dir.y/2f) * tilesize;
+                        Tmp.v1.trns(rotation * 60f + 180f, tilesize / 2f);
+                        float lsx = Hex.worldX(p.x, p.y) + Tmp.v1.x, lsy = Hex.worldY(p.y) + Tmp.v1.y;
 
                         if(boostWarmup < 0.99f){
                             Draw.alpha(1f - boostWarmup);
@@ -374,15 +391,15 @@ public class BeamDrill extends Block{
         protected void updateFacing(){
             lastItem = null;
             boolean multiple = false;
-            int dx = Geometry.d4x(rotation), dy = Geometry.d4y(rotation);
             facingAmount = 0;
 
             //update facing tiles
             for(int p = 0; p < size; p++){
                 Point2 l = lasers[p];
                 Tile dest = null;
+                int rx = l.x, ry = l.y;
+
                 for(int i = 0; i < range; i++){
-                    int rx = l.x + dx*i, ry = l.y + dy*i;
                     Tile other = world.tile(rx, ry);
                     if(other != null){
                         if(other.solid()){
@@ -398,6 +415,9 @@ public class BeamDrill extends Block{
                             break;
                         }
                     }
+                    Point2 offset = Hex.getOffset(ry, rotation);
+                    rx += offset.x;
+                    ry += offset.y;
                 }
 
                 facing[p] = dest;
