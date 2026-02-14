@@ -44,7 +44,7 @@ public class Edges{
         int size = block.size;
 
         float angle = Angles.angle(Hex.worldX(tilex, tiley), Hex.worldY(tiley), other.worldx(), other.worldy());
-        int direction = Math.round(angle / 60f);
+        int direction = Math.round(angle / 60f) % 6;
 
         Point2 p = Hex.nearby(tilex, tiley, direction, size - 1);
         return world.tile(p.x, p.y);

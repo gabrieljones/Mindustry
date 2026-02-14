@@ -735,8 +735,8 @@ public class Block extends UnlockableContent implements Senseable{
         super.afterPatch();
         barMap.clear();
         setBars();
-        offset = ((size + 1) % 2) * tilesize / 2f;
-        sizeOffset = -((size - 1) / 2);
+        offset = 0f;
+        sizeOffset = 0;
     }
 
     public boolean consumesItem(Item item){
@@ -891,18 +891,12 @@ public class Block extends UnlockableContent implements Senseable{
 
     /** Iterate through ever grid position taken up by this block. */
     public void iterateTaken(int x, int y, Intc2 placer){
+        placer.get(x, y);
+
         if(isMultiblock()){
-            int offsetx = -(size - 1) / 2;
-            int offsety = -(size - 1) / 2;
-
-            for(int dx = 0; dx < size; dx++){
-                for(int dy = 0; dy < size; dy++){
-                    placer.get(dx + offsetx + x, dy + offsety + y);
-                }
+            for(int i = 1; i < size; i++){
+                Hex.getRing(x, y, i, placer);
             }
-
-        }else{
-            placer.get(x, y);
         }
     }
 

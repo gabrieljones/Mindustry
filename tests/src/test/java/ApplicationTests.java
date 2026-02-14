@@ -715,14 +715,51 @@ public class ApplicationTests{
 
     @Test
     void edges(){
-        Point2[] edges = Edges.getEdges(1);
-        assertEquals(edges[0], new Point2(1, 0));
-        assertEquals(edges[1], new Point2(0, 1));
-        assertEquals(edges[2], new Point2(-1, 0));
-        assertEquals(edges[3], new Point2(0, -1));
+        Seq<Point2> edges1 = new Seq<>();
+        Edges.iterateEdges(1, 0, 0, (x, y) -> edges1.add(new Point2(x, y)));
+        assertEquals(6, edges1.size);
 
-        Point2[] edges2 = Edges.getEdges(2);
-        assertEquals(8, edges2.length);
+        assertTrue(edges1.contains(new Point2(1, 0)));
+        assertTrue(edges1.contains(new Point2(0, 1)));
+        assertTrue(edges1.contains(new Point2(-1, 1)));
+        assertTrue(edges1.contains(new Point2(-1, 0)));
+        assertTrue(edges1.contains(new Point2(-1, -1)));
+        assertTrue(edges1.contains(new Point2(0, -1)));
+
+        Seq<Point2> edges2 = new Seq<>();
+        Edges.iterateEdges(2, 0, 0, (x, y) -> edges2.add(new Point2(x, y)));
+        assertEquals(12, edges2.size);
+    }
+
+    @Test
+    void hexPercentSolid() {
+        // Mock a block with size 2
+        Block block = new Block("test-block") {
+            {
+                size = 2;
+            }
+        };
+
+        // For size 2, area is 3*2*1 + 1 = 7.
+        // iterateTaken should visit 7 tiles.
+
+        Seq<Point2> visited = new Seq<>();
+        block.iterateTaken(0, 0, (x, y) -> visited.add(new Point2(x, y)));
+
+        assertEquals(7, visited.size);
+
+        // Ensure center is visited
+        assertTrue(visited.contains(new Point2(0, 0)));
+
+        // Ensure ring 1 is visited (6 tiles)
+        // Ring 1 around (0,0):
+        // (1,0), (0,1), (-1,1), (-1,0), (-1,-1), (0,-1)
+        assertTrue(visited.contains(new Point2(1, 0)));
+        assertTrue(visited.contains(new Point2(0, 1)));
+
+        // Check calculation manually
+        float area = 3 * block.size * (block.size - 1) + 1;
+        assertEquals(7f, area);
     }
 
     @Test
