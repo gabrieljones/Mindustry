@@ -50,7 +50,7 @@ public class OverflowDuct extends Block{
     @Override
     public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         Draw.rect(region, plan.drawx(), plan.drawy());
-        Draw.rect(topRegion, plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(topRegion, plan.drawx(), plan.drawy(), plan.rotation * 60);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class OverflowDuct extends Block{
             if(invert) return null;
 
             for(int i = -1; i <= 1; i++){
-                int dir = Mathf.mod(rotation + (((i + cdump + 1) % 3) - 1), 4);
+                int dir = Mathf.mod(rotation + (((i + cdump + 1) % 3) - 1), 6);
                 if(dir == rotation) continue;
                 Building other = nearby(dir);
                 if(other != null && other.team == team && other.acceptItem(this, current)){

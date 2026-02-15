@@ -82,7 +82,7 @@ public class PayloadSource extends PayloadBlock{
     @Override
     public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         Draw.rect(region, plan.drawx(), plan.drawy());
-        Draw.rect(outRegion, plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(outRegion, plan.drawx(), plan.drawy(), plan.rotation * 60);
         Draw.rect(topRegion, plan.drawx(), plan.drawy());
     }
 

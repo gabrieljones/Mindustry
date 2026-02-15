@@ -136,8 +136,8 @@ public class PayloadRouter extends PayloadConveyor{
 
         public void checkMatch(){
             matches = sorted != null &&
-                (item instanceof BuildPayload build && build.block() == sorted) ||
-                (item instanceof UnitPayload unit && unit.unit.type == sorted);
+                ((item instanceof BuildPayload build && build.block() == sorted) ||
+                (item instanceof UnitPayload unit && unit.unit.type == sorted));
 
             if(invert) matches = !matches;
         }
