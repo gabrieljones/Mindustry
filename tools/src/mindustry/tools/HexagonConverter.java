@@ -114,7 +114,7 @@ public class HexagonConverter{
         // Width = sqrt(3) * R.
         // Height = 2 * R.
 
-        int R = w / 2;
+        int R = (int)(w / 1.85f);
         int outW = (int)Math.ceil(Math.sqrt(3) * R);
         int outH = 2 * R;
 
@@ -472,7 +472,7 @@ public class HexagonConverter{
 
     public static Pixmap processCluster(Pixmap input, int size){
         int radius = size - 1;
-        float hexR = 16f;
+        float hexR = 17f;
         float hexW = (float)(Math.sqrt(3) * hexR);
 
         int outW = (int)Math.ceil((radius * 2 + 1) * hexW);
