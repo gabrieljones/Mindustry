@@ -82,10 +82,10 @@ public class PayloadRouter extends PayloadConveyor{
                 }else{
                     int rotations = 0;
                     do{
-                        rotation = (rotation + 1) % 4;
+                        rotation = (rotation + 1) % 6;
                         //if it doesn't match the sort item and this router is facing forward, skip this rotation
                         if(!matches && sorted != null && rotation == recDir){
-                            rotation ++;
+                            rotation = (rotation + 1) % 6;
                         }
                         onProximityUpdate();
 
@@ -95,7 +95,7 @@ public class PayloadRouter extends PayloadConveyor{
                         }
                         //this condition intentionally uses "accept from itself" conditions, because payload conveyors only accept during the start
                         //"accept from self" conditions are for dropped payloads and are less restrictive
-                    }while((blocked || next == null || !next.acceptPayload(next, item)) && ++rotations < 4);
+                    }while((blocked || next == null || !next.acceptPayload(next, item)) && ++rotations < 6);
                 }
             }else{
                 onProximityUpdate();
@@ -107,7 +107,7 @@ public class PayloadRouter extends PayloadConveyor{
             super.control(type, p1, p2, p3, p4);
             if(type == LAccess.config){
                 int prev = rotation;
-                rotation = Mathf.mod((int)p1, 4);
+                rotation = Mathf.mod((int)p1, 6);
                 //when manually controlled, routers do not turn automatically for a while, same as turrets
                 controlTime = 60f * 6f;
                 if(prev != rotation){
