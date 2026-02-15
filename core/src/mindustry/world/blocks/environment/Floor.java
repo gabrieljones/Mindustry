@@ -408,7 +408,10 @@ public class Floor extends Block{
     }
 
     protected TextureRegion edge(int x, int y, int rx, int ry){
-        return edges(x, y)[rx][2 - ry];
+        TextureRegion[][] regions = edges(x, y);
+        int xi = Math.min(Math.max(rx, 0), regions.length - 1);
+        int yi = Math.min(Math.max(2 - ry, 0), regions[xi].length - 1);
+        return regions[xi][yi];
     }
 
     /** @return whether the edges from {@param other} should be drawn onto this tile **/
