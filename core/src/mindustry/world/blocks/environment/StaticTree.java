@@ -24,23 +24,32 @@ public class StaticTree extends StaticWall{
         float ox = 0;
         float oy = 0;
 
-        for(int i = 0; i < 4; i++){
-            if(tile.nearby(i) != null && tile.nearby(i).block() instanceof StaticWall){
+        boolean cropRight = false, cropTop = false, cropLeft = false, cropBottom = false;
 
-                if(i == 0){
-                    r.setWidth(r.width - crop);
-                    ox -= crop /2f;
-                }else if(i == 1){
-                    r.setY(r.getY() + crop);
-                    oy -= crop /2f;
-                }else if(i == 2){
-                    r.setX(r.getX() + crop);
-                    ox += crop /2f;
-                }else{
-                    r.setHeight(r.height - crop);
-                    oy += crop /2f;
-                }
+        for(int i = 0; i < 6; i++){
+            if(tile.nearby(i) != null && tile.nearby(i).block() instanceof StaticWall){
+                if(i == 0) cropRight = true;
+                if(i == 3) cropLeft = true;
+                if(i == 1 || i == 2) cropTop = true;
+                if(i == 4 || i == 5) cropBottom = true;
             }
+        }
+
+        if(cropRight){
+            r.setWidth(r.width - crop);
+            ox -= crop /2f;
+        }
+        if(cropTop){
+            r.setY(r.getY() + crop);
+            oy -= crop /2f;
+        }
+        if(cropLeft){
+            r.setX(r.getX() + crop);
+            ox += crop /2f;
+        }
+        if(cropBottom){
+            r.setHeight(r.height - crop);
+            oy += crop /2f;
         }
         Draw.rect(r, tile.drawx() + ox * Draw.scl, tile.drawy() + oy * Draw.scl);
     }

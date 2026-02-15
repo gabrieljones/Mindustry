@@ -57,7 +57,7 @@ public class DuctRouter extends Block{
     @Override
     public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
         Draw.rect(region, plan.drawx(), plan.drawy());
-        Draw.rect(topRegion, plan.drawx(), plan.drawy(), plan.rotation * 90);
+        Draw.rect(topRegion, plan.drawx(), plan.drawy(), plan.rotation * 60);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class DuctRouter extends Block{
                 Building other = proximity.get((i + dump) % proximity.size);
                 int rel = relativeTo(other);
 
-                if(!(sortItem != null && (current == sortItem) != (rel == rotation)) && !(rel == (rotation + 2) % 4) && other.team == team && other.acceptItem(this, current)){
+                if(!(sortItem != null && (current == sortItem) != (rel == rotation)) && !(rel == (rotation + 3) % 6) && other.team == team && other.acceptItem(this, current)){
                     incrementDump(proximity.size);
                     return other;
                 }
