@@ -120,7 +120,7 @@ task tileImages(){
     }
 }
 
-task pack(dependsOn: [classes, configurations.runtimeClasspath]){
+task pack(dependsOn: [classes, configurations.runtimeClasspath, 'genHexagons']){
 
     doLast{
         //cleanup old sprites
@@ -132,6 +132,17 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath]){
         copy{
             from "../core/assets-raw/sprites/"
             into "../core/assets-raw/sprites_out/"
+        }
+
+        //overwrite with hex sprites
+        copy{
+            from "../core/assets-raw/sprites/blocks-hex/"
+            into "../core/assets-raw/sprites_out/blocks/"
+        }
+
+        //remove blocks-hex directory to avoid duplicate sprites in atlas
+        delete{
+            delete "../core/assets-raw/sprites_out/blocks-hex/"
         }
 
         //run generation task; generate all needed sprites

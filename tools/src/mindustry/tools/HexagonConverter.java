@@ -28,6 +28,10 @@ public class HexagonConverter{
 
             input.walk(f -> {
                 if(f.extEquals("png")){
+                    if(f.path().contains("conveyor") || f.path().contains("conduit") || f.path().contains("duct") || f.path().contains("autotile")){
+                        return;
+                    }
+
                     // 1. Manually calculate the relative path via string manipulation
                     // We take the full path and remove the base directory part
                     String relPath = f.path().substring(basePath.length());
