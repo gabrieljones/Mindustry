@@ -44,7 +44,9 @@ jobs:
         rm -rf .github
         rm README.md
         git add .
-        git commit --allow-empty -m "Updating"
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -m "Updating"
+        fi
         git tag ${RELEASE_VERSION}
         git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/Anuken/MindustryJitpack ${RELEASE_VERSION}
         cd ../Mindustry
@@ -63,8 +65,10 @@ jobs:
         cp -a Mindustry/core/build/javadoc/. docs/
         cd docs
         git add .
-        git commit --allow-empty -m "Update ${RELEASE_VERSION:1}"
-        git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/MindustryGame/docs
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -m "Update ${RELEASE_VERSION:1}"
+          git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/MindustryGame/docs
+        fi
         cd ../Mindustry
     - name: Update F-Droid build string
       run: |
