@@ -140,6 +140,12 @@ task pack(dependsOn: [classes, configurations.runtimeClasspath, 'genHexagons']){
             into "../core/assets-raw/sprites_out/blocks/"
         }
 
+        //remove duplicate hex sprite directory
+        delete{
+            delete "../core/assets-raw/sprites_out/blocks-hex/"
+        }
+
+
         //run generation task; generate all needed sprites
         file(genFolder).mkdirs()
         javaexec{
