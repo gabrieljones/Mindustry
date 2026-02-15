@@ -14,8 +14,6 @@ import mindustry.world.blocks.*;
 import static mindustry.Vars.*;
 
 public class StaticWall extends Prop{
-    public @Load("@-large") TextureRegion large;
-    public TextureRegion[][] split;
     /** If true, this wall uses autotiling; variants are not supported. See https://github.com/GglLfr/tile-gen*/
     public boolean autotile;
     /** If >1, the middle region of the autotile has random variants. */
@@ -78,15 +76,6 @@ public class StaticWall extends Prop{
     @Override
     public void load(){
         super.load();
-        int size = large.width / 2;
-        split = large.split(size, size);
-        if(split != null){
-            for(var arr : split){
-                for(var reg : arr){
-                    reg.scale = region.scale;
-                }
-            }
-        }
 
         if(autotile){
             autotileRegions = TileBitmask.load(name);
