@@ -105,6 +105,10 @@ public class HexagonConverter{
         // Assume square input
         if(w != h) throw new IllegalArgumentException("Input must be square");
 
+        if(w % 32 == 0 && w / 32 > 1){
+            return processCluster(input, w / 32);
+        }
+
         // Output Hexagon dimensions (Pointy Topped)
         // Let side length R = w.
         // Width = sqrt(3) * R.
@@ -460,6 +464,55 @@ public class HexagonConverter{
                 sy = Math.max(0, Math.min(h - 1, sy));
 
                 out.set(x, y, input.get(sx, sy));
+            }
+        });
+
+        return out;
+    }
+
+    public static Pixmap processCluster(Pixmap input, int size){
+        int radius = size - 1;
+        float hexR = 16f;
+        float hexW = (float)(Math.sqrt(3) * hexR);
+
+        int outW = (int)Math.ceil((radius * 2 + 1) * hexW);
+        int outH = (int)((radius * 3 + 2) * hexR);
+
+        Pixmap out = new Pixmap(outW, outH);
+        float cx = outW / 2f, cy = outH / 2f;
+
+        out.each((x, y) -> {
+            float dx = x - cx;
+            float dy = y - cy;
+
+            //convert to axial coords
+            float q = ((float)Math.sqrt(3)/3f * dx - 1f/3f * dy) / hexR;
+            float r = (2f/3f * dy) / hexR;
+
+            float x3 = q, z3 = r, y3 = -x3 - z3;
+            int rx = Math.round(x3), rz = Math.round(z3), ry = Math.round(y3);
+
+            float x_diff = Math.abs(rx - x3);
+            float y_diff = Math.abs(ry - y3);
+            float z_diff = Math.abs(rz - z3);
+
+            if(x_diff > y_diff && x_diff > z_diff){
+                rx = -ry - rz;
+            }else if(y_diff > z_diff){
+                ry = -rx - rz;
+            }else{
+                rz = -rx - ry;
+            }
+
+            int dist = Math.max(Math.abs(rx), Math.max(Math.abs(ry), Math.abs(rz)));
+
+            if(dist <= radius){
+                // Map based on bounds of the hex cluster
+                // The cluster spans from -width/2 to width/2
+                // We map [0, width] -> [0, input.width]
+                int sx = (int)((float)x / outW * input.width);
+                int sy = (int)((float)y / outH * input.height);
+                out.set(x, y, input.get(Math.max(0, Math.min(sx, input.width - 1)), Math.max(0, Math.min(sy, input.height - 1))));
             }
         });
 
