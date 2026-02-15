@@ -110,7 +110,7 @@ public class HexagonConverter{
         // Width = sqrt(3) * R.
         // Height = 2 * R.
 
-        int R = w;
+        int R = w / 2;
         int outW = (int)Math.ceil(Math.sqrt(3) * R);
         int outH = 2 * R;
 
