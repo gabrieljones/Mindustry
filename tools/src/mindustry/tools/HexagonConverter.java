@@ -476,7 +476,7 @@ public class HexagonConverter{
         float hexW = (float)(Math.sqrt(3) * hexR);
 
         int outW = (int)Math.ceil((radius * 2 + 1) * hexW);
-        int outH = (int)((radius * 3 + 2) * hexR);
+        int outH = (int)((radius * 3 + 2) * hexR) + 1;
 
         Pixmap out = new Pixmap(outW, outH);
         float cx = outW / 2f, cy = outH / 2f;
